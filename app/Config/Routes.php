@@ -31,7 +31,9 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('/gls', 'GlsController::index');
+$routes->group('gls', static function ($routes) {
+    $routes->get('/', 'GlsController::index');
+});
 
 
 

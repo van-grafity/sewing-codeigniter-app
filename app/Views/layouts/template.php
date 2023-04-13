@@ -86,7 +86,10 @@
     <script src="<?= base_url('adminLTE'); ?>/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="<?= base_url('adminLTE'); ?>/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
+
+    <!-- Page Script | Javascript Khusus di halaman tersebut -->
+    <?= $this->renderSection('page_script'); ?>
+    
 </body>
 
 </html>
