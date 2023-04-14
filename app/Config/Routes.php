@@ -41,6 +41,11 @@ $routes->group('gls', static function ($routes) {
 });
 
 
+// ## Route for Datatable
+$routes->group('dtable', static function ($routes){
+    $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

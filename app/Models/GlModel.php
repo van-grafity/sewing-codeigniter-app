@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Gl extends Model
+class GlModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'gls';

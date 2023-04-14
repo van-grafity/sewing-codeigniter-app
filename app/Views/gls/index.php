@@ -35,7 +35,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="table_gl" class="table table-bordered table-hover">
+                            <table id="gl_table" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -119,16 +119,32 @@ $(document).ready(function(){
     let session = <?= json_encode(session()->getFlashdata()) ?>;
     show_flash_message(session);
 
-    
-    $('#btn_modal_create').click((e) => {
-        
-        $('#modal_form').modal('show')
-    })
-
     $('#btn_modal_create').click((e) => {
         create_gl()
     })
 })
+</script>
+
+<script type="text/javascript">
+
+    // ## Datatable Initialize
+    const dtable_url = "<?= url_to('dtable_gl') ?>";
+    $('#gl_table').DataTable({
+        // processing: true,
+        // serverSide: true,
+        // ajax: dtable_url,
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'gl_number', name: 'gl_number'},
+            {data: 'season', name: 'season'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ],
+        paging: true,
+        responsive: true,
+        lengthChange: true,
+        searching: true,
+        autoWidth: false,
+    });
 </script>
 
 <script type="text/javascript">

@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Gl;
+use App\Models\GlModel;
 
 class GlsController extends BaseController
 {
@@ -12,7 +12,7 @@ class GlsController extends BaseController
 
     public function __construct()
     {
-        $this->GlModel = new Gl();
+        $this->GlModel = new GlModel();
     }
 
     public function index()
@@ -23,6 +23,21 @@ class GlsController extends BaseController
             'gls' => $this->GlModel->findAll()
         ];
         return view('gls/index', $data);
+    }
+
+    public function dtableGl()
+    {
+        dd("load datatable");
+        // $query = DB::table('colors')->get();
+        //     return Datatables::of($query)
+        //     ->addIndexColumn()
+        //     ->escapeColumns([])
+        //     ->addColumn('action', function($data){
+        //         return '
+        //         <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_color('.$data->id.')">Edit</a>
+        //         <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_color('.$data->id.')">Delete</a>';
+        //     })
+        //     ->make(true);
     }
 
     public function show($id) {
