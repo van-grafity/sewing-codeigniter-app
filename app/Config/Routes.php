@@ -32,9 +32,13 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 $routes->group('gls', static function ($routes) {
-    $routes->get('/', 'GlsController::index');
+    $routes->get('', 'GlsController::index');
+    $routes->get('(:segment)', 'GlsController::show/$1', ['as' => 'gl_show']);
+    $routes->post('', 'GlsController::store', ['as' => 'gl_store']);
+    $routes->get('edit/(:segment)', 'GlsController::edit/$1', ['as' => 'gl_edit']);
+    $routes->put('(:segment)', 'GlsController::update/$1', ['as' => 'gl_update']);
+    $routes->delete('(:segment)', 'GlsController::destroy/$1', ['as' => 'gl_destroy']);
 });
-
 
 
 /*

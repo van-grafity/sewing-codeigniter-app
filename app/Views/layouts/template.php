@@ -5,9 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?=$title?></title>
+    <?= csrf_meta() ?>
 
-    <!-- Google Font: Source Sans Pro -->
     <base href="<?php echo base_url('assets') ?>/">
+    
+    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -23,12 +25,17 @@
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/jqvmap/jqvmap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/css/adminlte.min.css">
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/sweetalert2/sweetalert2.min.css">
+
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/summernote/summernote-bs4.min.css">
+    
 
 </head>
 
@@ -84,8 +91,15 @@
     <script src="<?= base_url('adminLTE'); ?>/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- overlayScrollbars -->
     <script src="<?= base_url('adminLTE'); ?>/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="<?= base_url('adminLTE'); ?>/plugins/sweetalert2/sweetalert2.min.js"></script>
+    
     <!-- AdminLTE App -->
     <script src="<?= base_url('adminLTE'); ?>/js/adminlte.js"></script>
+
+    <!-- Custom JS | Utility -->
+    <script src="<?= base_url(); ?>/js/utils.js"></script>
 
     <!-- Page Script | Javascript Khusus di halaman tersebut -->
     <?= $this->renderSection('page_script'); ?>

@@ -11,7 +11,6 @@ class CreateGlsTable extends Migration
         $this->forge->addField('id');
         $this->forge->addField([
             'gl_number'  => ['type' => 'varchar', 'constraint' => 31],
-            'uid'        => ['type' => 'varchar', 'constraint' => 31],
             'season'     => ['type' => 'varchar', 'constraint' => 63],
             'created_at' => ['type' => 'datetime', 'null' => true],
             'updated_at' => ['type' => 'datetime', 'null' => true],
@@ -19,7 +18,6 @@ class CreateGlsTable extends Migration
         ]);
 
         $this->forge->addKey('gl_number');
-        $this->forge->addKey('uid');
         $this->forge->addKey(['deleted_at', 'id']);
         $this->forge->addKey('created_at');
 
@@ -28,6 +26,6 @@ class CreateGlsTable extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('factories');
+        $this->forge->dropTable('gls');
     }
 }
