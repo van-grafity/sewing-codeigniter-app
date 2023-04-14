@@ -39,11 +39,20 @@ $routes->group('gls', static function ($routes) {
     $routes->put('(:segment)', 'GlsController::update/$1', ['as' => 'gl_update']);
     $routes->delete('(:segment)', 'GlsController::destroy/$1', ['as' => 'gl_destroy']);
 });
+$routes->group('lines', static function ($routes) {
+    $routes->get('', 'LinesController::index');
+    $routes->get('(:segment)', 'LinesController::show/$1', ['as' => 'line_show']);
+    $routes->post('', 'LinesController::store', ['as' => 'line_store']);
+    $routes->get('edit/(:segment)', 'LinesController::edit/$1', ['as' => 'line_edit']);
+    $routes->put('(:segment)', 'LinesController::update/$1', ['as' => 'line_update']);
+    $routes->delete('(:segment)', 'LinesController::destroy/$1', ['as' => 'line_destroy']);
+});
 
 
 // ## Route for Datatable
 $routes->group('dtable', static function ($routes){
     $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
+    $routes->get('line', 'LinesController::dtableLine',['as' => 'dtable_line']);
 });
 
 /*

@@ -18,7 +18,7 @@ class GlsController extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'AdminLTE 3 | Dashboard Controller',
+            'title' => 'AdminLTE 3 | Dashboard',
             'page_title' => 'Master Data GL',
             'gls' => $this->GlModel->findAll()
         ];

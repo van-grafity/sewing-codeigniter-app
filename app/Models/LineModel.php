@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class GlModel extends Model
+class LineModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'gls';
+    protected $table            = 'lines';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['gl_number','season'];
+    protected $allowedFields    = ['name','description'];
 
     // Dates
     protected $useTimestamps = true;
