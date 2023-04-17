@@ -8,19 +8,34 @@ class CreateGlsTable extends Migration
 {
     public function up()
     {
-        $this->forge->addField('id');
         $this->forge->addField([
-            'gl_number'  => ['type' => 'varchar', 'constraint' => 31],
-            'season'     => ['type' => 'varchar', 'constraint' => 63],
-            'created_at' => ['type' => 'datetime', 'null' => true],
-            'updated_at' => ['type' => 'datetime', 'null' => true],
-            'deleted_at' => ['type' => 'datetime', 'null' => true],
+            'id' => [
+                'type' => 'bigint',
+                'unsigned' => true, 
+                'auto_increment' => true
+            ],
+            'gl_number' => [
+                'type' => 'varchar', 
+                'constraint' => 20
+            ],
+            'season' => [
+                'type' => 'varchar', 
+                'constraint' => 20
+            ],
+            'created_at' => [
+                'type' => 'datetime', 
+                'null' => true
+            ],
+            'updated_at' => [
+                'type' => 'datetime', 
+                'null' => true
+            ],
+            'deleted_at' => [
+                'type' => 'datetime', 
+                'null' => true
+            ],
         ]);
-
-        $this->forge->addKey('gl_number');
-        $this->forge->addKey(['deleted_at', 'id']);
-        $this->forge->addKey('created_at');
-
+        $this->forge->addKey('id',true);
         $this->forge->createTable('gls');
     }
 
