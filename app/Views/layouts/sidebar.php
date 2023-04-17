@@ -40,7 +40,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="<?= url_to('output-records') ?>" class="nav-link">
                         <i class="far fa-file-alt nav-icon"></i>
                         <p>Output Record</p>
                     </a>

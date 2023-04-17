@@ -47,6 +47,14 @@ $routes->group('lines', static function ($routes) {
     $routes->put('(:segment)', 'LinesController::update/$1', ['as' => 'line_update']);
     $routes->delete('(:segment)', 'LinesController::destroy/$1', ['as' => 'line_destroy']);
 });
+$routes->group('output-records', static function ($routes) {
+    $routes->get('', 'OutputRecordsController::index');
+    $routes->get('(:segment)', 'OutputRecordsController::show/$1', ['as' => 'output_record_show']);
+    $routes->post('', 'OutputRecordsController::store', ['as' => 'output_record_store']);
+    $routes->get('edit/(:segment)', 'OutputRecordsController::edit/$1', ['as' => 'output_record_edit']);
+    $routes->put('(:segment)', 'OutputRecordsController::update/$1', ['as' => 'output_record_update']);
+    $routes->delete('(:segment)', 'OutputRecordsController::destroy/$1', ['as' => 'output_record_destroy']);
+});
 
 
 // ## Route for Datatable

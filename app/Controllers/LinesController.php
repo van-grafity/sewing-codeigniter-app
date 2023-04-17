@@ -18,7 +18,7 @@ class LinesController extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'AdminLTE 3 | Dashboard',
+            'title' => 'Master Data Line',
             'page_title' => 'Master Data Line',
             'lines' => $this->LineModel->findAll()
         ];
