@@ -30,7 +30,8 @@
                         <div class="card-header">
                             <h3 class="card-title">Manage Output Records</h3>
                             <div class="d-flex justify-content-end mb-1">
-                                <a href="javascript:void(0);" class="btn btn-success mb-2" id="btn_modal_create">Create</a>
+                                <a href="javascript:void(0);" class="btn btn-success mb-2"
+                                    id="btn_modal_create">Create</a>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -55,8 +56,10 @@
                                         <td><?= $output_record->lines->name ?></td>
                                         <td><?= $output_record->time_hours_of ?></td>
                                         <td>
-                                            <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_line(<?= $output_record->id ?>)">Edit</a>
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_line(<?= $output_record->id ?>)">Delete</a>
+                                            <a href="javascript:void(0);" class="btn btn-primary btn-sm"
+                                                onclick="edit_output_record(<?= $output_record->id ?>)">Edit</a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm"
+                                                onclick="delete_output_record(<?= $output_record->id ?>)">Delete</a>
                                         </td>
                                     </tr>
                                     <?php endforeach ?>
@@ -80,26 +83,92 @@
 
 
 <!-- Modal Section -->
-<div class="modal fade" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="modal_formLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="modal_formLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal_formLabel">Add Output Records</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="POST" class="custom-validation" enctype="multipart/form-data" id="line_form">
+            <form action="" method="POST" class="custom-validation" enctype="multipart/form-data" id="output_record_form">
                 <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Output Records Number">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="time_date">Date</label>
+                                    <input type="date" class="form-control" id="time_date" name="time_date" placeholder="Enter Date" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="gl_number" class="form-label">GL Number</label>
+                                    <select name="gl_number" class="form-control select2" id="gl_number"
+                                        style="width: 100%;" data-placeholder="Choose GL Number" required>
+                                        <option value="">Choose GL Number</option>
+                                        <?php foreach ($gls as $key => $gl) { ?>
+                                            <option value="<?= $gl->id ?>"><?= $gl->gl_number ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type="text" class="form-control" id="description" name="description" placeholder="Enter Description">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="line" class="form-label">Line</label>
+                                    <select name="line" class="form-control select2" id="line" style="width: 100%;" data-placeholder="Choose Line" required>
+                                        <option value="">Choose Line</option>
+                                        <?php foreach ($lines as $key => $line) { ?>
+                                            <option value="<?= $line->id ?>"><?= $line->name ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="line" class="form-label">Hours of</label>
+                                    <select name="time_hours_of" class="form-control select2" id="time_hours_of" style="width: 100%;" data-placeholder="Choose Hours of" required>
+                                        <option value="">Choose Hours of</option>
+                                        <?php for ($i=1; $i <= 10; $i++) { ?>
+                                            <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="target">Target</label>
+                                    <input type="number" class="form-control" id="target" name="target" placeholder="Enter Target" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="output">Output</label>
+                                    <input type="number" class="form-control" id="output" name="output" placeholder="Enter Output">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="defact_qty">Defact Qty</label>
+                                    <input type="number" class="form-control" id="defact_qty" name="defact_qty" placeholder="Enter Defact Qty">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="endline_ftt">Endline FTT</label>
+                                    <input type="number" class="form-control" id="endline_ftt" name="endline_ftt" placeholder="Enter Endline FTT">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- END .card-body -->
@@ -117,93 +186,128 @@
 
 <?= $this->Section('page_script'); ?>
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function() {
 
     // ## Show Flash Message
     let session = <?= json_encode(session()->getFlashdata()) ?>;
     show_flash_message(session);
 
     $('#btn_modal_create').click((e) => {
-        create_line()
+        create_output_record()
     })
 })
 </script>
 
 <script type="text/javascript">
-
-    // ## Datatable Initialize
-    const dtable_url = "<?= url_to('dtable_line') ?>";
-    $('#output_records_table').DataTable({
-        // processing: true,
-        // serverSide: true,
-        // ajax: dtable_url,
-        columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'time_date', name: 'time_date'},
-            {data: 'line', name: 'line'},
-            {data: 'gl_number', name: 'gl_number'},
-            {data: 'time_hours_of', name: 'time_hours_of'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ],
-        paging: true,
-        responsive: true,
-        lengthChange: true,
-        searching: true,
-        autoWidth: false,
-    });
+// ## Datatable Initialize
+const dtable_url = "<?= url_to('dtable_output_record') ?>";
+$('#output_records_table').DataTable({
+    // processing: true,
+    // serverSide: true,
+    // ajax: dtable_url,
+    columns: [{
+            data: 'DT_RowIndex',
+            name: 'DT_RowIndex'
+        },
+        {
+            data: 'time_date',
+            name: 'time_date'
+        },
+        {
+            data: 'line',
+            name: 'line'
+        },
+        {
+            data: 'gl_number',
+            name: 'gl_number'
+        },
+        {
+            data: 'time_hours_of',
+            name: 'time_hours_of'
+        },
+        {
+            data: 'action',
+            name: 'action',
+            orderable: false,
+            searchable: false
+        },
+    ],
+    paging: true,
+    responsive: true,
+    lengthChange: true,
+    searching: true,
+    autoWidth: false,
+});
 </script>
 
 <script type="text/javascript">
-    const token = document.querySelector('meta[name="X-CSRF-TOKEN"]').getAttribute('content');
-    const store_url ='<?= url_to('line_store') ?>';
-    const delete_url ='<?= url_to('line_destroy',':id') ?>';
-    const edit_url ='<?= url_to('line_edit',':id') ?>';
-    const update_url ='<?= url_to('line_update',':id') ?>';
+const token = document.querySelector('meta[name="X-CSRF-TOKEN"]').getAttribute('content');
+const store_url = '<?= url_to('output_record_store') ?>';
+const delete_url = '<?= url_to('output_record_destroy',':id') ?>';
+const edit_url = '<?= url_to('output_record_edit',':id') ?>';
+const update_url = '<?= url_to('output_record_update',':id') ?>';
 
-    function create_line() {
-        $('#modal_formLabel').text("Add Output Records")
-        $('#btn_submit').text("Add Output Records")
-        $('#line_form').attr('action', store_url);
-        $('#line_form').find("input[type=text], textarea").val("");
-        $('#line_form').find('input[name="_method"]').remove();
-        $('#modal_form').modal('show')
+function create_output_record() {
+    $('#modal_formLabel').text("Add Output Records")
+    $('#btn_submit').text("Add Output Records")
+    $('#output_record_form').attr('action', store_url);
+    $('#output_record_form').find("input[type=text], textarea").val("");
+    $('#output_record_form').find("input[type=number], input[type=date]").val("");
+    $('#output_record_form').find("select").val("").change();
+    $('#output_record_form').find('input[name="_method"]').remove();
+    $('#modal_form').modal('show')
+}
+
+async function edit_output_record(output_record_id) {
+    let url_edit = edit_url.replace(':id', output_record_id);
+
+    result = await get_using_fetch(url_edit);
+    form = $('#output_record_form')
+    form.append('<input type="hidden" name="_method" value="PUT">');
+    $('#modal_formLabel').text("Edit Output Records");
+    $('#btn_submit').text("Save");
+
+    let url_update = update_url.replace(':id', output_record_id);
+    form.attr('action', url_update);
+
+    form.find('input[name="time_date"]').val(result.time_date);
+    form.find('select[name="gl_number"]').val(result.gl_id).change();
+    form.find('select[name="line"]').val(result.line_id).change();
+    form.find('select[name="time_hours_of"]').val(result.time_hours_of).change();
+    form.find('input[name="target"]').val(result.target);
+    form.find('input[name="output"]').val(result.output);
+    form.find('input[name="defact_qty"]').val(result.defact_qty);
+    form.find('input[name="endline_ftt"]').val(result.endline_ftt);
+
+    $('#modal_form').modal('show')
+}
+
+async function delete_output_record(output_record_id) {
+    data = {
+        title: "Are you sure?"
+    };
+    let confirm_delete = await swal_delete_confirm(data);
+    if (!confirm_delete) {
+        return false;
+    };
+
+    let url_delete = delete_url.replace(':id', output_record_id);
+    let data_params = {
+        token
+    };
+    result = await delete_using_fetch(url_delete, data_params)
+
+    if (result.status == "success") {
+        swal_info({
+            title: result.message,
+            reload_option: true,
+        });
+    } else {
+        swal_failed({
+            title: result.message
+        });
     }
-    
-    async function edit_line(line_id) {
-        let url_edit = edit_url.replace(':id',line_id);
-        
-        result = await get_using_fetch(url_edit);
-        form = $('#line_form')
-        form.append('<input type="hidden" name="_method" value="PUT">');
-        $('#modal_formLabel').text("Edit Output Records");
-        $('#btn_submit').text("Save");
-
-        let url_update = update_url.replace(':id',line_id);
-        form.attr('action', url_update);
-        form.find('input[name="name"]').val(result.name);
-        form.find('input[name="description"]').val(result.description);
-
-        $('#modal_form').modal('show')
-    }
-
-    async function delete_line(line_id) {
-        data = { title: "Are you sure?" };
-        let confirm_delete = await swal_delete_confirm(data);
-        if(!confirm_delete) { return false; };
-
-        let url_delete = delete_url.replace(':id',line_id);
-        let data_params = { token };
-        result = await delete_using_fetch(url_delete, data_params)
-
-        if(result.status == "success"){
-            swal_info({
-                title : result.message,
-                reload_option: true, 
-            });
-        } else {
-            swal_failed({ title: result.message });
-        }
-    }
+}
 </script>
 
 <?= $this->endSection('page_script'); ?>

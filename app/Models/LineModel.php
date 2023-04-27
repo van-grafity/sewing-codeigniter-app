@@ -39,4 +39,13 @@ class LineModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getData() {
+
+        $builder = $this->db->table('lines');
+        $builder->select('*');
+        $lines = $builder->get()->getResult();
+
+        return $lines;
+    }
 }

@@ -23,7 +23,7 @@ class CreateOutputRecordTable extends Migration
                 'unsigned' => true, 
             ],
             'time_date' => [
-                'type' => 'datetime',
+                'type' => 'date',
             ],
             'time_hours_of' => [
                 'type' => 'int',

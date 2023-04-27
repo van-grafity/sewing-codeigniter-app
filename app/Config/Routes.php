@@ -61,6 +61,7 @@ $routes->group('output-records', static function ($routes) {
 $routes->group('dtable', static function ($routes){
     $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
     $routes->get('line', 'LinesController::dtableLine',['as' => 'dtable_line']);
+    $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
 });
 
 /*

@@ -39,4 +39,14 @@ class GlModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getData() {
+
+        $builder = $this->db->table('gls');
+        $builder->select('*');
+        $gls = $builder->get()->getResult();
+
+        return $gls;
+    }
 }
