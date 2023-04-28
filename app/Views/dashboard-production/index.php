@@ -69,13 +69,13 @@
         <div class="header-section mb-2">
             <div class="row">
                 <div class="col-sm-3">
-                    <div class="header-text">Line : <?= $data_panel['line'] ?></div>
+                    <div class="header-text" id="header_line">Line : - </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="header-text">Date : <?= $data_panel['date_show'] ?></div>
+                    <div class="header-text" id="header_date_show">Date : - </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="header-text">GL : <?= $data_panel['gl_number'] ?></div>
+                    <div class="header-text" id="header_gl_number">GL : - </div>
                 </div>
             </div>
         </div>
@@ -87,15 +87,15 @@
                             <table>
                                 <tr class="panel-data">
                                     <td class="title">Target</td>
-                                    <td class="value"><?= $data_panel['target'] ?> pcs</td>
+                                    <td class="value" id="panel_target"> - </td>
                                 </tr>
                                 <tr>
                                     <td class="title">Actual</td>
-                                    <td class="value big <?= $data_panel['output_class'] ?>"><?= $data_panel['output'] ?> pcs</td>
+                                    <td class="value big" id="panel_output"> - </td>
                                 </tr>
                                 <tr>
                                     <td class="title">Forecast</td>
-                                    <td class="value"><?= $data_panel['forecast'] ?> pcs</td>
+                                    <td class="value" id="panel_forecast"> - </td>
                                 </tr>
                             </table>
                         </div>
@@ -110,11 +110,11 @@
                                 </tr>
                                 <tr>
                                     <td class="title">Cumulative</td>
-                                    <td class="value big <?= $data_panel['output_class'] ?>"><?= $data_panel['variance_cumulative'] ?></td>
+                                    <td class="value big" id="panel_variance_cumulative"> - </td>
                                 </tr>
                                 <tr>
                                     <td class="title">Achievement</td>
-                                    <td class="value"><?= $data_panel['achievement'] ?></td>
+                                    <td class="value" id="panel_achievement"> - </td>
                                 </tr>
                             </table>
                         </div>
@@ -129,11 +129,11 @@
                                 </tr>
                                 <tr>
                                     <td class="title">Commited</td>
-                                    <td class="value big" >100%</td>
+                                    <td class="value big">100%</td>
                                 </tr>
                                 <tr>
                                     <td class="title">Actual</td>
-                                    <td class="value"><?= $data_panel['achievement'] ?></td>
+                                    <td class="value" id="panel_efficiency_actual"> - </td>
                                 </tr>
                             </table>
                         </div>
@@ -166,29 +166,29 @@
             <div class="col-sm-12">
                 <table class="table display-output">
                     <tbody>
-                        <tr>
+                        <tr id="row_display_hours_of">
                             <td class="title-column first-row">Hours of</td>
-                            <?php foreach ($data_output_records as $key => $output) { ?>
-                                <td class="value-column first-row"><?= $output['time_hours_of'] ?></td>
-                            <?php } ?>
+                            <?php for ($i=1; $i <= 10; $i++) { ?>
+                                <td class="value-column first-row"><?= $i ?></td>
+                            <?php }?>
                         </tr>
-                        <tr>
+                        <tr id="row_display_target">
                             <td class="title-column">Target</td>
-                            <?php foreach ($data_output_records as $key => $output) { ?>
-                                <td class="value-column"><?= $output['target'] ?></td>
-                            <?php } ?>
+                            <?php for ($i=1; $i <= 10; $i++) { ?>
+                                <td class="value-column"> - </td>
+                            <?php }?>
                         </tr>
-                        <tr>
+                        <tr id="row_display_output">
                             <td class="title-column">Output</td>
-                            <?php foreach ($data_output_records as $key => $output) { ?>
-                                <td class="value-column <?= $output['element_class'] ?>"><?= $output['output'] ?></td>
-                            <?php } ?>
+                            <?php for ($i=1; $i <= 10; $i++) { ?>
+                                <td class="value-column"> - </td>
+                            <?php }?>
                         </tr>
-                        <tr>
+                        <tr id="row_display_endline_ftt">
                             <td class="title-column">Endline FTT</td>
-                            <?php foreach ($data_output_records as $key => $output) { ?>
-                                <td class="value-column"><?= $output['endline_ftt'] ?></td>
-                            <?php } ?>
+                            <?php for ($i=1; $i <= 10; $i++) { ?>
+                                <td class="value-column"> - </td>
+                            <?php }?>
                         </tr>
                     </tbody>
                 </table>
@@ -196,8 +196,95 @@
         </div>
     </div>
 
-
-
+    <script src="<?= base_url('adminLTE'); ?>/plugins/jquery/jquery.min.js"></script>
     <script src="<?= base_url('bootstrap'); ?>/js/bootstrap.min.js"></script>
+    <script src="<?= base_url(''); ?>/js/utils.js"></script>
+
+    <script type="text/javascript">
+        const get_data_url ='<?= url_to('get_data_dashboard') ?>';
+        
+        const load_data_dashboard = async (data_params) => {
+
+            result = await using_fetch(get_data_url, data_params, "GET");
+            console.log(result);
+            
+            if(result.status == 'error') {
+                console.log(result.message);
+                return false;
+            }
+
+            $('#header_line').text(`Line : ${result.data.data_panel.line}`);
+            $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
+            $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);
+
+            $('#panel_target').text(`${result.data.data_panel.target} pcs`);
+            $('#panel_output').text(`${result.data.data_panel.output} pcs`);
+            $('#panel_forecast').text(`${result.data.data_panel.forecast} pcs`);
+            
+            $('#panel_output').addClass(result.data.data_panel.output_class);
+            
+            $('#panel_variance_cumulative').text(`${result.data.data_panel.variance_cumulative}`);
+            $('#panel_achievement').text(`${result.data.data_panel.achievement}`);
+            
+            $('#panel_variance_cumulative').addClass(result.data.data_panel.output_class);
+            
+            $('#panel_efficiency_actual').text(`${result.data.data_panel.achievement}`);
+
+            $("#row_display_hours_of").find("td:gt(0)").remove();
+            $("#row_display_target").find("td:gt(0)").remove();
+            $("#row_display_output").find("td:gt(0)").remove();
+            $("#row_display_endline_ftt").find("td:gt(0)").remove();
+            
+            let output_records = result.data.data_output_records;
+            
+            output_records.forEach(record => {
+                $("#row_display_hours_of").append(`<td class="value-column first-row">${record.time_hours_of}</td>`);
+                $("#row_display_target").append(`<td class="value-column">${record.target}</td>`);
+                $("#row_display_output").append(`<td class="value-column ${record.element_class}">${record.output}</td>`);
+                $("#row_display_endline_ftt").append(`<td class="value-column">${record.endline_ftt}</td>`);
+            });
+        }
+
+        let set_slide_show = [
+            {
+                line_id : "1",
+                gl_id : "1"
+            },
+            {
+                line_id : "2",
+                gl_id : "1"
+            },
+            {
+                line_id : "3",
+                gl_id : "1"
+            },
+        ];
+
+        function run_slide_show(set_slide_show) {
+            set_slide_show.forEach((data_show, i) => {
+                setTimeout(function(){
+                    data_params = {
+                        line_id: data_show.line_id,
+                        gl_id: data_show.gl_id,
+                        date_filter: new Date().toJSON().slice(0, 10),
+                    }
+
+                    load_data_dashboard(data_params)
+                }, i * 5000)
+            });
+
+
+            setTimeout(function(){
+                run_slide_show(set_slide_show)
+            }, set_slide_show.length * 5000)
+        }
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            run_slide_show(set_slide_show);
+        })
+        
+    </script>
 </body>
 </html>
