@@ -108,11 +108,12 @@ class DashboardProductionsController extends BaseController
                     $element_class = 'bg-danger text-white';
                 }
 
+                $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + $output_records[$i]->defact_qty)) * 100) . ' %';
                 $data_output_records[$i] = [
                     'time_hours_of' => $output_records[$i]->time_hours_of,
                     'target' => $output_records[$i]->target,
                     'output' => $output_records[$i]->output,
-                    'endline_ftt' => $output_records[$i]->endline_ftt,
+                    'endline_ftt' => $endline_ftt,
                     'element_class' => $element_class
                 ];
 
