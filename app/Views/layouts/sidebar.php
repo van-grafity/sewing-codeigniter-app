@@ -37,12 +37,24 @@
                                 <p>Lines</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="<?= url_to('slideshows') ?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Slideshows</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a href="<?= url_to('output-records') ?>" class="nav-link">
                         <i class="far fa-file-alt nav-icon"></i>
                         <p>Output Record</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= url_to('dashboard-production') ?>" class="nav-link">
+                        <i class="far fa-file-alt nav-icon"></i>
+                        <p>Dashboard Production</p>
                     </a>
                 </li>
                 

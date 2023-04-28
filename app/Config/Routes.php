@@ -55,6 +55,14 @@ $routes->group('output-records', static function ($routes) {
     $routes->put('(:segment)', 'OutputRecordsController::update/$1', ['as' => 'output_record_update']);
     $routes->delete('(:segment)', 'OutputRecordsController::destroy/$1', ['as' => 'output_record_destroy']);
 });
+$routes->group('slideshows', static function ($routes) {
+    $routes->get('', 'SlideshowsController::index');
+    $routes->get('(:segment)', 'SlideshowsController::show/$1', ['as' => 'slideshow_show']);
+    $routes->post('', 'SlideshowsController::store', ['as' => 'slideshow_store']);
+    $routes->get('edit/(:segment)', 'SlideshowsController::edit/$1', ['as' => 'slideshow_edit']);
+    $routes->put('(:segment)', 'SlideshowsController::update/$1', ['as' => 'slideshow_update']);
+    $routes->delete('(:segment)', 'SlideshowsController::destroy/$1', ['as' => 'slideshow_destroy']);
+});
 
 
 // ## Route for Datatable
@@ -62,11 +70,12 @@ $routes->group('dtable', static function ($routes){
     $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
     $routes->get('line', 'LinesController::dtableLine',['as' => 'dtable_line']);
     $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
+    $routes->get('slideshow', 'SlideshowsController::dtableSlideshow',['as' => 'dtable_slideshow']);
 });
 
 
 // ## Dashboard Page
-$routes->get('dashboard-production','DashboardProductionsController::index', ['as' =>'dashboard_production']);
+$routes->get('dashboard-production','DashboardProductionsController::index', ['as' =>'dashboard-production']);
 $routes->get('dashboard-production/get-data','DashboardProductionsController::getDataDashboard', ['as' =>'get_data_dashboard']);
 
 

@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class OutputRecordModel extends Model
+class SlideshowModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'output_records';
+    protected $table            = 'slideshows';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['gl_id','line_id','time_date','time_hours_of','target','output','defact_qty','endline_ftt','downtime_min'];
+    protected $allowedFields    = ['line_id','gl_id','time_date'];
 
     // Dates
     protected $useTimestamps = true;
@@ -40,10 +40,9 @@ class OutputRecordModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
     public function getData() {
 
-        $builder = $this->db->table('output_records');
+        $builder = $this->db->table('slideshows');
         $builder->select('*');
         $builder->where('deleted_at',null);
         $output_records = $builder->get()->getResult();

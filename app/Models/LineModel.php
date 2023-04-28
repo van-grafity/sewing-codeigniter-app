@@ -44,6 +44,7 @@ class LineModel extends Model
 
         $builder = $this->db->table('lines');
         $builder->select('*');
+        $builder->where('deleted_at',null);
         $lines = $builder->get()->getResult();
 
         return $lines;

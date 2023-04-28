@@ -206,8 +206,6 @@
         const load_data_dashboard = async (data_params) => {
 
             result = await using_fetch(get_data_url, data_params, "GET");
-            console.log(result);
-            
             if(result.status == 'error') {
                 console.log(result.message);
                 return false;
@@ -221,11 +219,13 @@
             $('#panel_output').text(`${result.data.data_panel.output} pcs`);
             $('#panel_forecast').text(`${result.data.data_panel.forecast} pcs`);
             
+            $('#panel_output').removeClass("down");
             $('#panel_output').addClass(result.data.data_panel.output_class);
             
             $('#panel_variance_cumulative').text(`${result.data.data_panel.variance_cumulative}`);
             $('#panel_achievement').text(`${result.data.data_panel.achievement}`);
             
+            $('#panel_variance_cumulative').removeClass("down");
             $('#panel_variance_cumulative').addClass(result.data.data_panel.output_class);
             
             $('#panel_efficiency_actual').text(`${result.data.data_panel.achievement}`);
@@ -245,22 +245,10 @@
             });
         }
 
-        let set_slide_show = [
-            {
-                line_id : "1",
-                gl_id : "1"
-            },
-            {
-                line_id : "2",
-                gl_id : "1"
-            },
-            {
-                line_id : "3",
-                gl_id : "1"
-            },
-        ];
+        let data_slide_show = <?php echo json_encode($data_slide_show)?>;
 
         function run_slide_show(set_slide_show) {
+            let delay = 5000;
             set_slide_show.forEach((data_show, i) => {
                 setTimeout(function(){
                     data_params = {
@@ -270,19 +258,18 @@
                     }
 
                     load_data_dashboard(data_params)
-                }, i * 5000)
+                }, i * delay)
             });
-
 
             setTimeout(function(){
                 run_slide_show(set_slide_show)
-            }, set_slide_show.length * 5000)
+            }, set_slide_show.length * delay)
         }
 
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
-            run_slide_show(set_slide_show);
+            run_slide_show(data_slide_show);
         })
         
     </script>

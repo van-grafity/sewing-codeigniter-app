@@ -45,6 +45,7 @@ class GlModel extends Model
 
         $builder = $this->db->table('gls');
         $builder->select('*');
+        $builder->where('deleted_at',null);
         $gls = $builder->get()->getResult();
 
         return $gls;

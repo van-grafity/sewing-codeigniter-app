@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\OutputRecordModel;
 use App\Models\GlModel;
 use App\Models\LineModel;
+use App\Models\SlideShowModel;
 
 use CodeIgniter\I18n\Time;
 
@@ -15,6 +16,7 @@ class DashboardProductionsController extends BaseController
     protected $OutputRecordModel;
     protected $GlModel;
     protected $LineModel;
+    protected $SlideShowModel;
 
     public function __construct()
     {
@@ -23,24 +25,29 @@ class DashboardProductionsController extends BaseController
         $this->OutputRecordModel = new OutputRecordModel();
         $this->GlModel = new GlModel();
         $this->LineModel = new LineModel();
+        $this->SlideShowModel = new SlideShowModel();
     }
 
     public function index()
     {
-        return view('dashboard-production/index');
+        $data_slide_show = $this->SlideShowModel->getData();
+        $data = [
+            'data_slide_show' => $data_slide_show,
+        ];
+        return view('dashboard-production/index', $data);
     }
 
     public function getDataDashboard()
     {
-        // dd($this->request->getGet());
         $line_id = $this->request->getGet('line_id');
         $gl_id = $this->request->getGet('gl_id');
+        $date_filter = $this->request->getGet('date_filter');
 
         $line = $this->LineModel->find($line_id);
         $gl = $this->GlModel->find($gl_id);
 
         // $date_today = new Time('now', 'Asia/Jakarta','id_ID');
-        $date_today = Time::createFromFormat('Y-m-d', '2023-04-27', 'Asia/Jakarta');
+        $date_today = Time::createFromFormat('Y-m-d', $date_filter, 'Asia/Jakarta');
         $date_filter = $date_today->toDateString();
         $date_show = $date_today->toLocalizedString('d MMMM yyyy');
 
