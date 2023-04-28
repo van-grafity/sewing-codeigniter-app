@@ -248,7 +248,7 @@
         let data_slide_show = <?php echo json_encode($data_slide_show)?>;
 
         function run_slide_show(set_slide_show) {
-            let delay = 5000;
+            let delay = 10000;
             set_slide_show.forEach((data_show, i) => {
                 setTimeout(function(){
                     data_params = {

@@ -8,4 +8,13 @@ class Home extends BaseController
     {
         return view('welcome_message');
     }
+
+    public function home()
+    {
+        $data = [
+            'title' => 'Home',
+            'page_title' => 'Home',
+        ];
+        return view('home', $data);
+    }
 }
