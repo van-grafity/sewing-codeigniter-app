@@ -64,6 +64,12 @@ $routes->group('dtable', static function ($routes){
     $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
 });
 
+
+// ## Dashboard Page
+$routes->get('dashboard-production','DashboardProductionsController::index', ['as' =>'dashboard_production']);
+$routes->get('dashboard-production/get-data','DashboardProductionsController::getDataDashboard', ['as' =>'get_data_dashboard']);
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
