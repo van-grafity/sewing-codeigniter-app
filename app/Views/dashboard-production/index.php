@@ -211,6 +211,8 @@
                 return false;
             }
 
+            // console.log(result);
+
             $('#header_line').text(`Line : ${result.data.data_panel.line}`);
             $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
             $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);

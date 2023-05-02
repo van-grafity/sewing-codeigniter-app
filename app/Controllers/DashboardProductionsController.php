@@ -182,11 +182,12 @@ class DashboardProductionsController extends BaseController
                                 ->selectSum('output')->first()->output;
     
             if(!$target) {
-                $data_return = [
-                    'status' => 'error',
-                    'message' => 'Data not found'
-                ];
-                return $this->response->setJSON($data_return);
+                continue;
+                // $data_return = [
+                //     'status' => 'error',
+                //     'message' => 'Data not found'
+                // ];
+                // return $this->response->setJSON($data_return);
             }
 
             $variance = $output - $target;

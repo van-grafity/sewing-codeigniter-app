@@ -20,6 +20,10 @@
             font-size: 1.2em;
             font-weight:700;
         }
+
+        #dashboard_manager tbody {
+            font-size:.8em;
+        }
         
         
     </style>
@@ -73,7 +77,7 @@
                 return false;
             }
 
-            console.log(result.data);
+            // console.log(result.data);
 
             let data_per_line = result.data.data_per_line;
             $('#dashboard_manager tbody').html(``);
