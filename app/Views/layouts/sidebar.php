@@ -43,12 +43,7 @@
                                 <p>Lines</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?= url_to('slideshows') ?>" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Slideshows</p>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -58,9 +53,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?= url_to('slideshows') ?>" class="nav-link">
+                        <i class="fas fa-cog nav-icon"></i>
+                        <p>Slideshows Setting</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="<?= url_to('dashboard-production') ?>" target="_blank" class="nav-link">
                         <i class="fas fa-tv nav-icon"></i>
                         <p>Dashboard Production</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= url_to('dashboard_manager') ?>" target="_blank" class="nav-link">
+                        <i class="fas fa-tv nav-icon"></i>
+                        <p>Dashboard Manager</p>
                     </a>
                 </li>
                 

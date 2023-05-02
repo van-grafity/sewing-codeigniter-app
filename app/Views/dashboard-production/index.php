@@ -245,7 +245,7 @@
             });
         }
 
-        let data_slide_show = <?php echo json_encode($data_slide_show)?>;
+        let data_slideshow = <?php echo json_encode($data_slideshow)?>;
 
         function run_slide_show(set_slide_show) {
             let delay = 10000;
@@ -269,7 +269,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
-            run_slide_show(data_slide_show);
+            run_slide_show(data_slideshow);
         })
         
     </script>

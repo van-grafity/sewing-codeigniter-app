@@ -30,11 +30,16 @@ class DashboardProductionsController extends BaseController
 
     public function index()
     {
-        $data_slide_show = $this->SlideShowModel->getData();
+        $data_slideshow = $this->SlideShowModel->getData();
         $data = [
-            'data_slide_show' => $data_slide_show,
+            'data_slideshow' => $data_slideshow,
         ];
         return view('dashboard-production/index', $data);
+    }
+
+    public function dashboardManager()
+    {
+        return view('dashboard-production/dashboard-manager');
     }
 
     public function getDataDashboard()
@@ -133,6 +138,89 @@ class DashboardProductionsController extends BaseController
             'data' => [
                 'data_panel' => $data_panel,
                 'data_output_records' => $data_output_records
+            ],
+        ];
+
+        return $this->response->setJSON($data_return);
+    }
+
+    public function getDataAllLine(){
+        $date_filter = $this->request->getGet('date_filter');
+
+        $date_today = new Time('now', 'Asia/Jakarta','id_ID');
+        if($date_filter){
+            $date_today = Time::createFromFormat('Y-m-d', $date_filter, 'Asia/Jakarta');
+        }
+        $date_filter = $date_today->toDateString();
+        $date_show = $date_today->toLocalizedString('d MMMM yyyy');
+
+        $data_slideshow = $this->SlideShowModel->getData();
+        $data_per_line = [];
+
+        foreach ($data_slideshow as $key => $slideshow) {
+            
+            $line = $slideshow->lines;
+            $gl = $slideshow->gls;
+            
+            $output_records = $this->OutputRecordModel
+                                ->where('line_id', $line->id)
+                                ->where('gl_id', $gl->id)
+                                ->where('time_date', $date_filter)
+                                ->orderBy('time_hours_of', 'ASC')
+                                ->findAll();
+
+            $target = $this->OutputRecordModel
+                                ->where('line_id', $line->id)
+                                ->where('gl_id', $gl->id)
+                                ->where('time_date', $date_filter)
+                                ->selectSum('target')->first()->target;
+
+            $output = $this->OutputRecordModel
+                                ->where('line_id', $line->id)
+                                ->where('gl_id', $gl->id)
+                                ->where('time_date', $date_filter)
+                                ->selectSum('output')->first()->output;
+    
+            if(!$target) {
+                $data_return = [
+                    'status' => 'error',
+                    'message' => 'Data not found'
+                ];
+                return $this->response->setJSON($data_return);
+            }
+
+            $variance = $output - $target;
+            $forecast = round(($output / count($output_records)) * 10);
+            $forecast_target = $target;
+            $forecast_variance = $forecast - $forecast_target;
+            $efficiency_target = '100%';
+            $efficiency_actual = round(($output / $target) * 100) . '%';
+            
+            $element_class = '';
+            if($variance < 0) {
+                $element_class = 'bg-danger text-white';
+            }
+
+            $data_per_line[] = [
+                'line' => $line->name,
+                'target' => $target,
+                'output' => $output,
+                'variance' => $variance,
+                'forecast' => $forecast,
+                'forecast_target' => $forecast_target,
+                'forecast_variance' => $forecast_variance,
+                'efficiency_target' => $efficiency_target,
+                'efficiency_actual' => $efficiency_actual,
+                'element_class' => $element_class,
+            ];
+            
+        }
+        
+        $data_return = [
+            'status' => 'success',
+            'message' => 'successfully get data dashboard',
+            'data' => [
+                'data_per_line' => $data_per_line
             ],
         ];
 

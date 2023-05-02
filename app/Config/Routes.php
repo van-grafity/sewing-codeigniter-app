@@ -79,6 +79,9 @@ $routes->group('dtable', static function ($routes){
 $routes->get('dashboard-production','DashboardProductionsController::index', ['as' =>'dashboard-production']);
 $routes->get('dashboard-production/get-data','DashboardProductionsController::getDataDashboard', ['as' =>'get_data_dashboard']);
 
+$routes->get('dashboard-production-manager','DashboardProductionsController::dashboardManager', ['as' =>'dashboard_manager']);
+$routes->get('dashboard-production/get-data-all-line','DashboardProductionsController::getDataAllLine', ['as' =>'get_data_all_line']);
+
 
 /*
  * --------------------------------------------------------------------
