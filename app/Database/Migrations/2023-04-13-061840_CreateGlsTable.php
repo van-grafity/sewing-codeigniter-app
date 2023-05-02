@@ -18,9 +18,18 @@ class CreateGlsTable extends Migration
                 'type' => 'varchar', 
                 'constraint' => 20
             ],
+            // 'buyer_id' => [
+            //     'type' => 'bigint',
+            //     'unsigned' => true, 
+            // ],
             'season' => [
                 'type' => 'varchar', 
                 'constraint' => 20
+            ],
+            'size_order' => [
+                'type' => 'varchar', 
+                'constraint' => 20,
+                'null' => true
             ],
             'created_at' => [
                 'type' => 'datetime', 
@@ -36,6 +45,7 @@ class CreateGlsTable extends Migration
             ],
         ]);
         $this->forge->addKey('id',true);
+        // $this->forge->addForeignKey('buyer_id', 'buyers', 'id');
         $this->forge->createTable('gls');
     }
 
