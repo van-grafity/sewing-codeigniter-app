@@ -59,7 +59,7 @@ class DashboardProductionsController extends BaseController
         
         $output_records = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                ->where('gl_id', $gl->id)
+                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->orderBy('time_hours_of', 'ASC')
                                 ->findAll();
@@ -164,20 +164,20 @@ class DashboardProductionsController extends BaseController
             
             $output_records = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                ->where('gl_id', $gl->id)
+                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->orderBy('time_hours_of', 'ASC')
                                 ->findAll();
 
             $target = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                ->where('gl_id', $gl->id)
+                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->selectSum('target')->first()->target;
 
             $output = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                ->where('gl_id', $gl->id)
+                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->selectSum('output')->first()->output;
     
