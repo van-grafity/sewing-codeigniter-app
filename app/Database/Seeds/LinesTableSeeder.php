@@ -31,6 +31,13 @@ class LinesTableSeeder extends Seeder
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
+            [
+                'id' => 4,
+                'name' => 'A4',
+                'description' => 'Meja nomor 4 pada Factory A',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
         ];
         $this->db->table($this->table)->insertBatch($data);
     }

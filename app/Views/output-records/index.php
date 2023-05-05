@@ -41,9 +41,11 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tanggal</th>
-                                        <th>GL Number</th>
                                         <th>Line</th>
                                         <th>Hours of</th>
+                                        <th>GL Number</th>
+                                        <th>Target</th>
+                                        <th>Output</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -52,9 +54,11 @@
                                     <tr>
                                         <td><?= $key+1 ?></td>
                                         <td><?= $output_record->time_date ?></td>
-                                        <td><?= $output_record->gls->gl_number ?></td>
                                         <td><?= $output_record->lines->name ?></td>
                                         <td><?= $output_record->time_hours_of ?></td>
+                                        <td><?= $output_record->gls->gl_number ?></td>
+                                        <td><?= $output_record->target ?></td>
+                                        <td><?= $output_record->output ?></td>
                                         <td>
                                             <a href="javascript:void(0);" class="btn btn-primary btn-sm"
                                                 onclick="edit_output_record(<?= $output_record->id ?>)">Edit</a>
@@ -218,12 +222,20 @@ $('#output_records_table').DataTable({
             name: 'line'
         },
         {
+            data: 'time_hours_of',
+            name: 'time_hours_of'
+        },
+        {
             data: 'gl_number',
             name: 'gl_number'
         },
         {
-            data: 'time_hours_of',
-            name: 'time_hours_of'
+            data: 'target',
+            name: 'target'
+        },
+        {
+            data: 'output',
+            name: 'output'
         },
         {
             data: 'action',

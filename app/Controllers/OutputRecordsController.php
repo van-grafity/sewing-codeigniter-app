@@ -57,6 +57,20 @@ class OutputRecordsController extends BaseController
             return redirect()->to('output-records')->with('error', 'Something is wrong!');
         }
 
+        $time_date = $this->request->getPost('time_date');
+        $line = $this->request->getPost('line');
+        $time_hours_of = $this->request->getPost('time_hours_of');
+
+        $check_double_record = $this->OutputRecordModel
+                                ->where('time_date', $time_date)
+                                ->where('line_id', $line)
+                                ->where('time_hours_of', $time_hours_of)
+                                ->find();
+        
+        if($check_double_record) {
+            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $time_date .' untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
+        }
+
         $this->OutputRecordModel->insert([
             'time_date' => $this->request->getPost('time_date'),
             'gl_id' => $this->request->getPost('gl_number'),
@@ -81,6 +95,21 @@ class OutputRecordsController extends BaseController
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('output-records')->with('error', 'Something is wrong!');
+        }
+
+        $time_date = $this->request->getPost('time_date');
+        $line = $this->request->getPost('line');
+        $time_hours_of = $this->request->getPost('time_hours_of');
+        
+        $check_double_record = $this->OutputRecordModel
+                                ->where('time_date', $time_date)
+                                ->where('line_id', $line)
+                                ->where('time_hours_of', $time_hours_of)
+                                ->where('id !=', $id)
+                                ->first();
+        
+        if($check_double_record) {
+            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $time_date .' untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
         }
         
         $data = [
