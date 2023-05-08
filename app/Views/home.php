@@ -27,7 +27,7 @@
             <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Home</div>
+                    <div class="card-header">Hai <?= session()->get('name'); ?></div>
                     <div class="card-body">
                         <p>Welcome to Sewing App</p>
                     </div>
