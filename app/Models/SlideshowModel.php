@@ -45,6 +45,7 @@ class SlideshowModel extends Model
         $builder = $this->db->table('slideshows');
         $builder->select('*');
         $builder->where('deleted_at',null);
+        $builder->orderBy('line_id','asc');
         $output_records = $builder->get()->getResult();
 
         foreach ($output_records as $key => $data) {

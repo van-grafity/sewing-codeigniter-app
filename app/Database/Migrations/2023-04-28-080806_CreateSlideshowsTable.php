@@ -24,6 +24,7 @@ class CreateSlideshowsTable extends Migration
             ],
             'time_date' => [
                 'type' => 'date',
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'datetime', 

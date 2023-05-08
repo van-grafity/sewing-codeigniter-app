@@ -167,7 +167,7 @@
                                     <input type="number" class="form-control" id="defact_qty" name="defact_qty" placeholder="Enter Defact Qty">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 d-none">
                                 <div class="form-group">
                                     <label for="endline_ftt">Endline FTT</label>
                                     <input type="number" class="form-control" id="endline_ftt" name="endline_ftt" placeholder="Enter Endline FTT">

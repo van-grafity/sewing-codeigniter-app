@@ -65,9 +65,17 @@ class DashboardProductionsController extends BaseController
                                 ->findAll();
 
         if(!$output_records) {
+            $data_panel = [
+                'line' => $line->name,
+                'gl_number' => $gl->gl_number,
+                'date_show' => $date_show,
+            ];
             $data_return = [
                 'status' => 'error',
-                'message' => 'Data not found'
+                'data' => [
+                    'data_panel' => $data_panel,
+                ],
+                'message' => 'Data output not found'
             ];
             return $this->response->setJSON($data_return);
         }

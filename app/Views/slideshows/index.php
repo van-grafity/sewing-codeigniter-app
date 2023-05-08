@@ -41,7 +41,7 @@
                                         <th>No</th>
                                         <th>Line</th>
                                         <th>GL Number</th>
-                                        <th>Date</th>
+                                        <th class="d-none">Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -51,7 +51,7 @@
                                         <td><?= $key+1 ?></td>
                                         <td><?= $slideshow->lines->name ?></td>
                                         <td><?= $slideshow->gls->gl_number ?></td>
-                                        <td><?= $slideshow->time_date ?></td>
+                                        <td class="d-none"><?= $slideshow->time_date ?></td>
                                         <td>
                                             <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_slideshow(<?= $slideshow->id ?>)">Edit</a>
                                             <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_slideshow(<?= $slideshow->id ?>)">Delete</a>
@@ -92,16 +92,6 @@
                 <div class="modal-body">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="gl_number" class="form-label">GL Number</label>
-                            <select name="gl_number" class="form-control select2" id="gl_number"
-                                style="width: 100%;" data-placeholder="Choose GL Number" required>
-                                <option value="">Choose GL Number</option>
-                                <?php foreach ($gls as $key => $gl) { ?>
-                                    <option value="<?= $gl->id ?>"><?= $gl->gl_number ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="line" class="form-label">Line</label>
                             <select name="line" class="form-control select2" id="line" style="width: 100%;" data-placeholder="Choose Line" required>
                                 <option value="">Choose Line</option>
@@ -111,9 +101,19 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="gl_number" class="form-label">GL Number</label>
+                            <select name="gl_number" class="form-control select2" id="gl_number"
+                                style="width: 100%;" data-placeholder="Choose GL Number" required>
+                                <option value="">Choose GL Number</option>
+                                <?php foreach ($gls as $key => $gl) { ?>
+                                    <option value="<?= $gl->id ?>"><?= $gl->gl_number ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <!-- <div class="form-group">
                             <label for="time_date">Date</label>
                             <input type="date" class="form-control" id="time_date" name="time_date" placeholder="Enter Date" required>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- END .card-body -->
                 </div>

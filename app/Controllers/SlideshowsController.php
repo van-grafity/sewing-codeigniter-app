@@ -47,7 +47,7 @@ class SlideshowsController extends BaseController
         $rules = [
             'line' => 'required',
             'gl_number' => 'required',
-            'time_date' => 'required',
+            // 'time_date' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('slideshows')->with('error', 'Something is wrong!');
@@ -65,7 +65,7 @@ class SlideshowsController extends BaseController
         $rules = [
             'line' => 'required',
             'gl_number' => 'required',
-            'time_date' => 'required',
+            // 'time_date' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('slideshows')->with('error', 'Something is wrong!');

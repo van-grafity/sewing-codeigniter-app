@@ -7,6 +7,7 @@ use App\Models\OutputRecordModel;
 use App\Models\GlModel;
 use App\Models\LineModel;
 
+use CodeIgniter\I18n\Time;
 
 class OutputRecordsController extends BaseController
 {
@@ -68,7 +69,11 @@ class OutputRecordsController extends BaseController
                                 ->find();
         
         if($check_double_record) {
-            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $time_date .' untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
+            
+            $date_show = Time::createFromFormat('Y-m-d', $time_date, 'Asia/Jakarta');
+            $date_show = $date_show->toLocalizedString('d MMMM yyyy');
+
+            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
         }
 
         $this->OutputRecordModel->insert([
@@ -109,7 +114,11 @@ class OutputRecordsController extends BaseController
                                 ->first();
         
         if($check_double_record) {
-            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $time_date .' untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
+
+            $date_show = Time::createFromFormat('Y-m-d', $time_date, 'Asia/Jakarta');
+            $date_show = $date_show->toLocalizedString('d MMMM yyyy');
+            
+            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
         }
         
         $data = [

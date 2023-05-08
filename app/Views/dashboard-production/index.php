@@ -129,7 +129,7 @@
                                 </tr>
                                 <tr>
                                     <td class="title">Commited</td>
-                                    <td class="value big">100%</td>
+                                    <td class="value big" id="panel_efficiency_target"> - </td>
                                 </tr>
                                 <tr>
                                     <td class="title">Actual</td>
@@ -207,7 +207,11 @@
 
             result = await using_fetch(get_data_url, data_params, "GET");
             if(result.status == 'error') {
-                console.log(result.message);
+                empty_data_dashboard();
+                $('#header_line').text(`Line : ${result.data.data_panel.line}`);
+                $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
+                $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);
+                
                 return false;
             }
 
@@ -230,6 +234,7 @@
             $('#panel_variance_cumulative').removeClass("down");
             $('#panel_variance_cumulative').addClass(result.data.data_panel.output_class);
             
+            $('#panel_efficiency_target').text(`100%`);
             $('#panel_efficiency_actual').text(`${result.data.data_panel.achievement}`);
 
             $("#row_display_hours_of").find("td:gt(0)").remove();
@@ -266,6 +271,38 @@
             setTimeout(function(){
                 run_slide_show(set_slide_show)
             }, set_slide_show.length * delay)
+        }
+
+        function empty_data_dashboard() {
+            $('#header_line').text(`Line : -`);
+            $('#header_date_show').text(`Date : -`);
+            $('#header_gl_number').text(`GL : -`);
+
+            $('#panel_target').text(`- pcs`);
+            $('#panel_output').text(`- pcs`);
+            $('#panel_forecast').text(`- pcs`);
+            
+            $('#panel_output').removeClass("down");
+            
+            $('#panel_variance_cumulative').text(`-`);
+            $('#panel_achievement').text(`-`);
+            
+            $('#panel_variance_cumulative').removeClass("down");
+            
+            $('#panel_efficiency_target').text(`-`);
+            $('#panel_efficiency_actual').text(`-`);
+
+            $("#row_display_hours_of").find("td:gt(0)").remove();
+            $("#row_display_target").find("td:gt(0)").remove();
+            $("#row_display_output").find("td:gt(0)").remove();
+            $("#row_display_endline_ftt").find("td:gt(0)").remove();
+
+            for (let index = 1; index <= 10; index++) {
+                $("#row_display_hours_of").append(`<td class="value-column first-row">${index}</td>`);
+                $("#row_display_target").append(`<td class="value-column"> - </td>`);
+                $("#row_display_output").append(`<td class="value-column"> - </td>`);
+                $("#row_display_endline_ftt").append(`<td class="value-column"> - </td>`);
+            }
         }
 
     </script>
