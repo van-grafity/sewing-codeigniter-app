@@ -33,12 +33,13 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
-            'usersAuth' => [
-                'except' => [
-                    'login',
-                    'logout'
-                ]
-            ]
+            // 'usersAuth' => [
+            //     'except' => [
+            //         'login',
+            //         'logout',
+            //         'dashboard-production',
+            //     ]
+            // ]
         ],
         'after' => [
             'toolbar',

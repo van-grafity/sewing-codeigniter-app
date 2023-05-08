@@ -34,50 +34,54 @@ $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::process');
 $routes->get('/logout', 'LoginController::logout');
 
-$routes->get('/home', 'Home::index');
-$routes->get('/', 'Home::home');
+$routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
+    $routes->get('/home', 'Home::index');
+    $routes->get('/', 'Home::home');
 
-$routes->group('gls', static function ($routes) {
-    $routes->get('', 'GlsController::index');
-    $routes->get('(:segment)', 'GlsController::show/$1', ['as' => 'gl_show']);
-    $routes->post('', 'GlsController::store', ['as' => 'gl_store']);
-    $routes->get('edit/(:segment)', 'GlsController::edit/$1', ['as' => 'gl_edit']);
-    $routes->put('(:segment)', 'GlsController::update/$1', ['as' => 'gl_update']);
-    $routes->delete('(:segment)', 'GlsController::destroy/$1', ['as' => 'gl_destroy']);
-});
-$routes->group('lines', static function ($routes) {
-    $routes->get('', 'LinesController::index');
-    $routes->get('(:segment)', 'LinesController::show/$1', ['as' => 'line_show']);
-    $routes->post('', 'LinesController::store', ['as' => 'line_store']);
-    $routes->get('edit/(:segment)', 'LinesController::edit/$1', ['as' => 'line_edit']);
-    $routes->put('(:segment)', 'LinesController::update/$1', ['as' => 'line_update']);
-    $routes->delete('(:segment)', 'LinesController::destroy/$1', ['as' => 'line_destroy']);
-});
-$routes->group('output-records', static function ($routes) {
-    $routes->get('', 'OutputRecordsController::index');
-    $routes->get('(:segment)', 'OutputRecordsController::show/$1', ['as' => 'output_record_show']);
-    $routes->post('', 'OutputRecordsController::store', ['as' => 'output_record_store']);
-    $routes->get('edit/(:segment)', 'OutputRecordsController::edit/$1', ['as' => 'output_record_edit']);
-    $routes->put('(:segment)', 'OutputRecordsController::update/$1', ['as' => 'output_record_update']);
-    $routes->delete('(:segment)', 'OutputRecordsController::destroy/$1', ['as' => 'output_record_destroy']);
-});
-$routes->group('slideshows', static function ($routes) {
-    $routes->get('', 'SlideshowsController::index');
-    $routes->get('(:segment)', 'SlideshowsController::show/$1', ['as' => 'slideshow_show']);
-    $routes->post('', 'SlideshowsController::store', ['as' => 'slideshow_store']);
-    $routes->get('edit/(:segment)', 'SlideshowsController::edit/$1', ['as' => 'slideshow_edit']);
-    $routes->put('(:segment)', 'SlideshowsController::update/$1', ['as' => 'slideshow_update']);
-    $routes->delete('(:segment)', 'SlideshowsController::destroy/$1', ['as' => 'slideshow_destroy']);
+    $routes->group('gls', static function ($routes) {
+        $routes->get('', 'GlsController::index');
+        $routes->get('(:segment)', 'GlsController::show/$1', ['as' => 'gl_show']);
+        $routes->post('', 'GlsController::store', ['as' => 'gl_store']);
+        $routes->get('edit/(:segment)', 'GlsController::edit/$1', ['as' => 'gl_edit']);
+        $routes->put('(:segment)', 'GlsController::update/$1', ['as' => 'gl_update']);
+        $routes->delete('(:segment)', 'GlsController::destroy/$1', ['as' => 'gl_destroy']);
+    });
+    $routes->group('lines', static function ($routes) {
+        $routes->get('', 'LinesController::index');
+        $routes->get('(:segment)', 'LinesController::show/$1', ['as' => 'line_show']);
+        $routes->post('', 'LinesController::store', ['as' => 'line_store']);
+        $routes->get('edit/(:segment)', 'LinesController::edit/$1', ['as' => 'line_edit']);
+        $routes->put('(:segment)', 'LinesController::update/$1', ['as' => 'line_update']);
+        $routes->delete('(:segment)', 'LinesController::destroy/$1', ['as' => 'line_destroy']);
+    });
+    $routes->group('output-records', static function ($routes) {
+        $routes->get('', 'OutputRecordsController::index');
+        $routes->get('(:segment)', 'OutputRecordsController::show/$1', ['as' => 'output_record_show']);
+        $routes->post('', 'OutputRecordsController::store', ['as' => 'output_record_store']);
+        $routes->get('edit/(:segment)', 'OutputRecordsController::edit/$1', ['as' => 'output_record_edit']);
+        $routes->put('(:segment)', 'OutputRecordsController::update/$1', ['as' => 'output_record_update']);
+        $routes->delete('(:segment)', 'OutputRecordsController::destroy/$1', ['as' => 'output_record_destroy']);
+    });
+    $routes->group('slideshows', static function ($routes) {
+        $routes->get('', 'SlideshowsController::index');
+        $routes->get('(:segment)', 'SlideshowsController::show/$1', ['as' => 'slideshow_show']);
+        $routes->post('', 'SlideshowsController::store', ['as' => 'slideshow_store']);
+        $routes->get('edit/(:segment)', 'SlideshowsController::edit/$1', ['as' => 'slideshow_edit']);
+        $routes->put('(:segment)', 'SlideshowsController::update/$1', ['as' => 'slideshow_update']);
+        $routes->delete('(:segment)', 'SlideshowsController::destroy/$1', ['as' => 'slideshow_destroy']);
+    });
+    
+    
+    // ## Route for Datatable
+    $routes->group('dtable', static function ($routes){
+        $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
+        $routes->get('line', 'LinesController::dtableLine',['as' => 'dtable_line']);
+        $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
+        $routes->get('slideshow', 'SlideshowsController::dtableSlideshow',['as' => 'dtable_slideshow']);
+    });
 });
 
 
-// ## Route for Datatable
-$routes->group('dtable', static function ($routes){
-    $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
-    $routes->get('line', 'LinesController::dtableLine',['as' => 'dtable_line']);
-    $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
-    $routes->get('slideshow', 'SlideshowsController::dtableSlideshow',['as' => 'dtable_slideshow']);
-});
 
 
 // ## Dashboard Page
