@@ -10,7 +10,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('GlsTableSeeder');
         $this->call('LinesTableSeeder');
-        $this->call('OutputRecordsTableSeeder');
+        $this->call('GroupsTableSeeder');
+        $this->call('LineGroupsTableSeeder');
         $this->call('SlideshowsTableSeeder');
+        $this->call('OutputRecordsTableSeeder');
     }
 }
