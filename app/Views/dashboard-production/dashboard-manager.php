@@ -38,8 +38,8 @@
                         <thead class="">
                             <tr class="big-title">
                                 <th></th>
-                                <th colspan ="3">Actual vs Commited</th>
-                                <th colspan ="3">Forcast (expected at the end of shift)</th>
+                                <th colspan ="3">Actual vs Committed</th>
+                                <th colspan ="3">Forecast (expected at the end of shift)</th>
                                 <th colspan ="2">Efficiency</th>
                             </tr>
                             <tr>

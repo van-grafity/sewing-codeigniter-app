@@ -128,7 +128,7 @@
                                     <td class="title bold">Efficiency</td>
                                 </tr>
                                 <tr>
-                                    <td class="title">Commited</td>
+                                    <td class="title">Committed</td>
                                     <td class="value big" id="panel_efficiency_target"> - </td>
                                 </tr>
                                 <tr>
