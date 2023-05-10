@@ -38,9 +38,9 @@
                             <table id="group_table" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <th width="5%">No</th>
+                                        <th width="10%">Name</th>
+                                        <th width="10%">Description</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -52,7 +52,7 @@
                                         <td><?= $group->description ?></td>
                                         <td>
                                             <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_group(<?= $group->id ?>)">Edit</a>
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_group(<?= $group->id ?>)">Delete</a>
+                                            <!-- <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_group(<?= $group->id ?>)">Delete</a> -->
                                         </td>
                                     </tr>
                                     <?php endforeach ?>
@@ -97,6 +97,14 @@
                             <label for="description">Description</label>
                             <input type="text" class="form-control" id="description" name="description" placeholder="Enter Description">
                         </div>
+                        <div class="form-group">
+                            <label>Line List</label>
+                            <select name="linelist[]" class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;" id="linelist">
+                                <?php foreach ($lines as $key => $line) { ?>
+                                    <option value="<?= $line->id ?>"><?= $line->name ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
                     </div>
                     <!-- END .card-body -->
                 </div>
@@ -115,6 +123,8 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
+    $('.select2').select2();
+    
     // ## Show Flash Message
     let session = <?= json_encode(session()->getFlashdata()) ?>;
     show_flash_message(session);
@@ -159,6 +169,7 @@ $(document).ready(function(){
         $('#btn_submit').text("Add Group")
         $('#group_form').attr('action', store_url);
         $('#group_form').find("input[type=text], textarea").val("");
+        $('#group_form').find('#linelist').val('').trigger('change');
         $('#group_form').find('input[name="_method"]').remove();
         $('#modal_form').modal('show')
     }
@@ -167,6 +178,10 @@ $(document).ready(function(){
         let url_edit = edit_url.replace(':id',group_id);
         
         result = await get_using_fetch(url_edit);
+        data_group = result.data.group;
+        data_linelist = result.data.linelist;
+        array_linelist = data_linelist.map(data => data.id);
+        
         form = $('#group_form')
         form.append('<input type="hidden" name="_method" value="PUT">');
         $('#modal_formLabel').text("Edit Group");
@@ -174,8 +189,11 @@ $(document).ready(function(){
 
         let url_update = update_url.replace(':id',group_id);
         form.attr('action', url_update);
-        form.find('input[name="name"]').val(result.name);
-        form.find('input[name="description"]').val(result.description);
+        form.find('input[name="name"]').val(data_group.name);
+        form.find('input[name="description"]').val(data_group.description);
+        
+        $('#linelist').val(array_linelist);
+        $('#linelist').trigger('change'); 
 
         $('#modal_form').modal('show')
     }

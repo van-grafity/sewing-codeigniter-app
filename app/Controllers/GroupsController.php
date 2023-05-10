@@ -3,16 +3,22 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\LineModel;
 use App\Models\GroupModel;
+use App\Models\LineGroupModel;
 
 
 class GroupsController extends BaseController
 {
+    protected $LineModel;
     protected $GroupModel;
+    protected $LineGroupModel;
 
     public function __construct()
     {
+        $this->LineModel = new LineModel();
         $this->GroupModel = new GroupModel();
+        $this->LineGroupModel = new LineGroupModel();
     }
 
     public function index()
@@ -20,7 +26,8 @@ class GroupsController extends BaseController
         $data = [
             'title' => 'Master Data Group',
             'page_title' => 'Master Data Group',
-            'groups' => $this->GroupModel->findAll()
+            'lines' => $this->LineModel->findAll(),
+            'groups' => $this->GroupModel->findAll(),
         ];
         return view('groups/index', $data);
     }
@@ -35,18 +42,28 @@ class GroupsController extends BaseController
     }
 
     public function store(){
+        
         $rules = [
             'name' => 'required',
-            'description' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('groups')->with('error', 'Something is wrong!');
         }
 
-        $this->GroupModel->insert([
+        $recent_group_id = $this->GroupModel->insert([
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
         ]);
+
+        $linelist = $this->request->getPost('linelist');
+        if($linelist) {
+            foreach ($linelist as $key => $line_id) {
+                $this->LineGroupModel->insert([
+                    'group_id' => $recent_group_id,
+                    'line_id' => $line_id,
+                ]);
+            }
+        }
         return redirect()->to('groups')->with('success', 'Successfully added Group');
     }
 
@@ -64,17 +81,39 @@ class GroupsController extends BaseController
             'description' => $this->request->getPost('description'),
         ];
         $this->GroupModel->update($id,$data);
-
+        
+        $this->LineGroupModel->where('group_id',$id)->delete();
+        $linelist = $this->request->getPost('linelist');
+        if($linelist) {
+            foreach ($linelist as $key => $line_id) {
+                $this->LineGroupModel->insert([
+                    'group_id' => $id,
+                    'line_id' => $line_id,
+                ]);
+            }
+        }
         return redirect()->to('groups')->with('success', 'Successfully updated Group');
     }
 
     public function edit($id){
         try {
-            $data = $this->GroupModel->find($id);
-            if(!$data) {
+            $group = $this->GroupModel->find($id);
+            $linelist = $this->LineGroupModel->getLineGroupId($group->id);
+
+            if(!$group) {
                 throw new \Exception('Data Group not Found!');
             }
-            return $this->response->setJSON($data, 200);
+
+            $date_return = [
+                'status' => 'success',
+                'data'=> [
+                    'group' => $group,
+                    'linelist' => $linelist,
+                ],
+                'message'=> 'Data Output Record berhasil di hapus',
+            ];
+            return $this->response->setJSON($date_return, 200);
+
         } catch (\Throwable $th) {
             return $this->response->setJSON([
                 'status' => 'error',

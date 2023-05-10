@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet"
         href="<?= base_url('adminLTE'); ?>/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -76,6 +79,10 @@
     </script>
     <!-- Bootstrap 4 -->
     <script src="<?= base_url('adminLTE'); ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="<?= base_url('adminLTE'); ?>/plugins/select2/js/select2.full.min.js"></script>
+
     <!-- ChartJS -->
     <script src="<?= base_url('adminLTE'); ?>/plugins/chart.js/Chart.min.js"></script>
     <!-- Sparkline -->

@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class GroupModel extends Model
+class LineGroupModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'groups';
+    protected $table            = 'line_groups';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name','description'];
+    protected $allowedFields    = ['group_id','line_id'];
 
     // Dates
     protected $useTimestamps = true;
@@ -42,11 +42,23 @@ class GroupModel extends Model
 
     public function getData() {
 
-        $builder = $this->db->table('groups');
+        $builder = $this->db->table('line_groups');
         $builder->select('*');
         $builder->where('deleted_at',null);
-        $groups = $builder->get()->getResult();
+        $lineGroups = $builder->get()->getResult();
 
-        return $groups;
+        return $lineGroups;
+    }
+
+    public function getLineGroupId($group_id = null) {
+        if(!$group_id) { return false; }
+
+        $builder = $this->db->table('line_groups');
+        $builder->select('lines.*');
+        $builder->join('lines', 'lines.id = line_id');
+        $builder->where('group_id', $group_id);
+        $query = $builder->get();
+        $result = $query->getResult();
+        return $result;
     }
 }
