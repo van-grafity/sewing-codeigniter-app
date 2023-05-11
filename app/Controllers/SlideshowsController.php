@@ -7,30 +7,38 @@ use App\Controllers\BaseController;
 use App\Models\GlModel;
 use App\Models\LineModel;
 use App\Models\SlideshowModel;
+use App\Models\GroupModel;
+use App\Models\LineGroupModel;
 
 class SlideshowsController extends BaseController
 {
-    protected $GlModel;
-    protected $LineModel;
     protected $SlideshowModel;
+    protected $GroupModel;
+    protected $LineGroupModel;
 
     public function __construct()
     {
-        $this->GlModel = new GlModel();
-        $this->LineModel = new LineModel();
+        helper('date');
         $this->SlideshowModel = new SlideshowModel();
+        $this->GroupModel = new GroupModel();
+        $this->LineGroupModel = new LineGroupModel();
     }
 
     public function index()
     {
+        $slideshows = $this->SlideshowModel->getData();
+        
+        foreach ($slideshows as $key => $slideshow) {
+            $slideshow->linelist = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
+        }
+        
         $data = [
             'title' => 'Master Data Slideshow',
             'page_title' => 'Master Data Slideshow',
-            'slideshows' => $this->SlideshowModel->getData(),
-            'gls' => $this->GlModel->getData(),
-            'lines' => $this->LineModel->getData(),
+            'slideshows' => $slideshows,
+            'groups' => $this->GroupModel->getData(),
         ];
-
+        
         return view('slideshows/index', $data);
     }
 
@@ -45,35 +53,31 @@ class SlideshowsController extends BaseController
 
     public function store(){
         $rules = [
-            'line' => 'required',
-            'gl_number' => 'required',
-            // 'time_date' => 'required',
+            'group' => 'required',
+            'time_date' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('slideshows')->with('error', 'Something is wrong!');
         }
-
+        $time_date = $this->request->getPost('time_date') ? $this->request->getPost('time_date') : now();
         $this->SlideshowModel->insert([
-            'line_id' => $this->request->getPost('line'),
-            'gl_id' => $this->request->getPost('gl_number'),
-            'time_date' => $this->request->getPost('time_date'),
+            'group_id' => $this->request->getPost('group'),
+            'time_date' => $time_date,
         ]);
         return redirect()->to('slideshows')->with('success', 'Successfully added Slideshow');
     }
 
     public function update($id){
         $rules = [
-            'line' => 'required',
-            'gl_number' => 'required',
-            // 'time_date' => 'required',
+            'group' => 'required',
+            'time_date' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('slideshows')->with('error', 'Something is wrong!');
         }
         
         $data = [
-            'line_id' => $this->request->getPost('line'),
-            'gl_id' => $this->request->getPost('gl_number'),
+            'group_id' => $this->request->getPost('group'),
             'time_date' => $this->request->getPost('time_date'),
         ];
         $this->SlideshowModel->update($id,$data);
@@ -85,7 +89,7 @@ class SlideshowsController extends BaseController
         try {
             $data = $this->SlideshowModel->find($id);
             if(!$data) {
-                throw new \Exception('Data Slideshow tidak ditemukan');
+                throw new \Exception('Data Slideshow not Found');
             }
             return $this->response->setJSON($data, 200);
         } catch (\Throwable $th) {
@@ -103,12 +107,12 @@ class SlideshowsController extends BaseController
             if($slideshows) {
                 $this->SlideshowModel->delete($id);
             } else {
-                throw new \Exception('Data Slideshow tidak ditemukan');
+                throw new \Exception('Data Slideshow not Found');
             }
             $date_return = [
                 'status' => 'success',
                 'data'=> $slideshows,
-                'message'=> 'Data Slideshow berhasil di hapus',
+                'message'=> 'Successfully deleted Slideshow',
             ];
             return $this->response->setJSON($date_return, 200);
         } catch (\Throwable $th) {
