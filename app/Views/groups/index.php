@@ -40,7 +40,8 @@
                                     <tr>
                                         <th width="5%">No</th>
                                         <th width="10%">Name</th>
-                                        <th width="10%">Description</th>
+                                        <th width="20%">Description</th>
+                                        <th width="60%">Lines</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -50,6 +51,11 @@
                                         <td><?= $key+1 ?></td>
                                         <td><?= $group->name ?></td>
                                         <td><?= $group->description ?></td>
+                                        <td>
+                                            <?php foreach ($group->linelist as $key => $line) { ?>
+                                                <button class="btn-pill bg-maroon"><?= $line->name ?></button>
+                                            <?php } ?>
+                                        </td>
                                         <td>
                                             <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_group(<?= $group->id ?>)">Edit</a>
                                             <!-- <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_group(<?= $group->id ?>)">Delete</a> -->
@@ -146,7 +152,8 @@ $(document).ready(function(){
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
-            {data: 'description', name: 'description'},
+            {data: 'description', name: 'description', orderable: false},
+            {data: 'lines', name: 'lines', orderable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         paging: true,

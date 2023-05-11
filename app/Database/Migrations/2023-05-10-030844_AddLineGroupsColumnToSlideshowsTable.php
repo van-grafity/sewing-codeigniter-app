@@ -16,14 +16,14 @@ class AddLineGroupsColumnToSlideshowsTable extends Migration
         $this->forge->dropColumn($this->table, ['line_id']);
 
         $fields = [
-            'line_group_id' => [
+            'group_id' => [
                 'type' => 'bigint', 
                 'unsigned' => true,
                 'after' => 'id',
             ],
         ];
         $this->forge->addColumn($this->table, $fields);
-        $this->forge->addForeignKey('line_group_id', 'line_groups', 'id');
+        $this->forge->addForeignKey('group_id', 'groups', 'id');
         $this->forge->processIndexes($this->table);
     }
 
@@ -44,7 +44,7 @@ class AddLineGroupsColumnToSlideshowsTable extends Migration
         $this->forge->addForeignKey('line_id', 'lines', 'id');
         $this->forge->processIndexes($this->table);
 
-        $this->forge->dropForeignKey($this->table, 'slideshows_line_group_id_foreign');
-        $this->forge->dropColumn($this->table, ['line_group_id']);
+        $this->forge->dropForeignKey($this->table, 'slideshows_group_id_foreign');
+        $this->forge->dropColumn($this->table, ['group_id']);
     }
 }

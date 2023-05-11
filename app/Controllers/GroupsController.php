@@ -23,12 +23,18 @@ class GroupsController extends BaseController
 
     public function index()
     {
+        $groups = $this->GroupModel->findAll();
+        foreach ($groups as $key => $group) {
+            $group->linelist = $this->LineGroupModel->getLinesByGroupId($group->id);
+        }
+        
         $data = [
             'title' => 'Master Data Group',
             'page_title' => 'Master Data Group',
             'lines' => $this->LineModel->findAll(),
-            'groups' => $this->GroupModel->findAll(),
+            'groups' => $groups,
         ];
+        
         return view('groups/index', $data);
     }
 
@@ -98,7 +104,7 @@ class GroupsController extends BaseController
     public function edit($id){
         try {
             $group = $this->GroupModel->find($id);
-            $linelist = $this->LineGroupModel->getLineGroupId($group->id);
+            $linelist = $this->LineGroupModel->getLinesByGroupId($group->id);
 
             if(!$group) {
                 throw new \Exception('Data Group not Found!');

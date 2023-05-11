@@ -42,7 +42,7 @@ class LineGroupModel extends Model
 
     public function getData() {
 
-        $builder = $this->db->table('line_groups');
+        $builder = $this->db->table($this->table);
         $builder->select('*');
         $builder->where('deleted_at',null);
         $lineGroups = $builder->get()->getResult();
@@ -50,10 +50,10 @@ class LineGroupModel extends Model
         return $lineGroups;
     }
 
-    public function getLineGroupId($group_id = null) {
-        if(!$group_id) { return false; }
+    public function getLinesByGroupId($group_id = null) {
+        if(!$group_id) { return array(); }
 
-        $builder = $this->db->table('line_groups');
+        $builder = $this->db->table($this->table);
         $builder->select('lines.*');
         $builder->join('lines', 'lines.id = line_id');
         $builder->where('group_id', $group_id);
