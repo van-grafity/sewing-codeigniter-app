@@ -74,7 +74,7 @@
                 <div class="col-sm-3">
                     <div class="header-text" id="header_date_show">Date : - </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                     <div class="header-text" id="header_gl_number">GL : - </div>
                 </div>
             </div>
@@ -253,15 +253,18 @@
         }
 
         let data_slideshow = <?php echo json_encode($data_slideshow)?>;
+        let time_date_filter = '<?= $time_date?>';
+        // console.log(time_date_filter);
+        // console.log(data_slideshow);
 
         function run_slide_show(set_slide_show) {
             let delay = 10000;
             set_slide_show.forEach((data_show, i) => {
                 setTimeout(function(){
                     data_params = {
-                        line_id: data_show.line_id,
-                        gl_id: data_show.gl_id,
-                        date_filter: new Date().toJSON().slice(0, 10),
+                        line_id: data_show.id,
+                        date_filter: time_date_filter,
+                        // date_filter: new Date().toJSON().slice(0, 10),
                     }
 
                     load_data_dashboard(data_params)

@@ -6,7 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\OutputRecordModel;
 use App\Models\GlModel;
 use App\Models\LineModel;
-use App\Models\SlideShowModel;
+use App\Models\LineGroupModel;
+use App\Models\SlideshowModel;
 
 use CodeIgniter\I18n\Time;
 
@@ -16,7 +17,8 @@ class DashboardProductionsController extends BaseController
     protected $OutputRecordModel;
     protected $GlModel;
     protected $LineModel;
-    protected $SlideShowModel;
+    protected $LineGroupModel;
+    protected $SlideshowModel;
 
     public function __construct()
     {
@@ -25,15 +27,20 @@ class DashboardProductionsController extends BaseController
         $this->OutputRecordModel = new OutputRecordModel();
         $this->GlModel = new GlModel();
         $this->LineModel = new LineModel();
-        $this->SlideShowModel = new SlideShowModel();
+        $this->LineGroupModel = new LineGroupModel();
+        $this->SlideshowModel = new SlideshowModel();
     }
 
     public function index()
     {
-        $data_slideshow = $this->SlideShowModel->getData();
+        // $data_slideshow = $this->SlideshowModel->getData();
+        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
+        $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
         $data = [
             'data_slideshow' => $data_slideshow,
+            'time_date' => $slideshow->time_date,
         ];
+        // dd($data);
         return view('dashboard-production/index', $data);
     }
 
@@ -45,13 +52,10 @@ class DashboardProductionsController extends BaseController
     public function getDataDashboard()
     {
         $line_id = $this->request->getGet('line_id');
-        $gl_id = $this->request->getGet('gl_id');
         $date_filter = $this->request->getGet('date_filter');
 
         $line = $this->LineModel->find($line_id);
-        $gl = $this->GlModel->find($gl_id);
 
-        // $date_today = new Time('now', 'Asia/Jakarta','id_ID');
         $date_today = Time::createFromFormat('Y-m-d', $date_filter, 'Asia/Jakarta');
         $date_filter = $date_today->toDateString();
         $date_show = $date_today->toLocalizedString('d MMMM yyyy');
@@ -59,15 +63,25 @@ class DashboardProductionsController extends BaseController
         
         $output_records = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->orderBy('time_hours_of', 'ASC')
                                 ->findAll();
 
+        $get_gl_list = $this->OutputRecordModel
+                    ->join('gls','gls.id = gl_id')
+                    ->select('gls.gl_number')
+                    ->where('output_records.line_id', $line->id)
+                    ->where('time_date', $date_filter)
+                    ->groupBy('gl_id')
+                    ->findAll();
+                    
+        $gl_list = array_map( function($obj) { return $obj->gl_number; }, $get_gl_list);
+        $data_panel_gl = implode(", ", $gl_list);
+        
         if(!$output_records) {
             $data_panel = [
                 'line' => $line->name,
-                'gl_number' => $gl->gl_number,
+                'gl_number' => $data_panel_gl,
                 'date_show' => $date_show,
             ];
             $data_return = [
@@ -103,7 +117,7 @@ class DashboardProductionsController extends BaseController
 
         $data_panel = [
             'line' => $line->name,
-            'gl_number' => $gl->gl_number,
+            'gl_number' => $data_panel_gl,
             'date_show' => $date_show,
             'target' => $sum_target,
             'output' => $sum_output,
@@ -162,7 +176,7 @@ class DashboardProductionsController extends BaseController
         $date_filter = $date_today->toDateString();
         $date_show = $date_today->toLocalizedString('d MMMM yyyy');
 
-        $data_slideshow = $this->SlideShowModel->getData();
+        $data_slideshow = $this->SlideshowModel->getData();
         $data_per_line = [];
 
         foreach ($data_slideshow as $key => $slideshow) {
