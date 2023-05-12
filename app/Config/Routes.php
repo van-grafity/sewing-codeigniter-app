@@ -78,6 +78,8 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->get('edit/(:segment)', 'SlideshowsController::edit/$1', ['as' => 'slideshow_edit']);
         $routes->put('(:segment)', 'SlideshowsController::update/$1', ['as' => 'slideshow_update']);
         $routes->delete('(:segment)', 'SlideshowsController::destroy/$1', ['as' => 'slideshow_destroy']);
+        
+        $routes->get('toggle/flag_status', 'SlideshowsController::toggle_status', ['as' => 'slideshow_toggle_status']);
     });
     
     

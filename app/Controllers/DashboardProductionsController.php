@@ -35,11 +35,19 @@ class DashboardProductionsController extends BaseController
     {
         // $data_slideshow = $this->SlideshowModel->getData();
         $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
-        $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
-        $data = [
-            'data_slideshow' => $data_slideshow,
-            'time_date' => $slideshow->time_date,
-        ];
+        if($slideshow) {
+            $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
+            
+            $data = [
+                'data_slideshow' => $data_slideshow,
+                'time_date' => $slideshow->time_date,
+            ];
+        } else {
+            $data = [
+                'data_slideshow' => [],
+                'time_date' => "",
+            ];
+        }
         // dd($data);
         return view('dashboard-production/index', $data);
     }

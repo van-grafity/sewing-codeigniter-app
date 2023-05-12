@@ -174,3 +174,43 @@ const show_flash_message = ( session = {} ) => {
         });
     }
 }
+
+const swal_confirm = (data = {}) => {
+    const swalComponent = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-primary m-2",
+            cancelButton: "btn btn-secondary m-2",
+        },
+        buttonsStyling: false,
+    });
+
+    let title = data.title ? data.title : "Are you sure?";
+    let confirm_button = data.confirm_button ? data.confirm_button : "Save";
+    let success_message = data.success_message
+        ? data.success_message
+        : "Success!";
+    let failed_message = data.failed_message
+        ? data.failed_message
+        : "Cancel Action";
+
+    return new Promise((resolve, reject) => {
+        swalComponent
+            .fire({
+                title: title,
+                text: data.text,
+                confirmButtonText: confirm_button,
+                icon: "question",
+                showCancelButton: true,
+                reverseButtons: true,
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    resolve(true);
+                }
+                resolve(false);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}

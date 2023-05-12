@@ -30,6 +30,8 @@ class SlideshowsController extends BaseController
         
         foreach ($slideshows as $key => $slideshow) {
             $slideshow->linelist = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
+            $slideshow->status_text = $slideshow->flag_active == '1' ? 'Active' : 'Inactive';
+            $slideshow->status_class = $slideshow->flag_active == '1' ? 'btn-success' : 'btn-secondary';
         }
         
         $data = [
@@ -121,5 +123,46 @@ class SlideshowsController extends BaseController
                 'message' => $th->getMessage()
             ]);
         }
+    }
+
+    public function toggle_status() {
+
+        $slideshow_id = $this->request->getGet('id');
+        $slideshow = $this->SlideshowModel->find($slideshow_id);
+        
+        $this->deactive_all_slideshow();
+
+        
+        if($slideshow->flag_active == 0) {
+            $data = ['flag_active' => '1'];
+            $this->SlideshowModel->update($slideshow->id, $data);
+            $message = 'Successfully Activate Slideshow';
+        
+        } else {
+            $message = 'Successfully Deactivate Slideshow';
+        }
+
+        $slideshow = $this->SlideshowModel->find($slideshow_id);
+        $date_return = [
+            'status' => 'success',
+            'data'=> $slideshow,
+            'message'=> $message,
+        ];
+
+        return $this->response->setJSON($date_return, 200);
+    }
+
+    function deactive_all_slideshow() {
+        
+        $active_slideshows = $this->SlideshowModel->where('flag_active != 0')->findAll();
+        $active_slideshows_id = array_map( function($obj) { return $obj->id; }, $active_slideshows);
+        
+        $deactive_slideshow = false;
+        if ($active_slideshows_id) {
+            $deactive_slideshow = $this->SlideshowModel->whereIn('id',$active_slideshows_id)->set(['flag_active' => 0])->update();
+        }
+
+        return $deactive_slideshow;
+
     }
 }

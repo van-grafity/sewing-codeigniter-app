@@ -40,9 +40,10 @@
                                     <tr>
                                         <th width="5%">No</th>
                                         <th width="10%">Group</th>
-                                        <th width="60%">Line List</th>
+                                        <th width="50%">Line List</th>
                                         <th width="10%">Date</th>
-                                        <th width="">Action</th>
+                                        <th width="15%">Action</th>
+                                        <th width="10%">Toggle Active</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,6 +60,9 @@
                                         <td>
                                             <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_slideshow(<?= $slideshow->id ?>)">Edit</a>
                                             <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_slideshow(<?= $slideshow->id ?>)">Delete</a>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0);" class="btn <?= $slideshow->status_class ?> btn-sm" onclick="toggle_status(<?= $slideshow->id ?>)" data-flag-active="<?= $slideshow->flag_active ?>"><?= $slideshow->status_text ?></a>
                                         </td>
                                     </tr>
                                     <?php endforeach ?>
@@ -149,6 +153,7 @@ $(document).ready(function(){
             {data: 'group', name: 'group'},
             {data: 'linelist', name: 'linelist', orderable: false },
             {data: 'time_date', name: 'time_date',},
+            {data: 'toggle_active', name: 'toggle_active', orderable: false, searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         paging: true,
@@ -165,6 +170,7 @@ $(document).ready(function(){
     const delete_url ='<?= url_to('slideshow_destroy',':id') ?>';
     const edit_url ='<?= url_to('slideshow_edit',':id') ?>';
     const update_url ='<?= url_to('slideshow_update',':id') ?>';
+    const toggle_active_url ='<?= url_to('slideshow_toggle_status') ?>';
 
     function create_slideshow() {
         $('#modal_formLabel').text("Add")
@@ -205,6 +211,33 @@ $(document).ready(function(){
         let url_delete = delete_url.replace(':id',slideshow_id);
         let data_params = { token };
         result = await delete_using_fetch(url_delete, data_params)
+
+        if(result.status == "success"){
+            swal_info({
+                title : result.message,
+                reload_option: true, 
+            });
+        } else {
+            swal_failed({ title: result.message });
+        }
+    }
+
+    async function toggle_status(slideshow_id) {
+        let flag_active = $(event.srcElement).data('flag-active');
+        
+        if(flag_active == 0) {
+            data = { title: "Are you sure to Activate this Group?", confirm_button: "Activate", text: "Only this Group will be Active" };
+        } else if(flag_active == 1) {
+            data = { title: "Are you sure to Deactivate this Group?", confirm_button: "Deactivate" };
+        } else {
+            data = { title: "Something Wrong, Please Contact Administrator!" };
+        }
+
+        let confirm_action = await swal_confirm(data);
+        if(!confirm_action) { return false; };
+
+        let data_params = { token, id: slideshow_id };
+        result = await using_fetch(toggle_active_url, data_params , 'GET')
 
         if(result.status == "success"){
             swal_info({
