@@ -72,8 +72,9 @@ class OutputRecordsController extends BaseController
             
             $date_show = Time::createFromFormat('Y-m-d', $time_date, 'Asia/Jakarta');
             $date_show = $date_show->toLocalizedString('d MMMM yyyy');
+            $line_show = $this->LineModel->find($line);
 
-            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
+            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line_show->name .' pada jam ke '. $time_hours_of . ' sudah ada!');
         }
 
         $this->OutputRecordModel->insert([
@@ -117,8 +118,9 @@ class OutputRecordsController extends BaseController
 
             $date_show = Time::createFromFormat('Y-m-d', $time_date, 'Asia/Jakarta');
             $date_show = $date_show->toLocalizedString('d MMMM yyyy');
+            $line_show = $this->LineModel->find($line);
             
-            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line .' pada jam ke '. $time_hours_of . ' sudah ada!');
+            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line_show->name .' pada jam ke '. $time_hours_of . ' sudah ada!');
         }
         
         $data = [
@@ -140,7 +142,7 @@ class OutputRecordsController extends BaseController
         try {
             $data = $this->OutputRecordModel->find($id);
             if(!$data) {
-                throw new \Exception('Data Output Record tidak ditemukan');
+                throw new \Exception('Data Output Record not Found');
             }
             return $this->response->setJSON($data, 200);
         } catch (\Throwable $th) {
@@ -158,12 +160,12 @@ class OutputRecordsController extends BaseController
             if($output_records) {
                 $this->OutputRecordModel->delete($id);
             } else {
-                throw new \Exception('Data Output Record tidak ditemukan');
+                throw new \Exception('Data Output Record not Found');
             }
             $date_return = [
                 'status' => 'success',
                 'data'=> $output_records,
-                'message'=> 'Data Output Record berhasil di hapus',
+                'message'=> 'Data Output Record Deleted Successfully',
             ];
             return $this->response->setJSON($date_return, 200);
         } catch (\Throwable $th) {
