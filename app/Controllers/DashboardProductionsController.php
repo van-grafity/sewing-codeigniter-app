@@ -54,7 +54,13 @@ class DashboardProductionsController extends BaseController
 
     public function dashboardManager()
     {
-        return view('dashboard-production/dashboard-manager');
+        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
+        
+        $date_show = Time::createFromFormat('Y-m-d', $slideshow->time_date, 'Asia/Jakarta')->toLocalizedString('d MMMM yyyy');
+        $data = [
+            'time_date' => $date_show,
+        ];
+        return view('dashboard-production/dashboard-manager', $data);
     }
 
     public function getDataDashboard()
@@ -143,7 +149,14 @@ class DashboardProductionsController extends BaseController
                     $element_class = 'bg-danger text-white';
                 }
 
-                $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + $output_records[$i]->defact_qty)) * 100) . ' %';
+                if($output_records[$i]->output > 0) {
+                    $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + 
+                    $output_records[$i]->defact_qty)) * 100) . ' %';
+                
+                } else {
+                    $endline_ftt = "-";
+                }
+                
                 $data_output_records[$i] = [
                     'time_hours_of' => $output_records[$i]->time_hours_of,
                     'target' => $output_records[$i]->target,
@@ -162,6 +175,7 @@ class DashboardProductionsController extends BaseController
                 ];
             }
         }
+
         $data_return = [
             'status' => 'success',
             'message' => 'successfully get data dashboard',
@@ -175,49 +189,33 @@ class DashboardProductionsController extends BaseController
     }
 
     public function getDataAllLine(){
-        $date_filter = $this->request->getGet('date_filter');
-
-        $date_today = new Time('now', 'Asia/Jakarta','id_ID');
-        if($date_filter){
-            $date_today = Time::createFromFormat('Y-m-d', $date_filter, 'Asia/Jakarta');
-        }
-        $date_filter = $date_today->toDateString();
-        $date_show = $date_today->toLocalizedString('d MMMM yyyy');
-
-        $data_slideshow = $this->SlideshowModel->getData();
+        
+        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
+        $line_list = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
+        $date_filter = $slideshow->time_date;
+        
         $data_per_line = [];
 
-        foreach ($data_slideshow as $key => $slideshow) {
-            
-            $line = $slideshow->lines;
-            $gl = $slideshow->gls;
+        foreach ($line_list as $key => $line) {
             
             $output_records = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->orderBy('time_hours_of', 'ASC')
                                 ->findAll();
 
             $target = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->selectSum('target')->first()->target;
 
             $output = $this->OutputRecordModel
                                 ->where('line_id', $line->id)
-                                // ->where('gl_id', $gl->id)
                                 ->where('time_date', $date_filter)
                                 ->selectSum('output')->first()->output;
     
             if(!$target) {
                 continue;
-                // $data_return = [
-                //     'status' => 'error',
-                //     'message' => 'Data not found'
-                // ];
-                // return $this->response->setJSON($data_return);
             }
 
             $variance = $output - $target;
