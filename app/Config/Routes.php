@@ -63,6 +63,14 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->put('(:segment)', 'GroupsController::update/$1', ['as' => 'group_update']);
         $routes->delete('(:segment)', 'GroupsController::destroy/$1', ['as' => 'group_destroy']);
     });
+    $routes->group('remarks', static function ($routes) {
+        $routes->get('', 'RemarksController::index');
+        $routes->get('(:segment)', 'RemarksController::show/$1', ['as' => 'remark_show']);
+        $routes->post('', 'RemarksController::store', ['as' => 'remark_store']);
+        $routes->get('edit/(:segment)', 'RemarksController::edit/$1', ['as' => 'remark_edit']);
+        $routes->put('(:segment)', 'RemarksController::update/$1', ['as' => 'remark_update']);
+        $routes->delete('(:segment)', 'RemarksController::destroy/$1', ['as' => 'remark_destroy']);
+    });
     $routes->group('output-records', static function ($routes) {
         $routes->get('', 'OutputRecordsController::index');
         $routes->get('(:segment)', 'OutputRecordsController::show/$1', ['as' => 'output_record_show']);
@@ -90,6 +98,7 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->get('group', 'GroupsController::dtableGroup',['as' => 'dtable_group']);
         $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
         $routes->get('slideshow', 'SlideshowsController::dtableSlideshow',['as' => 'dtable_slideshow']);
+        $routes->get('remark', 'RemarksController::dtableRemark',['as' => 'dtable_remark']);
     });
 });
 

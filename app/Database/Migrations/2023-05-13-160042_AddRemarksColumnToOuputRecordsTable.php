@@ -15,6 +15,7 @@ class AddRemarksColumnToOuputRecordsTable extends Migration
                 'type' => 'bigint', 
                 'unsigned' => true,
                 'after' => 'id',
+                'null' => true,
             ],
         ];
         $this->forge->addColumn($this->table, $fields);

@@ -16,9 +16,14 @@ class CreateRemarksTable extends Migration
                 'unsigned' => true, 
                 'auto_increment' => true
             ],
-            'remarks' => [
+            'remark' => [
                 'type' => 'varchar',
                 'constraint' => 255, 
+            ],
+            'description' => [
+                'type' => 'varchar',
+                'constraint' => 255, 
+                'null' => true
             ],
             'created_at' => [
                 'type' => 'datetime', 
