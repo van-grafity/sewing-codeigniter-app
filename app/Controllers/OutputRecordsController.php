@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\OutputRecordModel;
 use App\Models\GlModel;
 use App\Models\LineModel;
+use App\Models\RemarkModel;
 
 use CodeIgniter\I18n\Time;
 
@@ -14,12 +15,14 @@ class OutputRecordsController extends BaseController
     protected $OutputRecordModel;
     protected $GlModel;
     protected $LineModel;
+    protected $RemarkModel;
 
     public function __construct()
     {
         $this->OutputRecordModel = new OutputRecordModel();
         $this->GlModel = new GlModel();
         $this->LineModel = new LineModel();
+        $this->RemarkModel = new RemarkModel();
     }
 
     public function index()
@@ -29,7 +32,8 @@ class OutputRecordsController extends BaseController
             'page_title' => 'Output Records',
             'output_records' => $this->OutputRecordModel->getData(),
             'gls' => $this->GlModel->getData(),
-            'lines' => $this->LineModel->getData()
+            'lines' => $this->LineModel->getData(),
+            'remarks' => $this->RemarkModel->getData(),
         ];
         // dd($data);
         return view('output-records/index', $data);
@@ -84,8 +88,8 @@ class OutputRecordsController extends BaseController
             'time_hours_of' => $this->request->getPost('time_hours_of'),
             'target' => $this->request->getPost('target'),
             'output' => $this->request->getPost('output'),
-            'defact_qty' => $this->request->getPost('defact_qty'),
-            'endline_ftt' => $this->request->getPost('endline_ftt'),
+            'defect_qty' => $this->request->getPost('defect_qty'),
+            'remark_id' => $this->request->getPost('remark') ? $this->request->getPost('remark') : null,
         ]);
         return redirect()->to('output-records')->with('success', 'Successfully added Output Record');
     }
@@ -130,8 +134,9 @@ class OutputRecordsController extends BaseController
             'time_hours_of' => $this->request->getPost('time_hours_of'),
             'target' => $this->request->getPost('target'),
             'output' => $this->request->getPost('output'),
-            'defact_qty' => $this->request->getPost('defact_qty'),
-            'endline_ftt' => $this->request->getPost('endline_ftt'),
+            'defect_qty' => $this->request->getPost('defect_qty'),
+            'remark_id' => $this->request->getPost('remark') ? $this->request->getPost('remark') : null,
+
         ];
         $this->OutputRecordModel->update($id,$data);
 

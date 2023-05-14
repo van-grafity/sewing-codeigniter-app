@@ -163,14 +163,19 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="defact_qty">Defact Qty</label>
-                                    <input type="number" class="form-control" id="defact_qty" name="defact_qty" placeholder="Enter Defact Qty">
+                                    <label for="defect_qty">Defect Qty</label>
+                                    <input type="number" class="form-control" id="defect_qty" name="defect_qty" placeholder="Enter Defect Qty">
                                 </div>
                             </div>
-                            <div class="col-sm-6 d-none">
+                            <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="endline_ftt">Endline FTT</label>
-                                    <input type="number" class="form-control" id="endline_ftt" name="endline_ftt" placeholder="Enter Endline FTT">
+                                    <label for="remark" class="form-label">Remark</label>
+                                    <select name="remark" class="form-control select2" id="remark" style="width: 100%;" data-placeholder="Choose Remark">
+                                        <option value="">Choose Remark</option>
+                                        <?php foreach ($remarks as $key => $remark) { ?>
+                                            <option value="<?= $remark->id ?>"><?= $remark->remark ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -288,9 +293,9 @@ async function edit_output_record(output_record_id) {
     form.find('select[name="time_hours_of"]').val(result.time_hours_of).change();
     form.find('input[name="target"]').val(result.target);
     form.find('input[name="output"]').val(result.output);
-    form.find('input[name="defact_qty"]').val(result.defact_qty);
-    form.find('input[name="endline_ftt"]').val(result.endline_ftt);
-
+    form.find('input[name="defect_qty"]').val(result.defect_qty);
+    form.find('select[name="remark"]').val(result.remark_id).change();
+    
     $('#modal_form').modal('show')
 }
 

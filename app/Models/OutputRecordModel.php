@@ -14,7 +14,7 @@ class OutputRecordModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['gl_id','line_id','time_date','time_hours_of','target','output','defact_qty','endline_ftt','downtime_min'];
+    protected $allowedFields    = ['gl_id','line_id','time_date','time_hours_of','target','output','defect_qty','endline_ftt','downtime_min','remark_id'];
 
     // Dates
     protected $useTimestamps = true;
