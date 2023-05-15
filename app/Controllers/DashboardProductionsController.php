@@ -151,7 +151,7 @@ class DashboardProductionsController extends BaseController
 
                 if($output_records[$i]->output > 0) {
                     $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + 
-                    $output_records[$i]->defact_qty)) * 100) . ' %';
+                    $output_records[$i]->defect_qty)) * 100) . ' %';
                 
                 } else {
                     $endline_ftt = "-";
