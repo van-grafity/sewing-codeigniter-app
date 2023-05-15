@@ -55,8 +55,14 @@ class DashboardProductionsController extends BaseController
     public function dashboardManager()
     {
         $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
-        
-        $date_show = Time::createFromFormat('Y-m-d', $slideshow->time_date, 'Asia/Jakarta')->toLocalizedString('d MMMM yyyy');
+        if(!$slideshow) {
+            $time_date = (new Time('now'))->toDateString();
+        } else {
+            $time_date = $slideshow->time_date;
+        }
+
+        // dd($time_date);
+        $date_show = Time::createFromFormat('Y-m-d', $time_date, 'Asia/Jakarta')->toLocalizedString('d MMMM yyyy');
         $data = [
             'time_date' => $date_show,
         ];
