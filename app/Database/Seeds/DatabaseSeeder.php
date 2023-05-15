@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call('LineGroupsTableSeeder');
         $this->call('SlideshowsTableSeeder');
         $this->call('OutputRecordsTableSeeder');
+        $this->call('RemarksTableSeeder');
     }
 }
