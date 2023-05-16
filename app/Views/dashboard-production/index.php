@@ -258,7 +258,7 @@
         // console.log(data_slideshow);
 
         function run_slide_show(set_slide_show) {
-            let delay = 10000;
+            let delay = 30000;
             set_slide_show.forEach((data_show, i) => {
                 setTimeout(function(){
                     data_params = {
