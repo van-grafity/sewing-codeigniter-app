@@ -46,7 +46,7 @@ class OutputRecordModel extends Model
         $builder = $this->db->table('output_records');
         $builder->select('*');
         $builder->where('deleted_at',null);
-        $builder->orderBy('time_date');
+        $builder->orderBy('time_date','desc');
         $builder->orderBy('line_id');
         $builder->orderBy('time_hours_of');
         $output_records = $builder->get()->getResult();
