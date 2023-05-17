@@ -14,7 +14,7 @@ class GlModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['gl_number','season'];
+    protected $allowedFields    = ['gl_number','season','buyer_id'];
 
     // Dates
     protected $useTimestamps = true;
@@ -48,6 +48,19 @@ class GlModel extends Model
         $builder->where('deleted_at',null);
         $gls = $builder->get()->getResult();
 
+        foreach ($gls as $key => $data) {
+            $data->buyer = $this->hasOne('buyers', $data->buyer_id);
+        }
+
         return $gls;
+    }
+
+    function hasOne($table_relation_with, $foreign_key){
+
+        $builder = $this->db->table($table_relation_with);
+        $builder->select('*');
+        $builder->where('id', $foreign_key);
+        $query = $builder->get();
+        return $query->getFirstRow();
     }
 }

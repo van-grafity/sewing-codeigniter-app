@@ -4,15 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\GlModel;
+use App\Models\BuyerModel;
 
 class GlsController extends BaseController
 {
 
     protected $GlModel;
+    protected $BuyerModel;
 
     public function __construct()
     {
         $this->GlModel = new GlModel();
+        $this->BuyerModel = new BuyerModel();
     }
 
     public function index()
@@ -20,8 +23,11 @@ class GlsController extends BaseController
         $data = [
             'title' => 'Master Data GL',
             'page_title' => 'Master Data GL',
-            'gls' => $this->GlModel->findAll()
+            'gls' => $this->GlModel->getData(),
+            'buyers' => $this->BuyerModel->getData(),
         ];
+
+        // dd($data);
         return view('gls/index', $data);
     }
 
@@ -48,6 +54,7 @@ class GlsController extends BaseController
         $rules = [
             'gl_number' => 'required',
             'season' => 'required',
+            'buyer' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('gls')->with('error', 'Something is wrong!');
@@ -56,6 +63,7 @@ class GlsController extends BaseController
         $this->GlModel->insert([
             'gl_number' => $this->request->getPost('gl_number'),
             'season' => $this->request->getPost('season'),
+            'buyer_id' => $this->request->getPost('buyer'),
         ]);
         return redirect()->to('gls')->with('success', 'Successfully added GL');
     }
@@ -64,6 +72,7 @@ class GlsController extends BaseController
         $rules = [
             'gl_number' => 'required',
             'season' => 'required',
+            'buyer' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('gls')->with('error', 'Something is wrong!');
@@ -72,6 +81,7 @@ class GlsController extends BaseController
         $data = [
             'gl_number' => $this->request->getPost('gl_number'),
             'season' => $this->request->getPost('season'),
+            'buyer_id' => $this->request->getPost('buyer'),
         ];
         $this->GlModel->update($id,$data);
 
