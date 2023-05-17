@@ -109,6 +109,11 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->get('slideshow', 'SlideshowsController::dtableSlideshow',['as' => 'dtable_slideshow']);
         $routes->get('remark', 'RemarksController::dtableRemark',['as' => 'dtable_remark']);
     });
+
+    $routes->group('fetch', static function ($routes){
+        $routes->get('', 'FetchController::index');
+        $routes->get('style', 'FetchController::style',['as' => 'fetch_style']);
+    });
 });
 
 

@@ -2,6 +2,11 @@
 
 <?= $this->Section('content'); ?>
 
+<style>
+    .form-group {
+        margin-bottom:0px;
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -79,7 +84,7 @@
 
 <!-- Modal Section -->
 <div class="modal fade" id="modal_form" tabindex="-1" role="dialog" aria-labelledby="modal_formLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal_formLabel">Add GL</h5>
@@ -108,6 +113,38 @@
                                 <?php } ?>
                             </select>
                         </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-hover" id="table_style">
+                                    <thead>
+                                        <tr>
+                                            <th >Style</th>
+                                            <th >Description</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td width="150">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="style" name="style[]">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="style_desc" name="style_desc[]">
+                                                </div>
+                                            </td>
+                                            <td width="100" class="text-center">
+                                                <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="add_new_tr()" ><i class="fas fa-plus"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <!-- END .card-body -->
                 </div>
@@ -131,8 +168,15 @@ $(document).ready(function(){
     show_flash_message(session);
 
     $('#btn_modal_create').click((e) => {
-        create_gl()
+        reset_gl_form();
+        $('#modal_form').modal('show');
     })
+
+    // ## Delete dynamic row
+    $('#table_style > tbody').on("click",".btn-style-delete", function(e){ 
+        e.preventDefault();
+        $(this).parent().parent().remove();
+    });
 })
 </script>
 
@@ -168,15 +212,52 @@ $(document).ready(function(){
     const delete_url ='<?= url_to('gl_destroy',':id') ?>';
     const edit_url ='<?= url_to('gl_edit',':id') ?>';
     const update_url ='<?= url_to('gl_update',':id') ?>';
+    const fetch_style_url ='<?= url_to('fetch_style') ?>';
 
-    function create_gl() {
+    function reset_gl_form() {
         $('#modal_formLabel').text("Add GL")
         $('#btn_submit').text("Add GL")
         $('#gl_form').attr('action', store_url);
         $('#gl_form').find("input[type=text], textarea").val("");
         $('#gl_form').find('input[name="_method"]').remove();
         $('#gl_form').find("select").val("").change();
-        $('#modal_form').modal('show')
+        reset_style_list();
+    }
+
+    function reset_style_list() {
+        $('#table_style > tbody').html('');
+        element_html = create_tr_element();
+        $('#table_style > tbody').append(element_html);
+    }
+
+    async function get_style_data(gl_id) {
+
+        // ## Get Style from the GL
+        let data_style_params = { gl_id: gl_id };
+        style_result = await using_fetch(fetch_style_url, data_style_params, "GET");
+        data_style = style_result.data;
+
+        // ## Insert to Style table list
+        let button_type;
+        
+        data_style.forEach((data, i) => {
+            if(i <= 0) {
+                // ## If first row using button icon plus
+                $('#table_style > tbody').html('');
+                button_type = 'button-add';
+            } else {
+                button_type = 'button-delete';
+            }
+
+            let params = {
+                data,
+                button_type
+            }
+            element_html = create_tr_element(params);
+            $('#table_style > tbody').append(element_html);
+        });
+
+        if(data_style.length <= 0) { reset_style_list() }
     }
     
     async function edit_gl(gl_id) {
@@ -194,7 +275,9 @@ $(document).ready(function(){
         form.find('input[name="season"]').val(result.season);
         form.find('select[name="buyer"]').val(result.buyer_id).change();
 
-        $('#modal_form').modal('show')
+        get_style_data(gl_id);
+
+        $('#modal_form').modal('show');
     }
 
     async function delete_gl(gl_id) {
@@ -214,6 +297,49 @@ $(document).ready(function(){
         } else {
             swal_failed({ title: result.message });
         }
+    }
+
+    function add_new_tr(){
+        element_html = create_tr_element({button_type: "button-delete"});
+        $('#table_style > tbody').append(element_html);
+    }
+
+    function create_tr_element(params = {}) {
+        //  Create tr element with some option.
+        data = params.hasOwnProperty('data') ? params.data : null;
+        button_type = params.hasOwnProperty('button_type') ? params.button_type : 'button-add';
+        
+        let button_element;
+        if(button_type == 'button-add') {
+            button_element = `
+            <a href="javascript:void(0);" class="btn btn-success btn-sm" onclick="add_new_tr()"><i class="fas fa-plus"></i></a>
+            `;
+        } else {
+            button_element = `
+            <a href="javascript:void(0);" class="btn btn-danger btn-sm btn-style-delete"><i class="fas fa-trash-alt"></i></a>
+            `;
+        }
+
+        let style = data ? data.style : '';
+        let style_desc = data ? data.description : '';
+        let element = `
+        <tr>
+            <td width="150">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="style[]" value="${style}">
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="style_desc[]" value="${style_desc}">
+                </div>
+            </td>
+            <td width="100" class="text-center">
+                ${button_element}
+            </td>
+        </tr>
+        `
+        return element;
     }
 </script>
 

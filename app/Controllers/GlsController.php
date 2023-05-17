@@ -5,17 +5,20 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\GlModel;
 use App\Models\BuyerModel;
+use App\Models\StyleModel;
 
 class GlsController extends BaseController
 {
 
     protected $GlModel;
     protected $BuyerModel;
+    protected $StyleModel;
 
     public function __construct()
     {
         $this->GlModel = new GlModel();
         $this->BuyerModel = new BuyerModel();
+        $this->StyleModel = new StyleModel();
     }
 
     public function index()
@@ -60,11 +63,26 @@ class GlsController extends BaseController
             return redirect()->to('gls')->with('error', 'Something is wrong!');
         }
 
-        $this->GlModel->insert([
+        $gl_id = $this->GlModel->insert([
             'gl_number' => $this->request->getPost('gl_number'),
             'season' => $this->request->getPost('season'),
             'buyer_id' => $this->request->getPost('buyer'),
         ]);
+
+        $styles = $this->request->getPost('style');
+        $styles_desc = $this->request->getPost('style_desc');
+
+        foreach ($styles as $key => $style) {
+            if($style && $styles_desc[$key]){
+                $style = [
+                    'style' => $style,
+                    'description' => $styles_desc[$key],
+                    'gl_id' => $gl_id,
+                ];
+                $insertStyle = $this->StyleModel->insert($style);
+            }
+        }
+
         return redirect()->to('gls')->with('success', 'Successfully added GL');
     }
 
@@ -84,6 +102,23 @@ class GlsController extends BaseController
             'buyer_id' => $this->request->getPost('buyer'),
         ];
         $this->GlModel->update($id,$data);
+
+        $gl_id = $id;
+        $this->StyleModel->where('gl_id', $gl_id)->delete();
+
+        $styles = $this->request->getPost('style');
+        $styles_desc = $this->request->getPost('style_desc');
+
+        foreach ($styles as $key => $style) {
+            if($style && $styles_desc[$key]){
+                $style = [
+                    'style' => $style,
+                    'description' => $styles_desc[$key],
+                    'gl_id' => $gl_id,
+                ];
+                $insertStyle = $this->StyleModel->insert($style);
+            }
+        }
 
         return redirect()->to('gls')->with('success', 'Successfully updated GL');
     }
