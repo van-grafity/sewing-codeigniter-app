@@ -32,6 +32,12 @@
                     </a>
                     <ul class="ml-3 nav nav-treeview">
                         <li class="nav-item">
+                            <a href="<?= url_to('buyers') ?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Buyers</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="<?= url_to('gls') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Gls</p>

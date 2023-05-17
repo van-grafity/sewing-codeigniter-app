@@ -71,6 +71,14 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->put('(:segment)', 'RemarksController::update/$1', ['as' => 'remark_update']);
         $routes->delete('(:segment)', 'RemarksController::destroy/$1', ['as' => 'remark_destroy']);
     });
+    $routes->group('buyers', static function ($routes) {
+        $routes->get('', 'BuyersController::index');
+        $routes->get('(:segment)', 'BuyersController::show/$1', ['as' => 'buyer_show']);
+        $routes->post('', 'BuyersController::store', ['as' => 'buyer_store']);
+        $routes->get('edit/(:segment)', 'BuyersController::edit/$1', ['as' => 'buyer_edit']);
+        $routes->put('(:segment)', 'BuyersController::update/$1', ['as' => 'buyer_update']);
+        $routes->delete('(:segment)', 'BuyersController::destroy/$1', ['as' => 'buyer_destroy']);
+    });
     $routes->group('output-records', static function ($routes) {
         $routes->get('', 'OutputRecordsController::index');
         $routes->get('(:segment)', 'OutputRecordsController::show/$1', ['as' => 'output_record_show']);
@@ -93,6 +101,7 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
     
     // ## Route for Datatable
     $routes->group('dtable', static function ($routes){
+        $routes->get('buyer', 'BuyersController::dtableBuyer',['as' => 'dtable_buyer']);
         $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
         $routes->get('line', 'LinesController::dtableLine',['as' => 'dtable_line']);
         $routes->get('group', 'GroupsController::dtableGroup',['as' => 'dtable_group']);
