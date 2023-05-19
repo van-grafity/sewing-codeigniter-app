@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\GlModel;
 use App\Models\BuyerModel;
 use App\Models\StyleModel;
+use App\Models\CategoryModel;
 
 class GlsController extends BaseController
 {
@@ -13,12 +14,14 @@ class GlsController extends BaseController
     protected $GlModel;
     protected $BuyerModel;
     protected $StyleModel;
+    protected $CategoryModel;
 
     public function __construct()
     {
         $this->GlModel = new GlModel();
         $this->BuyerModel = new BuyerModel();
         $this->StyleModel = new StyleModel();
+        $this->CategoryModel = new CategoryModel();
     }
 
     public function index()
@@ -28,6 +31,7 @@ class GlsController extends BaseController
             'page_title' => 'Master Data GL',
             'gls' => $this->GlModel->getData(),
             'buyers' => $this->BuyerModel->getData(),
+            'categories' => $this->CategoryModel->getData(),
         ];
 
         // dd($data);
@@ -58,6 +62,7 @@ class GlsController extends BaseController
             'gl_number' => 'required',
             'season' => 'required',
             'buyer' => 'required',
+            'category' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('gls')->with('error', 'Something is wrong!');
@@ -67,6 +72,7 @@ class GlsController extends BaseController
             'gl_number' => $this->request->getPost('gl_number'),
             'season' => $this->request->getPost('season'),
             'buyer_id' => $this->request->getPost('buyer'),
+            'category_id' => $this->request->getPost('category'),
         ]);
 
         $styles = $this->request->getPost('style');
@@ -91,6 +97,7 @@ class GlsController extends BaseController
             'gl_number' => 'required',
             'season' => 'required',
             'buyer' => 'required',
+            'category' => 'required',
         ];
         if (!$this->validate($rules)) {
             return redirect()->to('gls')->with('error', 'Something is wrong!');
@@ -100,6 +107,7 @@ class GlsController extends BaseController
             'gl_number' => $this->request->getPost('gl_number'),
             'season' => $this->request->getPost('season'),
             'buyer_id' => $this->request->getPost('buyer'),
+            'category_id' => $this->request->getPost('category'),
         ];
         $this->GlModel->update($id,$data);
 

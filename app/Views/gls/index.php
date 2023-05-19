@@ -47,6 +47,7 @@
                                         <th>GL Number</th>
                                         <th>Season</th>
                                         <th>Buyer</th>
+                                        <th>Category</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -57,6 +58,7 @@
                                         <td><?= $gl->gl_number ?></td>
                                         <td><?= $gl->season ?></td>
                                         <td><?= $gl->buyer ? $gl->buyer->buyer_name : '' ?></td>
+                                        <td><?= $gl->category ? $gl->category->category_name : '' ?></td>
                                         <td>
                                             <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_gl(<?= $gl->id ?>)">Edit</a>
                                             <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_gl(<?= $gl->id ?>)">Delete</a>
@@ -96,22 +98,45 @@
                 <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="gl_number">GL Number</label>
-                            <input type="text" class="form-control" id="gl_number" name="gl_number" placeholder="Enter GL Number" required>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="gl_number">GL Number</label>
+                                    <input type="text" class="form-control" id="gl_number" name="gl_number" placeholder="Enter GL Number" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="season">Season</label>
+                                    <input type="text" class="form-control" id="season" name="season" placeholder="Enter Season">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="season">Season</label>
-                            <input type="text" class="form-control" id="season" name="season" placeholder="Enter Season">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="buyer" class="form-label">Buyer</label>
+                                    <select name="buyer" class="form-control select2" id="buyer" style="width: 100%;" data-placeholder="Choose Buyer" required>
+                                        <option value="">Choose Buyer</option>
+                                        <?php foreach ($buyers as $key => $buyer) { ?>
+                                            <option value="<?= $buyer->id ?>"><?= $buyer->buyer_name ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="Buyer" class="form-label">Buyer</label>
-                            <select name="buyer" class="form-control select2" id="buyer" style="width: 100%;" data-placeholder="Choose Buyer" required>
-                                <option value="">Choose Buyer</option>
-                                <?php foreach ($buyers as $key => $buyer) { ?>
-                                    <option value="<?= $buyer->id ?>"><?= $buyer->buyer_name ?></option>
-                                <?php } ?>
-                            </select>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select name="category" class="form-control select2" id="category" style="width: 100%;" data-placeholder="Choose Category" required>
+                                        <option value="">Choose Category</option>
+                                        <?php foreach ($categories as $key => $category) { ?>
+                                            <option value="<?= $category->id ?>"><?= $category->category_name ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <hr>
@@ -193,6 +218,7 @@ $(document).ready(function(){
             {data: 'gl_number', name: 'gl_number'},
             {data: 'season', name: 'season'},
             {data: 'buyer', name: 'buyer'},
+            {data: 'category', name: 'category'},
             {data: 'action', name: 'action'},
         ],
         columnDefs: [
@@ -274,6 +300,7 @@ $(document).ready(function(){
         form.find('input[name="gl_number"]').val(result.gl_number);
         form.find('input[name="season"]').val(result.season);
         form.find('select[name="buyer"]').val(result.buyer_id).change();
+        form.find('select[name="category"]').val(result.category_id).change();
 
         get_style_data(gl_id);
 

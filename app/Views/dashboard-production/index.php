@@ -74,8 +74,11 @@
                 <div class="col-sm-3">
                     <div class="header-text" id="header_date_show">Date : - </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <div class="header-text" id="header_gl_number">GL : - </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="header-text" id="header_category">Category : - </div>
                 </div>
             </div>
         </div>
@@ -144,7 +147,7 @@
                         <div class="card-body">
                             <table>
                                 <tr>
-                                    <td class="title bold">Incentive Earned</td>
+                                    <td class="title bold">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td class="title">Last Day</td>
@@ -211,6 +214,7 @@
                 $('#header_line').text(`Line : ${result.data.data_panel.line}`);
                 $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
                 $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);
+                $('#header_category').text(`Category : ${result.data.data_panel.category}`);
                 
                 return false;
             }
@@ -220,6 +224,8 @@
             $('#header_line').text(`Line : ${result.data.data_panel.line}`);
             $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
             $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);
+            $('#header_category').text(`Category : ${result.data.data_panel.category}`);
+
 
             $('#panel_target').text(`${result.data.data_panel.target} pcs`);
             $('#panel_output').text(`${result.data.data_panel.output} pcs`);
@@ -280,6 +286,7 @@
             $('#header_line').text(`Line : -`);
             $('#header_date_show').text(`Date : -`);
             $('#header_gl_number').text(`GL : -`);
+            $('#header_category').text(`Cateogry : -`);
 
             $('#panel_target').text(`- pcs`);
             $('#panel_output').text(`- pcs`);

@@ -59,6 +59,27 @@ class OutputRecordModel extends Model
         return $output_records;
     }
 
+    public function get_gl_list($params = null) {
+
+        $line_id = isset($params->line_id) ? $params->line_id : null; 
+        $time_date = isset($params->time_date) ? $params->time_date : null;
+
+        $builder = $this->db->table('output_records');
+        $builder->join('gls','gls.id = output_records.gl_id');
+        $builder->join('categories','categories.id = gls.category_id');
+        $builder->select('gls.gl_number, categories.category_name');
+        $builder->when($line_id, static function ($query, $line_id) {
+            $query->where('output_records.line_id', $line_id);
+        });
+        $builder->when($time_date, static function ($query, $time_date) {
+            $query->where('output_records.time_date', $time_date);
+        });
+        $builder->groupBy('gl_id');
+        $gl_list = $builder->get()->getResult();
+
+        return $gl_list;
+    }
+
     function hasOne($table_relation_with, $foreign_key){
 
         $builder = $this->db->table($table_relation_with);

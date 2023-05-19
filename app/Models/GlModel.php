@@ -14,7 +14,7 @@ class GlModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
-    protected $allowedFields    = ['gl_number','season','buyer_id'];
+    protected $allowedFields    = ['gl_number','season','buyer_id','category_id'];
 
     // Dates
     protected $useTimestamps = true;
@@ -50,6 +50,7 @@ class GlModel extends Model
 
         foreach ($gls as $key => $data) {
             $data->buyer = $this->hasOne('buyers', $data->buyer_id);
+            $data->category = $this->hasOne('categories', $data->category_id);
         }
 
         return $gls;

@@ -33,7 +33,6 @@ class DashboardProductionsController extends BaseController
 
     public function index()
     {
-        // $data_slideshow = $this->SlideshowModel->getData();
         $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
         if($slideshow) {
             $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
@@ -48,7 +47,6 @@ class DashboardProductionsController extends BaseController
                 'time_date' => "",
             ];
         }
-        // dd($data);
         return view('dashboard-production/index', $data);
     }
 
@@ -61,7 +59,6 @@ class DashboardProductionsController extends BaseController
             $time_date = $slideshow->time_date;
         }
 
-        // dd($time_date);
         $date_show = Time::createFromFormat('Y-m-d', $time_date, 'Asia/Jakarta')->toLocalizedString('d MMMM yyyy');
         $data = [
             'time_date' => $date_show,
@@ -80,28 +77,29 @@ class DashboardProductionsController extends BaseController
         $date_filter = $date_today->toDateString();
         $date_show = $date_today->toLocalizedString('d MMMM yyyy');
 
-        
-        $output_records = $this->OutputRecordModel
-                                ->where('line_id', $line->id)
-                                ->where('time_date', $date_filter)
-                                ->orderBy('time_hours_of', 'ASC')
-                                ->findAll();
-
-        $get_gl_list = $this->OutputRecordModel
-                    ->join('gls','gls.id = gl_id')
-                    ->select('gls.gl_number')
-                    ->where('output_records.line_id', $line->id)
-                    ->where('time_date', $date_filter)
-                    ->groupBy('gl_id')
-                    ->findAll();
+        $params = (object)[
+            'line_id' => $line->id,
+            'time_date' => $date_filter,
+        ];
+        $get_gl_list = $this->OutputRecordModel->get_gl_list($params);
                     
         $gl_list = array_map( function($obj) { return $obj->gl_number; }, $get_gl_list);
         $data_panel_gl = implode(", ", $gl_list);
+        $category_list = array_map( function($obj) { return $obj->category_name; }, $get_gl_list);
+        $data_panel_category = implode(", ", $category_list);
+
+
+        $output_records = $this->OutputRecordModel
+                            ->where('line_id', $line->id)
+                            ->where('time_date', $date_filter)
+                            ->orderBy('time_hours_of', 'ASC')
+                            ->findAll();
         
         if(!$output_records) {
             $data_panel = [
                 'line' => $line->name,
                 'gl_number' => $data_panel_gl,
+                'category' => $data_panel_category,
                 'date_show' => $date_show,
             ];
             $data_return = [
@@ -138,6 +136,7 @@ class DashboardProductionsController extends BaseController
         $data_panel = [
             'line' => $line->name,
             'gl_number' => $data_panel_gl,
+            'category' => $data_panel_category,
             'date_show' => $date_show,
             'target' => $sum_target,
             'output' => $sum_output,

@@ -68,7 +68,7 @@ class OutputRecordsTableSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'gl_id' => '1',
+                'gl_id' => '3',
                 'line_id' => '1',
                 'time_hours_of' => '5',
                 'time_date' => date('Y-m-d'),
@@ -82,7 +82,7 @@ class OutputRecordsTableSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'gl_id' => '1',
+                'gl_id' => '3',
                 'line_id' => '1',
                 'time_hours_of' => '6',
                 'time_date' => date('Y-m-d'),
@@ -96,7 +96,7 @@ class OutputRecordsTableSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'gl_id' => '1',
+                'gl_id' => '3',
                 'line_id' => '1',
                 'time_hours_of' => '7',
                 'time_date' => date('Y-m-d'),
@@ -110,7 +110,7 @@ class OutputRecordsTableSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'gl_id' => '1',
+                'gl_id' => '3',
                 'line_id' => '1',
                 'time_hours_of' => '8',
                 'time_date' => date('Y-m-d'),
