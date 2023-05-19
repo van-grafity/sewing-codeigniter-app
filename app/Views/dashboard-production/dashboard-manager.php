@@ -108,7 +108,7 @@
         }
 
         function run_slide_show() {
-            let delay = 10000;
+            let delay = 30000;
             setTimeout(function(){
                 data_params = {}
                 load_data_dashboard(data_params)

@@ -79,6 +79,16 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->put('(:segment)', 'BuyersController::update/$1', ['as' => 'buyer_update']);
         $routes->delete('(:segment)', 'BuyersController::destroy/$1', ['as' => 'buyer_destroy']);
     });
+    $routes->group('categories', static function ($routes) {
+        $routes->get('', 'CategoriesController::index');
+        $routes->get('(:segment)', 'CategoriesController::show/$1', ['as' => 'category_show']);
+        $routes->post('', 'CategoriesController::store', ['as' => 'category_store']);
+        $routes->get('edit/(:segment)', 'CategoriesController::edit/$1', ['as' => 'category_edit']);
+        $routes->put('(:segment)', 'CategoriesController::update/$1', ['as' => 'category_update']);
+        $routes->delete('(:segment)', 'CategoriesController::destroy/$1', ['as' => 'category_destroy']);
+    });
+
+
     $routes->group('output-records', static function ($routes) {
         $routes->get('', 'OutputRecordsController::index');
         $routes->get('(:segment)', 'OutputRecordsController::show/$1', ['as' => 'output_record_show']);
@@ -108,6 +118,7 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
         $routes->get('slideshow', 'SlideshowsController::dtableSlideshow',['as' => 'dtable_slideshow']);
         $routes->get('remark', 'RemarksController::dtableRemark',['as' => 'dtable_remark']);
+        $routes->get('category', 'CategoriesController::dtableCategory',['as' => 'dtable_category']);
     });
 
     $routes->group('fetch', static function ($routes){
