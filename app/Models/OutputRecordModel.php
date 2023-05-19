@@ -66,7 +66,7 @@ class OutputRecordModel extends Model
 
         $builder = $this->db->table('output_records');
         $builder->join('gls','gls.id = output_records.gl_id');
-        $builder->join('categories','categories.id = gls.category_id');
+        $builder->join('categories','categories.id = gls.category_id','left');
         $builder->select('gls.gl_number, categories.category_name');
         $builder->when($line_id, static function ($query, $line_id) {
             $query->where('output_records.line_id', $line_id);
