@@ -71,10 +71,27 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= url_to('output-records') ?>" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="far fa-file-alt nav-icon"></i>
-                        <p>Output Record</p>
+                        <p>
+                            Output Record
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="ml-3 nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="<?= url_to('output_record_create') ?>" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Record</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= url_to('output-records') ?>" class="nav-link">
+                                <i class="far fa-file-alt nav-icon"></i>
+                                <p>Output Record List</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="<?= url_to('slideshows') ?>" class="nav-link">

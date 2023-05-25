@@ -48,6 +48,16 @@ class OutputRecordsController extends BaseController
         dd("masuk",$id);
     }
 
+    public function create() {
+        $data = [
+            'title' => 'Create Output Records',
+            'page_title' => 'Create Output Records',
+            'gls' => $this->GlModel->getData(),
+            'lines' => $this->LineModel->getData(),
+            'remarks' => $this->RemarkModel->getData(),
+        ];
+        return view('output-records/create', $data);
+    }
     public function store(){
         // dd($this->request->getPost());
         $rules = [
@@ -78,7 +88,7 @@ class OutputRecordsController extends BaseController
             $date_show = $date_show->toLocalizedString('d MMMM yyyy');
             $line_show = $this->LineModel->find($line);
 
-            return redirect()->to('output-records')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line_show->name .' pada jam ke '. $time_hours_of . ' sudah ada!');
+            return redirect()->to('output-record-create')->with('error', 'Data output pada tanggal '. $date_show .', untuk Line '. $line_show->name .' pada jam ke '. $time_hours_of . ' sudah ada!');
         }
 
         $this->OutputRecordModel->insert([
@@ -91,7 +101,7 @@ class OutputRecordsController extends BaseController
             'defect_qty' => $this->request->getPost('defect_qty'),
             'remark_id' => $this->request->getPost('remark') ? $this->request->getPost('remark') : null,
         ]);
-        return redirect()->to('output-records')->with('success', 'Successfully added Output Record');
+        return redirect()->to('output-record-create')->with('success', 'Successfully added Output Record');
     }
 
     public function update($id){

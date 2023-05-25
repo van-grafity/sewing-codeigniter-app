@@ -89,8 +89,10 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
     });
 
 
+    $routes->get('output-record-create', 'OutputRecordsController::create', ['as' => 'output_record_create']);
     $routes->group('output-records', static function ($routes) {
         $routes->get('', 'OutputRecordsController::index');
+        $routes->get('create', 'OutputRecordsController::create', ['as' => 'output_record_create']);
         $routes->get('(:segment)', 'OutputRecordsController::show/$1', ['as' => 'output_record_show']);
         $routes->post('', 'OutputRecordsController::store', ['as' => 'output_record_store']);
         $routes->get('edit/(:segment)', 'OutputRecordsController::edit/$1', ['as' => 'output_record_edit']);
