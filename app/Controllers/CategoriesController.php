@@ -18,8 +18,8 @@ class CategoriesController extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Master Data Categories',
-            'page_title' => 'Master Data Categories',
+            'title' => 'Master Data Product Type',
+            'page_title' => 'Master Data Product Type',
             'categories' => $this->CategoryModel->findAll()
         ];
         return view('categories/index', $data);
@@ -46,7 +46,7 @@ class CategoriesController extends BaseController
             'category_name' => $this->request->getPost('category_name'),
             'description' => $this->request->getPost('description'),
         ]);
-        return redirect()->to('categories')->with('success', 'Successfully added Category');
+        return redirect()->to('categories')->with('success', 'Successfully added Product Type');
     }
 
     public function update($id){
@@ -63,14 +63,14 @@ class CategoriesController extends BaseController
         ];
         $this->CategoryModel->update($id,$data);
 
-        return redirect()->to('categories')->with('success', 'Successfully updated Category');
+        return redirect()->to('categories')->with('success', 'Successfully updated Product Type');
     }
 
     public function edit($id){
         try {
             $data = $this->CategoryModel->find($id);
             if(!$data) {
-                throw new \Exception('Data Category not found');
+                throw new \Exception('Data Product Type not found');
             }
             return $this->response->setJSON($data, 200);
         } catch (\Throwable $th) {
@@ -88,12 +88,12 @@ class CategoriesController extends BaseController
             if($categories) {
                 $this->CategoryModel->delete($id);
             } else {
-                throw new \Exception('Data Category not found');
+                throw new \Exception('Data Product Type not found');
             }
             $date_return = [
                 'status' => 'success',
                 'data'=> $categories,
-                'message'=> 'Data Category deleted successfully',
+                'message'=> 'Data Product Type deleted successfully',
             ];
             return $this->response->setJSON($date_return, 200);
         } catch (\Throwable $th) {

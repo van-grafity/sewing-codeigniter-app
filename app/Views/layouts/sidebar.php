@@ -40,7 +40,7 @@
                         <li class="nav-item">
                             <a href="<?= url_to('categories') ?>" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Categories</p>
+                                <p>Product Type</p>
                             </a>
                         </li>
                         <li class="nav-item">

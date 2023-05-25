@@ -78,7 +78,7 @@
                     <div class="header-text" id="header_gl_number">GL : - </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="header-text" id="header_category">Category : - </div>
+                    <div class="header-text" id="header_category">Product Type : - </div>
                 </div>
             </div>
         </div>
@@ -214,7 +214,7 @@
                 $('#header_line').text(`Line : ${result.data.data_panel.line}`);
                 $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
                 $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);
-                $('#header_category').text(`Category : ${result.data.data_panel.category}`);
+                $('#header_category').text(`Product Type : ${result.data.data_panel.category}`);
                 
                 return false;
             }
@@ -224,7 +224,7 @@
             $('#header_line').text(`Line : ${result.data.data_panel.line}`);
             $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
             $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);
-            $('#header_category').text(`Category : ${result.data.data_panel.category}`);
+            $('#header_category').text(`Product Type : ${result.data.data_panel.category}`);
 
 
             $('#panel_target').text(`${result.data.data_panel.target} pcs`);
@@ -286,7 +286,7 @@
             $('#header_line').text(`Line : -`);
             $('#header_date_show').text(`Date : -`);
             $('#header_gl_number').text(`GL : -`);
-            $('#header_category').text(`Cateogry : -`);
+            $('#header_category').text(`Product Type : -`);
 
             $('#panel_target').text(`- pcs`);
             $('#panel_output').text(`- pcs`);

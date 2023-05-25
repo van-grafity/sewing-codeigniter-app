@@ -39,7 +39,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Category</th>
+                                        <th>Product Type</th>
                                         <th>Description</th>
                                         <th>Action</th>
                                     </tr>
@@ -80,7 +80,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal_formLabel">Add Category</h5>
+                <h5 class="modal-title" id="modal_formLabel">Add Product Type</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -90,8 +90,8 @@
                 <div class="modal-body">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="category_name">Category</label>
-                            <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Category" required>
+                            <label for="category_name">Product Type</label>
+                            <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Product Type" required>
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="btn_submit">Add Category</button>
+                    <button type="submit" class="btn btn-primary" id="btn_submit">Add Product Type</button>
                 </div>
             </form>
         </div>
@@ -155,8 +155,8 @@ $(document).ready(function(){
     const update_url ='<?= url_to('category_update',':id') ?>';
 
     function create_category() {
-        $('#modal_formLabel').text("Add Category")
-        $('#btn_submit').text("Add Category")
+        $('#modal_formLabel').text("Add Product Type")
+        $('#btn_submit').text("Add Product Type")
         $('#category_form').attr('action', store_url);
         $('#category_form').find("input[type=text], textarea").val("");
         $('#category_form').find('input[name="_method"]').remove();
@@ -169,7 +169,7 @@ $(document).ready(function(){
         result = await get_using_fetch(url_edit);
         form = $('#category_form')
         form.append('<input type="hidden" name="_method" value="PUT">');
-        $('#modal_formLabel').text("Edit Category");
+        $('#modal_formLabel').text("Edit Product Type");
         $('#btn_submit').text("Save");
 
         let url_update = update_url.replace(':id',category_id);
