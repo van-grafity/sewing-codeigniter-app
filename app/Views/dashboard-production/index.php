@@ -115,7 +115,7 @@
                                     <td class="title">Cumulative</td>
                                     <td class="value big" id="panel_variance_cumulative"> - </td>
                                 </tr>
-                                <tr>
+                                <tr class="d-none">
                                     <td class="title">Achievement</td>
                                     <td class="value" id="panel_achievement"> - </td>
                                 </tr>
@@ -150,7 +150,7 @@
                                     <td class="title bold">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td class="title">Last Day</td>
+                                    <td class="title">Previous Day</td>
                                     <td class="value">0 pcs</td>
                                 </tr>
                                 <tr>

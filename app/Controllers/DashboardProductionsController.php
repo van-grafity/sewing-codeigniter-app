@@ -130,7 +130,7 @@ class DashboardProductionsController extends BaseController
             $output_class = 'down';
         }
 
-        $forecast = round(($sum_output / count($output_records)) * 10);
+        $forecast = round(($sum_output / count($output_records)) * 8);
         $achievement = round(($sum_output / $sum_target) * 100) . ' %';
 
         $data_panel = [
@@ -224,7 +224,7 @@ class DashboardProductionsController extends BaseController
             }
 
             $variance = $output - $target;
-            $forecast = round(($output / count($output_records)) * 10);
+            $forecast = round(($output / count($output_records)) * 8);
             $forecast_target = $target;
             $forecast_variance = $forecast - $forecast_target;
             $efficiency_target = '100%';
