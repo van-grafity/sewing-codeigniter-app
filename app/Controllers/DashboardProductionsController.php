@@ -131,7 +131,8 @@ class DashboardProductionsController extends BaseController
         }
 
         $forecast = round(($sum_output / count($output_records)) * 8);
-        $achievement = round(($sum_output / $sum_target) * 100) . ' %';
+        $actual = round(($sum_output / $sum_target) * 100) . ' %';
+        $achievement = round(($variance_cumulative / $sum_target) * 100) . '%';
 
         $data_panel = [
             'line' => $line->name,
@@ -143,6 +144,7 @@ class DashboardProductionsController extends BaseController
             'forecast' => $forecast,
             'output_class' => $output_class,
             'variance_cumulative' => $variance_cumulative,
+            'actual' => $actual,
             'achievement' => $achievement,
         ];
 

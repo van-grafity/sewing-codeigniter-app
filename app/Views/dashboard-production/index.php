@@ -115,7 +115,7 @@
                                     <td class="title">Cumulative</td>
                                     <td class="value big" id="panel_variance_cumulative"> - </td>
                                 </tr>
-                                <tr class="d-none">
+                                <tr class="">
                                     <td class="title">Achievement</td>
                                     <td class="value" id="panel_achievement"> - </td>
                                 </tr>
@@ -241,7 +241,7 @@
             $('#panel_variance_cumulative').addClass(result.data.data_panel.output_class);
             
             $('#panel_efficiency_target').text(`100%`);
-            $('#panel_efficiency_actual').text(`${result.data.data_panel.achievement}`);
+            $('#panel_efficiency_actual').text(`${result.data.data_panel.actual}`);
 
             $("#row_display_hours_of").find("td:gt(0)").remove();
             $("#row_display_target").find("td:gt(0)").remove();
