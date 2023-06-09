@@ -130,7 +130,10 @@ class DashboardProductionsController extends BaseController
             $output_class = 'down';
         }
 
-        $forecast = round(($sum_output / count($output_records)) * 8);
+        $work_hours = count($output_records) <= 8 ? 8 : count($output_records);
+        $forecast = round(($sum_output / count($output_records)) * $work_hours);
+        // dd($forecast);
+        
         $actual = round(($sum_output / $sum_target) * 100) . ' %';
         $achievement = round(($variance_cumulative / $sum_target) * 100) . '%';
 
