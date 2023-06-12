@@ -1,7 +1,16 @@
 <?= $this->extend('layouts/template'); ?>
 
 <?= $this->Section('content'); ?>
+<style>
+    #output_records_table tr,
+    #output_records_table td {
+        text-align: center;
+    }
 
+    #output_records_table .filterhead {
+        padding: .75rem;
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -48,25 +57,18 @@
                                         <th>Output</th>
                                         <th>Action</th>
                                     </tr>
+                                    <tr>
+                                        <th class="filterhead"></th>
+                                        <th class="filterhead"></th>
+                                        <th class="filterhead"></th>
+                                        <th class="filterhead"></th>
+                                        <th class="filterhead"></th>
+                                        <th class="filterhead"></th>
+                                        <th class="filterhead"></th>
+                                        <th class="filterhead"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($output_records as $key => $output_record) : ?>
-                                    <tr>
-                                        <td><?= $key+1 ?></td>
-                                        <td><?= $output_record->time_date ?></td>
-                                        <td><?= $output_record->lines->name ?></td>
-                                        <td><?= $output_record->time_hours_of ?></td>
-                                        <td><?= $output_record->gls->gl_number ?></td>
-                                        <td><?= $output_record->target ?></td>
-                                        <td><?= $output_record->output ?></td>
-                                        <td>
-                                            <a href="javascript:void(0);" class="btn btn-primary btn-sm"
-                                                onclick="edit_output_record(<?= $output_record->id ?>)">Edit</a>
-                                            <a href="javascript:void(0);" class="btn btn-danger btn-sm"
-                                                onclick="delete_output_record(<?= $output_record->id ?>)">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach ?>
                                 </tbody>
                             </table>
                         </div>
@@ -211,49 +213,47 @@ $(document).ready(function() {
 // ## Datatable Initialize
 const dtable_url = "<?= url_to('dtable_output_record') ?>";
 $('#output_records_table').DataTable({
-    // processing: true,
-    // serverSide: true,
-    // ajax: dtable_url,
-    columns: [{
-            data: 'DT_RowIndex',
-            name: 'DT_RowIndex'
-        },
-        {
-            data: 'time_date',
-            name: 'time_date'
-        },
-        {
-            data: 'line',
-            name: 'line'
-        },
-        {
-            data: 'time_hours_of',
-            name: 'time_hours_of'
-        },
-        {
-            data: 'gl_number',
-            name: 'gl_number'
-        },
-        {
-            data: 'target',
-            name: 'target'
-        },
-        {
-            data: 'output',
-            name: 'output'
-        },
-        {
-            data: 'action',
-            name: 'action',
-            orderable: false,
-            searchable: false
-        },
+    processing: true,
+    serverSide: true,
+    ajax: dtable_url,
+    order: [],
+    columns: [
+        { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+        { data: 'time_date', name: 'time_date' },
+        { data: 'line', name: 'lines.name' },
+        { data: 'time_hours_of', name: 'time_hours_of' },
+        { data: 'gl_number', name: 'gl_number' },
+        { data: 'target', name: 'target' },
+        { data: 'output', name: 'output' },
+        { data: 'action', name: 'action', orderable: false, searchable: false },
+    ],
+    columnDefs: [
+        { targets: [0,-1], orderable: false, searchable: false },
     ],
     paging: true,
     responsive: true,
     lengthChange: true,
     searching: true,
     autoWidth: false,
+    orderCellsTop: true,
+    initComplete: function( settings, json ) 
+    {
+        var indexColumn = 0;
+        this.api().columns().every(function () 
+        {
+            var column      = this;
+            var input       = document.createElement("input");
+            if(indexColumn > 0 && indexColumn < 7) {
+                $(input).attr( 'placeholder', 'Search' )
+                        .addClass('form-control form-control-sm')
+                        .appendTo( $('.filterhead:eq('+indexColumn+')').empty() )
+                        .on('input', function () {
+                            column.search($(this).val(), false, false, true).draw();
+                        });
+            }
+            indexColumn++;
+        });
+    }
 });
 </script>
 

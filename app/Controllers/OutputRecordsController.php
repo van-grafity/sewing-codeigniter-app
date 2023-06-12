@@ -10,6 +10,8 @@ use App\Models\RemarkModel;
 
 use CodeIgniter\I18n\Time;
 
+use \Hermawan\DataTables\DataTable;
+
 class OutputRecordsController extends BaseController
 {
     protected $OutputRecordModel;
@@ -30,7 +32,7 @@ class OutputRecordsController extends BaseController
         $data = [
             'title' => 'Output Records',
             'page_title' => 'Output Records',
-            'output_records' => $this->OutputRecordModel->getData(),
+            // 'output_records' => $this->OutputRecordModel->getData(),
             'gls' => $this->GlModel->getData(),
             'lines' => $this->LineModel->getData(),
             'remarks' => $this->RemarkModel->getData(),
@@ -41,7 +43,17 @@ class OutputRecordsController extends BaseController
 
     public function dtableOutputRecord()
     {
-        dd("load datatable");
+        $output_records = $this->OutputRecordModel->getDatatable();
+        return DataTable::of($output_records)
+            ->addNumbering('DT_RowIndex')
+            ->add('action', function($row){
+                $action_button = '
+                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="edit_output_record('. $row->id .')">Edit</a>
+                    <a href="javascript:void(0);" class="btn btn-danger btn-sm" onclick="delete_output_record('. $row->id .')">Delete</a>
+                ';
+                return $action_button;
+            })
+            ->toJson(true);
     }
 
     public function show($id) {

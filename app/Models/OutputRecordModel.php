@@ -88,4 +88,17 @@ class OutputRecordModel extends Model
         $query = $builder->get();
         return $query->getRow();
     }
+
+    public function getDatatable() {
+        $builder = $this->db->table('output_records');
+        $builder->select('output_records.id, time_date, lines.name as line, time_hours_of, gls.gl_number, target, output');
+        $builder->join('lines','lines.id = output_records.line_id');
+        $builder->join('gls','gls.id = output_records.gl_id');
+        $builder->where('output_records.deleted_at',null);
+        $builder->orderBy('time_date','desc');
+        $builder->orderBy('line_id');
+        $builder->orderBy('time_hours_of');
+
+        return $builder;
+    }
 }
