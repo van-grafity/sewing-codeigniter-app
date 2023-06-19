@@ -46,6 +46,7 @@ class GlModel extends Model
         $builder = $this->db->table('gls');
         $builder->select('*');
         $builder->where('deleted_at',null);
+        $builder->orderBy('gl_number','asc');
         $gls = $builder->get()->getResult();
 
         foreach ($gls as $key => $data) {

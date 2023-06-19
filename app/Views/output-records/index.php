@@ -1,6 +1,6 @@
 <?= $this->extend('layouts/template'); ?>
 
-<?= $this->Section('content'); ?>
+<?= $this->Section('page_css'); ?>
 <style>
     #output_records_table tr,
     #output_records_table td {
@@ -10,7 +10,17 @@
     #output_records_table .filterhead {
         padding: .75rem;
     }
+
+    @include media-breakpoint-down(sm) {
+        .hide-sm {
+            display: none;
+        }
+    }
 </style>
+<?= $this->endSection('page_css'); ?>
+
+<?= $this->Section('content'); ?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -39,7 +49,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Manage Output Records</h3>
                             <div class="d-flex justify-content-end mb-1">
-                                <a href="javascript:void(0);" class="btn btn-success mb-2"
+                                <a href="javascript:void(0);" class="btn btn-success mb-2 d-none"
                                     id="btn_modal_create">Create</a>
                             </div>
                         </div>
@@ -57,7 +67,7 @@
                                         <th>Output</th>
                                         <th>Action</th>
                                     </tr>
-                                    <tr>
+                                    <tr class="hide-sm">
                                         <th class="filterhead"></th>
                                         <th class="filterhead"></th>
                                         <th class="filterhead"></th>

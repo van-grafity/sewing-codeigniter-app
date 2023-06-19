@@ -47,6 +47,9 @@
     <!-- Cuttom App CSS -->
     <link rel="stylesheet" href="<?= base_url(''); ?>/css/app.css">
 
+    <?= $this->renderSection('page_css'); ?>
+
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
