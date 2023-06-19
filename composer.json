@@ -8,7 +8,8 @@
         "php": "^7.4 || ^8.0",
         "almasaeed2010/adminlte": "~3.2",
         "codeigniter4/framework": "^4.0",
-        "hermawan/codeigniter4-datatables": "^0.6.1"
+        "hermawan/codeigniter4-datatables": "^0.6.1",
+        "seunmatt/codeigniter-log-viewer": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",

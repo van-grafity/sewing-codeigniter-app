@@ -127,6 +127,10 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->get('', 'FetchController::index');
         $routes->get('style', 'FetchController::style',['as' => 'fetch_style']);
     });
+
+
+    // ## Log Viewer Route
+    $routes->get('logs', "LogViewerController::index");
 });
 
 
@@ -138,6 +142,9 @@ $routes->get('dashboard-production/get-data','DashboardProductionsController::ge
 
 $routes->get('dashboard-production-manager','DashboardProductionsController::dashboardManager', ['as' =>'dashboard_manager']);
 $routes->get('dashboard-production/get-data-all-line','DashboardProductionsController::getDataAllLine', ['as' =>'get_data_all_line']);
+
+
+
 
 
 /*
