@@ -12,6 +12,8 @@ use CodeIgniter\I18n\Time;
 
 use \Hermawan\DataTables\DataTable;
 
+helper('form');
+
 class OutputRecordsController extends BaseController
 {
     protected $OutputRecordModel;
