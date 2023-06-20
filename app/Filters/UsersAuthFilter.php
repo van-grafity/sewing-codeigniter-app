@@ -22,5 +22,18 @@ class UsersAuthFilter implements FilterInterface
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
         // Do something here
+        
+        $request = \Config\Services::request();
+        $ip_address = $request->getIPAddress();
+        $current_url = current_url();
+        $username = session()->get('name');
+        
+        $info = [
+            'username'   => $username,
+            'ip_address' => $ip_address,
+            'current_url' => $current_url,
+            'previous_url' => session()->get('_ci_previous_url'),
+        ];
+        log_message('debug',"User: <b>{username}</b> <br> Access Path : <b>{current_url}</b> <br> IP Address : <b>{ip_address}</b> <br> Prev URL : <b>{previous_url}</b>", $info);
     }
 }
