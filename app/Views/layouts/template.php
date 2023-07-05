@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     
-    <!-- Cuttom App CSS -->
+    <!-- Custom App CSS -->
     <link rel="stylesheet" href="<?= base_url(''); ?>/css/app.css">
 
     <?= $this->renderSection('page_css'); ?>

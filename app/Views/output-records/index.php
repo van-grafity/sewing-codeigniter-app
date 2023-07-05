@@ -11,7 +11,7 @@
         padding: .75rem;
     }
 
-    @include media-breakpoint-down(sm) {
+    @media (max-width: 767px) {   
         .hide-sm {
             display: none;
         }
