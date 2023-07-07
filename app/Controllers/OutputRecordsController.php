@@ -55,7 +55,12 @@ class OutputRecordsController extends BaseController
                 ';
                 return $action_button;
             })
-            ->toJson(true);
+            ->postQuery(function($builder){
+                $builder->orderBy('time_date','desc');
+                $builder->orderBy('line_id');
+                $builder->orderBy('time_hours_of','desc');
+
+            })->toJson(true);
     }
 
     public function show($id) {

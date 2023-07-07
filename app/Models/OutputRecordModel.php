@@ -95,10 +95,6 @@ class OutputRecordModel extends Model
         $builder->join('lines','lines.id = output_records.line_id');
         $builder->join('gls','gls.id = output_records.gl_id');
         $builder->where('output_records.deleted_at',null);
-        $builder->orderBy('time_date','desc');
-        $builder->orderBy('line_id');
-        $builder->orderBy('time_hours_of');
-
         return $builder;
     }
 }
