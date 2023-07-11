@@ -156,6 +156,10 @@
             }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
         });
 
+
+        $('.select2').on('select2:open', function (e) {
+            document.querySelector('.select2-search__field').focus();
+        });
     </script>
     
 </body>

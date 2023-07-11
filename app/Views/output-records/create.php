@@ -250,6 +250,10 @@ $(document).ready(function() {
     $('#btn_modal_create').click((e) => {
         create_output_record()
     })
+
+    $('#time_date').val(moment().format('YYYY-MM-DD'));
+    $('#gl_number').select2({});
+
 })
 </script>
 
