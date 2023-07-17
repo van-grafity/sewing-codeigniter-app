@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
             [
                 'id' => 1,
                 'email' => 'admin@ghimli.com',
-                'password' => password_hash('123456789', PASSWORD_BCRYPT),
+                'password' => password_hash('ghimli@2024', PASSWORD_BCRYPT),
                 'name' => 'Admin IT',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
