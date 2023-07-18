@@ -138,6 +138,7 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
 
 // ## Dashboard Page
 $routes->get('dashboard-production','DashboardProductionsController::index', ['as' =>'dashboard-production']);
+$routes->get('dashboard-production-date/(:any)','DashboardProductionsController::index_date/$1', ['as' =>'dashboard-production-date']);
 $routes->get('dashboard-production/get-data','DashboardProductionsController::getDataDashboard', ['as' =>'get_data_dashboard']);
 
 $routes->get('dashboard-production-manager','DashboardProductionsController::dashboardManager', ['as' =>'dashboard_manager']);

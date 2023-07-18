@@ -40,10 +40,11 @@
                                     <tr>
                                         <th width="5%">No</th>
                                         <th width="10%">Group</th>
-                                        <th width="50%">Line List</th>
+                                        <th width="40%">Line List</th>
                                         <th width="10%">Date</th>
                                         <th width="15%">Action</th>
                                         <th width="10%">Toggle Active</th>
+                                        <th width="10%">Show Dashboard</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -63,6 +64,13 @@
                                         </td>
                                         <td>
                                             <a href="javascript:void(0);" class="btn <?= $slideshow->status_class ?> btn-sm" onclick="toggle_status(<?= $slideshow->id ?>)" data-flag-active="<?= $slideshow->flag_active ?>"><?= $slideshow->status_text ?></a>
+                                        </td>
+                                        <td>
+                                            <?php if($slideshow->flag_active) : ?>
+                                                <a href="<?= url_to('dashboard-production-date',$slideshow->time_date)?>" target="_blank" class="btn btn-info btn-sm">Show Dashboard</a>
+                                            <?php else : ?>
+                                                <a href="javascript:void(0);" class="btn btn-secondary btn-sm disabled" data-toggle="tooltip" data-placement="top" title="Tooltip on top" >Show Dashboard</a>
+                                            <?php endif ?>
                                         </td>
                                     </tr>
                                     <?php endforeach ?>

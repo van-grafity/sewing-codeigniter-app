@@ -39,6 +39,27 @@ class DashboardProductionsController extends BaseController
             
             $data = [
                 'data_slideshow' => $data_slideshow,
+                'time_date' => (new Time('now'))->toDateString(),
+            ];
+        } else {
+            $data = [
+                'data_slideshow' => [],
+                'time_date' => "",
+            ];
+        }
+        return view('dashboard-production/index', $data);
+    }
+
+    public function index_date($date)
+    {
+        // ## date sesuai settingan slide
+        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
+        
+        if($slideshow) {
+            $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
+            
+            $data = [
+                'data_slideshow' => $data_slideshow,
                 'time_date' => $slideshow->time_date,
             ];
         } else {
@@ -47,6 +68,7 @@ class DashboardProductionsController extends BaseController
                 'time_date' => "",
             ];
         }
+
         return view('dashboard-production/index', $data);
     }
 
