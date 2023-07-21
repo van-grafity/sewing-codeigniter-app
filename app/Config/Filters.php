@@ -40,6 +40,7 @@ class Filters extends BaseConfig
             //         'dashboard-production',
             //     ]
             // ]
+            'session' => ['except' => ['home','login*', 'register', 'auth/a/*']],
         ],
         'after' => [
             'toolbar',

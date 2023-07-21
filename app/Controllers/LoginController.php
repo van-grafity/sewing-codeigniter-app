@@ -11,7 +11,7 @@ class LoginController extends BaseController
     public function index()
     {
         if((session()->get('logged_in'))){
-            return redirect()->to(base_url('/'));
+            return redirect()->to(base_url('/home'));
         }
         return view('login/index');
     }

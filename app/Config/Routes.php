@@ -5,6 +5,9 @@ namespace Config;
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
+// ## Default Route for Shiled CI4
+// service('auth')->routes($routes);
+
 /*
  * --------------------------------------------------------------------
  * Router Setup
