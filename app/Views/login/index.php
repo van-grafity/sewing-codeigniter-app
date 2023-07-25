@@ -14,8 +14,7 @@
     <title>AdminLTE 3 | Log in</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url('adminLTE'); ?>/plugins/fontawesome-free/css/all.min.css">
     <!-- iCheck -->
@@ -27,12 +26,18 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <b>Sewing Apps</b>
-        </div>
         <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Login</p>
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <div>
+                        <h3 class="brand">Sewing Apps</h3>
+                        <h5 class="brand">PT. GHIM LI INDONESIA</h5>
+                    </div>
+                </div>
+
+                <!-- <p class="login-box-msg">Sign in to your account</p> -->
+                <h6 class="mb-4 text-muted">Sign in to your account</h6>
+
                 <?php if (!empty(session()->getFlashdata('error'))) : ?>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <?php echo session()->getFlashdata('error'); ?>
@@ -44,7 +49,7 @@
                 <form action="<?= url_to('login') ?>" method="post">
                     <?= csrf_field(); ?>
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
+                        <input name="email" type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -70,15 +75,15 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
-
             </div>
             <!-- /.login-card-body -->
         </div>
+        <!-- /.card -->
     </div>
     <!-- /.login-box -->
 
@@ -91,4 +96,5 @@
     <script src="<?= base_url('adminLTE'); ?>/js/adminlte.js"></script>
 
 </body>
+
 </html>
