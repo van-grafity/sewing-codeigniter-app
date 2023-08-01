@@ -183,7 +183,7 @@
                             <?php } ?>
                         </tr>
                         <tr id="row_display_output">
-                            <td class="title-column">Output</td>
+                            <td class="title-column">Output (Q Passed)</td>
                             <?php for ($i = 1; $i <= 10; $i++) { ?>
                                 <td class="value-column"> - </td>
                             <?php } ?>
@@ -195,7 +195,14 @@
                                 <td class="value-column"> - </td>
                             <?php } ?>
                         </tr>
-
+                        <!-- row to display defect qty -->
+                        <tr id="row_display_defect_qty">
+                            <td class="title-column">Defect Qty</td>
+                            <?php for ($i = 1; $i <= 10; $i++) { ?>
+                                <td class="value-column"> - </td>
+                            <?php } ?>
+                        </tr>
+                        <!-- row to display defect rate -->
                         <tr id="row_display_defect_rate">
                             <td class="title-column">Defect Rate</td>
                             <?php for ($i = 1; $i <= 10; $i++) { ?>
@@ -256,7 +263,7 @@
             $("#row_display_target").find("td:gt(0)").remove();
             $("#row_display_output").find("td:gt(0)").remove();
             $("#row_display_efficiency").find("td:gt(0)").remove();
-            // $("#row_display_endline_ftt").find("td:gt(0)").remove();
+            $("#row_display_defect_qty").find("td:gt(0)").remove();
             $("#row_display_defect_rate").find("td:gt(0)").remove();
 
             let output_records = result.data.data_output_records;
@@ -266,7 +273,7 @@
                 $("#row_display_target").append(`<td class="value-column">${record.target}</td>`);
                 $("#row_display_efficiency").append(`<td class="value-column">${record.hourly_efficiency}</td>`);
                 $("#row_display_output").append(`<td class="value-column ${record.element_class}">${record.output}</td>`);
-                // $("#row_display_endline_ftt").append(`<td class="value-column">${record.endline_ftt}</td>`);
+                $("#row_display_defect_qty").append(`<td class="value-column">${record.defect_qty}</td>`);
                 $("#row_display_defect_rate").append(`<td class="value-column">${record.defect_rate}</td>`);
             });
         }
@@ -319,15 +326,16 @@
             $("#row_display_target").find("td:gt(0)").remove();
             $("#row_display_output").find("td:gt(0)").remove();
             $("#row_display_efficiency").find("td:gt(0)").remove();
-            // $("#row_display_endline_ftt").find("td:gt(0)").remove();
+            $("#row_display_defect_qty").find("td:gt(0)").remove();
             $("#row_display_defect_rate").find("td:gt(0)").remove();
+
 
             for (let index = 1; index <= 10; index++) {
                 $("#row_display_hours_of").append(`<td class="value-column first-row">${index}</td>`);
                 $("#row_display_target").append(`<td class="value-column"> - </td>`);
                 $("#row_display_output").append(`<td class="value-column"> - </td>`);
                 $("#row_display_efficiency").append(`<td class="value-column"> - </td>`);
-                // $("#row_display_endline_ftt").append(`<td class="value-column"> - </td>`);
+                $("#row_display_defect_qty").append(`<td class="value-column"> - </td>`);
                 $("#row_display_defect_rate").append(`<td class="value-column"> - </td>`);
             }
         }

@@ -186,10 +186,10 @@ class DashboardProductionsController extends BaseController
 
                 if ($output_records[$i]->output > 0) {
                     // $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + $output_records[$i]->defect_qty)) * 100) . ' %';
-                    $defect_rate = round(($output_records[$i]->defect_qty / $output_records[$i]->output) * 100) . ' %';
+                    $defect_rate = round($output_records[$i]->defect_qty / ($output_records[$i]->defect_qty + $output_records[$i]->output), 2) . ' %';
                     $hourly_efficiency = round(($output_records[$i]->output / $output_records[$i]->target) * 100) . ' %';
                 } else {
-                    $reject_rate = "-";
+                    $defect_rate = "-";
                 }
 
                 $data_output_records[$i] = [
@@ -197,6 +197,7 @@ class DashboardProductionsController extends BaseController
                     'target' => $output_records[$i]->target,
                     'output' => $output_records[$i]->output,
                     'hourly_efficiency' => $hourly_efficiency,
+                    // 'defect_qty' => $defect_qty,
                     'defect_rate' => $defect_rate,
                     'element_class' => $element_class
                 ];
@@ -206,6 +207,7 @@ class DashboardProductionsController extends BaseController
                     'target' => '-',
                     'output' => '-',
                     'hourly_efficiency' => '-',
+                    'defect_qty' => '-',
                     'defect_rate' => '-',
                     'element_class' => ''
                 ];

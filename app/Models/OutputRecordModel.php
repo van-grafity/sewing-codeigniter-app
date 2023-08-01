@@ -14,7 +14,7 @@ class OutputRecordModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['gl_id','line_id','time_date','time_hours_of','target','output','defect_qty','endline_ftt','downtime_min','remark_id'];
+    protected $allowedFields    = ['gl_id', 'line_id', 'time_date', 'time_hours_of', 'target', 'output', 'defect_qty', 'endline_ftt', 'downtime_min', 'remark_id'];
 
     // Dates
     protected $useTimestamps = true;
@@ -40,13 +40,12 @@ class OutputRecordModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
-    public function getData() {
-
+    public function getData()
+    {
         $builder = $this->db->table('output_records');
         $builder->select('*');
-        $builder->where('deleted_at',null);
-        $builder->orderBy('time_date','desc');
+        $builder->where('deleted_at', null);
+        $builder->orderBy('time_date', 'desc');
         $builder->orderBy('line_id');
         $builder->orderBy('time_hours_of');
         $output_records = $builder->get()->getResult();
@@ -59,14 +58,14 @@ class OutputRecordModel extends Model
         return $output_records;
     }
 
-    public function get_gl_list($params = null) {
-
-        $line_id = isset($params->line_id) ? $params->line_id : null; 
+    public function get_gl_list($params = null)
+    {
+        $line_id = isset($params->line_id) ? $params->line_id : null;
         $time_date = isset($params->time_date) ? $params->time_date : null;
 
         $builder = $this->db->table('output_records');
-        $builder->join('gls','gls.id = output_records.gl_id');
-        $builder->join('categories','categories.id = gls.category_id','left');
+        $builder->join('gls', 'gls.id = output_records.gl_id');
+        $builder->join('categories', 'categories.id = gls.category_id', 'left');
         $builder->select('gls.gl_number, categories.category_name');
         $builder->when($line_id, static function ($query, $line_id) {
             $query->where('output_records.line_id', $line_id);
@@ -80,8 +79,8 @@ class OutputRecordModel extends Model
         return $gl_list;
     }
 
-    function hasOne($table_relation_with, $foreign_key){
-
+    function hasOne($table_relation_with, $foreign_key)
+    {
         $builder = $this->db->table($table_relation_with);
         $builder->select('*');
         $builder->where('id', $foreign_key);
@@ -89,12 +88,13 @@ class OutputRecordModel extends Model
         return $query->getRow();
     }
 
-    public function getDatatable() {
+    public function getDatatable()
+    {
         $builder = $this->db->table('output_records');
-        $builder->select('output_records.id, time_date, lines.name as line, time_hours_of, gls.gl_number, target, output');
-        $builder->join('lines','lines.id = output_records.line_id');
-        $builder->join('gls','gls.id = output_records.gl_id');
-        $builder->where('output_records.deleted_at',null);
+        $builder->select('output_records.id, time_date, lines.name as line, time_hours_of, gls.gl_number, target, output, defect_qty');
+        $builder->join('lines', 'lines.id = output_records.line_id');
+        $builder->join('gls', 'gls.id = output_records.gl_id');
+        $builder->where('output_records.deleted_at', null);
         return $builder;
     }
 }
