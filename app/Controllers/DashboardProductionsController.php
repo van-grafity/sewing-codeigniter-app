@@ -33,10 +33,10 @@ class DashboardProductionsController extends BaseController
 
     public function index()
     {
-        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
-        if($slideshow) {
+        $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
+        if ($slideshow) {
             $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
-            
+
             $data = [
                 'data_slideshow' => $data_slideshow,
                 'time_date' => (new Time('now'))->toDateString(),
@@ -53,11 +53,11 @@ class DashboardProductionsController extends BaseController
     public function index_date($date)
     {
         // ## date sesuai settingan slide
-        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
-        
-        if($slideshow) {
+        $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
+
+        if ($slideshow) {
             $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
-            
+
             $data = [
                 'data_slideshow' => $data_slideshow,
                 'time_date' => $slideshow->time_date,
@@ -74,8 +74,8 @@ class DashboardProductionsController extends BaseController
 
     public function dashboardManager()
     {
-        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
-        if(!$slideshow) {
+        $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
+        if (!$slideshow) {
             $time_date = (new Time('now'))->toDateString();
         } else {
             $time_date = $slideshow->time_date;
@@ -104,20 +104,24 @@ class DashboardProductionsController extends BaseController
             'time_date' => $date_filter,
         ];
         $get_gl_list = $this->OutputRecordModel->get_gl_list($params);
-                    
-        $gl_list = array_map( function($obj) { return $obj->gl_number; }, $get_gl_list);
+
+        $gl_list = array_map(function ($obj) {
+            return $obj->gl_number;
+        }, $get_gl_list);
         $data_panel_gl = implode(", ", $gl_list);
-        $category_list = array_map( function($obj) { return $obj->category_name; }, $get_gl_list);
+        $category_list = array_map(function ($obj) {
+            return $obj->category_name;
+        }, $get_gl_list);
         $data_panel_category = implode(", ", $category_list);
 
 
         $output_records = $this->OutputRecordModel
-                            ->where('line_id', $line->id)
-                            ->where('time_date', $date_filter)
-                            ->orderBy('time_hours_of', 'ASC')
-                            ->findAll();
-        
-        if(!$output_records) {
+            ->where('line_id', $line->id)
+            ->where('time_date', $date_filter)
+            ->orderBy('time_hours_of', 'ASC')
+            ->findAll();
+
+        if (!$output_records) {
             $data_panel = [
                 'line' => $line->name,
                 'gl_number' => $data_panel_gl,
@@ -144,17 +148,17 @@ class DashboardProductionsController extends BaseController
         }
 
         $variance_cumulative = $sum_output - $sum_target;
-        if($variance_cumulative > 0) {
+        if ($variance_cumulative > 0) {
             $variance_cumulative = '+' . $variance_cumulative;
         }
-        
-        if($sum_output < $sum_target) {
+
+        if ($sum_output < $sum_target) {
             $output_class = 'down';
         }
 
         $work_hours = count($output_records) <= 8 ? 8 : count($output_records);
         $forecast = round(($sum_output / count($output_records)) * $work_hours);
-        
+
         $actual = round(($sum_output / $sum_target) * 100) . ' %';
         $achievement = round(($variance_cumulative / $sum_target) * 100) . '%';
 
@@ -172,36 +176,37 @@ class DashboardProductionsController extends BaseController
             'achievement' => $achievement,
         ];
 
-        for ($i=0; $i < 10; $i++) {
-            
+        for ($i = 0; $i < 10; $i++) {
+
             if (array_key_exists($i, $output_records)) {
                 $element_class = '';
-                if($output_records[$i]->output < $output_records[$i]->target) {
+                if ($output_records[$i]->output < $output_records[$i]->target) {
                     $element_class = 'bg-danger text-white';
                 }
 
-                if($output_records[$i]->output > 0) {
-                    $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + 
-                    $output_records[$i]->defect_qty)) * 100) . ' %';
-                
+                if ($output_records[$i]->output > 0) {
+                    // $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + $output_records[$i]->defect_qty)) * 100) . ' %';
+                    $defect_rate = round(($output_records[$i]->defect_qty / $output_records[$i]->output) * 100) . ' %';
+                    $hourly_efficiency = round(($output_records[$i]->output / $output_records[$i]->target) * 100) . ' %';
                 } else {
-                    $endline_ftt = "-";
+                    $reject_rate = "-";
                 }
-                
+
                 $data_output_records[$i] = [
                     'time_hours_of' => $output_records[$i]->time_hours_of,
                     'target' => $output_records[$i]->target,
                     'output' => $output_records[$i]->output,
-                    'endline_ftt' => $endline_ftt,
+                    'hourly_efficiency' => $hourly_efficiency,
+                    'defect_rate' => $defect_rate,
                     'element_class' => $element_class
                 ];
-
             } else {
                 $data_output_records[$i] = [
                     'time_hours_of' => $i + 1,
                     'target' => '-',
                     'output' => '-',
-                    'endline_ftt' => '-',
+                    'hourly_efficiency' => '-',
+                    'defect_rate' => '-',
                     'element_class' => ''
                 ];
             }
@@ -219,33 +224,34 @@ class DashboardProductionsController extends BaseController
         return $this->response->setJSON($data_return);
     }
 
-    public function getDataAllLine(){
-        
-        $slideshow = $this->SlideshowModel->where('flag_active','1')->first();
+    public function getDataAllLine()
+    {
+
+        $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
         $line_list = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
         $date_filter = $slideshow->time_date;
-        
+
         $data_per_line = [];
 
         foreach ($line_list as $key => $line) {
-            
+
             $output_records = $this->OutputRecordModel
-                                ->where('line_id', $line->id)
-                                ->where('time_date', $date_filter)
-                                ->orderBy('time_hours_of', 'ASC')
-                                ->findAll();
+                ->where('line_id', $line->id)
+                ->where('time_date', $date_filter)
+                ->orderBy('time_hours_of', 'ASC')
+                ->findAll();
 
             $target = $this->OutputRecordModel
-                                ->where('line_id', $line->id)
-                                ->where('time_date', $date_filter)
-                                ->selectSum('target')->first()->target;
+                ->where('line_id', $line->id)
+                ->where('time_date', $date_filter)
+                ->selectSum('target')->first()->target;
 
             $output = $this->OutputRecordModel
-                                ->where('line_id', $line->id)
-                                ->where('time_date', $date_filter)
-                                ->selectSum('output')->first()->output;
-    
-            if(!$target) {
+                ->where('line_id', $line->id)
+                ->where('time_date', $date_filter)
+                ->selectSum('output')->first()->output;
+
+            if (!$target) {
                 continue;
             }
 
@@ -255,9 +261,9 @@ class DashboardProductionsController extends BaseController
             $forecast_variance = $forecast - $forecast_target;
             $efficiency_target = '100%';
             $efficiency_actual = round(($output / $target) * 100) . '%';
-            
+
             $element_class = '';
-            if($variance < 0) {
+            if ($variance < 0) {
                 $element_class = 'bg-danger text-white';
             }
 
@@ -273,9 +279,8 @@ class DashboardProductionsController extends BaseController
                 'efficiency_actual' => $efficiency_actual,
                 'element_class' => $element_class,
             ];
-            
         }
-        
+
         $data_return = [
             'status' => 'success',
             'message' => 'successfully get data dashboard',
@@ -286,5 +291,4 @@ class DashboardProductionsController extends BaseController
 
         return $this->response->setJSON($data_return);
     }
-
 }
