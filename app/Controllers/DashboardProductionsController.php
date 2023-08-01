@@ -33,9 +33,10 @@ class DashboardProductionsController extends BaseController
 
     public function index()
     {
-        $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
-        if ($slideshow) {
+        $slideshow = $this->SlideshowModel->where('flag_active',  '1')->first();
+        if  ($slideshow) {
             $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
+
 
             $data = [
                 'data_slideshow' => $data_slideshow,
@@ -108,10 +109,13 @@ class DashboardProductionsController extends BaseController
         $gl_list = array_map(function ($obj) {
             return $obj->gl_number;
         }, $get_gl_list);
+
         $data_panel_gl = implode(", ", $gl_list);
+
         $category_list = array_map(function ($obj) {
             return $obj->category_name;
         }, $get_gl_list);
+
         $data_panel_category = implode(", ", $category_list);
 
 
@@ -137,6 +141,7 @@ class DashboardProductionsController extends BaseController
             ];
             return $this->response->setJSON($data_return);
         }
+
         $sum_target = 0;
         $sum_output = 0;
         $output_class = '';
@@ -158,6 +163,7 @@ class DashboardProductionsController extends BaseController
 
         $work_hours = count($output_records) <= 8 ? 8 : count($output_records);
         $forecast = round(($sum_output / count($output_records)) * $work_hours);
+
 
         $actual = round(($sum_output / $sum_target) * 100) . ' %';
         $achievement = round(($variance_cumulative / $sum_target) * 100) . '%';
@@ -185,7 +191,6 @@ class DashboardProductionsController extends BaseController
                 }
 
                 if ($output_records[$i]->output > 0) {
-                    // $endline_ftt = round(($output_records[$i]->output / ($output_records[$i]->output + $output_records[$i]->defect_qty)) * 100) . ' %';
                     $defect_rate = round($output_records[$i]->defect_qty / ($output_records[$i]->defect_qty + $output_records[$i]->output), 2) . ' %';
                     $hourly_efficiency = round(($output_records[$i]->output / $output_records[$i]->target) * 100) . ' %';
                 } else {
@@ -197,7 +202,7 @@ class DashboardProductionsController extends BaseController
                     'target' => $output_records[$i]->target,
                     'output' => $output_records[$i]->output,
                     'hourly_efficiency' => $hourly_efficiency,
-                    // 'defect_qty' => $defect_qty,
+                    'defect_qty' => $output_records[$i]->defect_qty,
                     'defect_rate' => $defect_rate,
                     'element_class' => $element_class
                 ];
@@ -206,6 +211,7 @@ class DashboardProductionsController extends BaseController
                     'time_hours_of' => $i + 1,
                     'target' => '-',
                     'output' => '-',
+                    'hour_efficiency' => '-',
                     'hourly_efficiency' => '-',
                     'defect_qty' => '-',
                     'defect_rate' => '-',
@@ -232,6 +238,7 @@ class DashboardProductionsController extends BaseController
         $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
         $line_list = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
         $date_filter = $slideshow->time_date;
+
 
         $data_per_line = [];
 
@@ -264,8 +271,9 @@ class DashboardProductionsController extends BaseController
             $efficiency_target = '100%';
             $efficiency_actual = round(($output / $target) * 100) . '%';
 
+
             $element_class = '';
-            if ($variance < 0) {
+            if  ($variance < 0) {
                 $element_class = 'bg-danger text-white';
             }
 
