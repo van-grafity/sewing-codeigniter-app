@@ -77,8 +77,6 @@ class DashboardProductionsController extends BaseController
     {
         $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
         if (!$slideshow) {
-        $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
-        if (!$slideshow) {
             $time_date = (new Time('now'))->toDateString();
         } else {
             $time_date = $slideshow->time_date;
@@ -112,26 +110,16 @@ class DashboardProductionsController extends BaseController
             return $obj->gl_number;
         }, $get_gl_list);
 
-        $gl_list = array_map(function ($obj) {
-            return $obj->gl_number;
-        }, $get_gl_list);
         $data_panel_gl = implode(", ", $gl_list);
+
         $category_list = array_map(function ($obj) {
             return $obj->category_name;
         }, $get_gl_list);
-        $category_list = array_map(function ($obj) {
-            return $obj->category_name;
-        }, $get_gl_list);
+
         $data_panel_category = implode(", ", $category_list);
 
 
         $output_records = $this->OutputRecordModel
-            ->where('line_id', $line->id)
-            ->where('time_date', $date_filter)
-            ->orderBy('time_hours_of', 'ASC')
-            ->findAll();
-
-        if (!$output_records) {
             ->where('line_id', $line->id)
             ->where('time_date', $date_filter)
             ->orderBy('time_hours_of', 'ASC')
@@ -153,6 +141,7 @@ class DashboardProductionsController extends BaseController
             ];
             return $this->response->setJSON($data_return);
         }
+
         $sum_target = 0;
         $sum_output = 0;
         $output_class = '';
@@ -165,11 +154,8 @@ class DashboardProductionsController extends BaseController
 
         $variance_cumulative = $sum_output - $sum_target;
         if ($variance_cumulative > 0) {
-        if ($variance_cumulative > 0) {
             $variance_cumulative = '+' . $variance_cumulative;
         }
-
-        if ($sum_output < $sum_target) {
 
         if ($sum_output < $sum_target) {
             $output_class = 'down';
@@ -198,11 +184,8 @@ class DashboardProductionsController extends BaseController
 
         for ($i = 0; $i < 10; $i++) {
 
-        for ($i = 0; $i < 10; $i++) {
-
             if (array_key_exists($i, $output_records)) {
                 $element_class = '';
-                if ($output_records[$i]->output < $output_records[$i]->target) {
                 if ($output_records[$i]->output < $output_records[$i]->target) {
                     $element_class = 'bg-danger text-white';
                 }
@@ -221,7 +204,7 @@ class DashboardProductionsController extends BaseController
                     'output' => $output_records[$i]->output,
                     'hour_efficiency' => $hour_efficiency,
                     'hourly_efficiency' => $hourly_efficiency,
-                    'defect_rate' => $defect_rate,
+                    // 'defect_rate' => $defect_rate,
                     'element_class' => $element_class
                 ];
             } else {
@@ -253,10 +236,6 @@ class DashboardProductionsController extends BaseController
     {
 
         $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
-    public function getDataAllLine()
-    {
-
-        $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
         $line_list = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
         $date_filter = $slideshow->time_date;
 
@@ -271,25 +250,13 @@ class DashboardProductionsController extends BaseController
                 ->where('time_date', $date_filter)
                 ->orderBy('time_hours_of', 'ASC')
                 ->findAll();
-                ->where('line_id', $line->id)
-                ->where('time_date', $date_filter)
-                ->orderBy('time_hours_of', 'ASC')
-                ->findAll();
 
             $target = $this->OutputRecordModel
                 ->where('line_id', $line->id)
                 ->where('time_date', $date_filter)
                 ->selectSum('target')->first()->target;
-                ->where('line_id', $line->id)
-                ->where('time_date', $date_filter)
-                ->selectSum('target')->first()->target;
 
             $output = $this->OutputRecordModel
-                ->where('line_id', $line->id)
-                ->where('time_date', $date_filter)
-                ->selectSum('output')->first()->output;
-
-            if (!$target) {
                 ->where('line_id', $line->id)
                 ->where('time_date', $date_filter)
                 ->selectSum('output')->first()->output;
@@ -324,7 +291,6 @@ class DashboardProductionsController extends BaseController
                 'element_class' => $element_class,
             ];
         }
-
 
         $data_return = [
             'status' => 'success',

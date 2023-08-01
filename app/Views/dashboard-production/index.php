@@ -182,7 +182,6 @@
                         <tr id="row_display_target">
                             <td class="title-column">Target</td>
                             <?php for ($i = 1; $i <= 10; $i++) { ?>
-                            <?php for ($i = 1; $i <= 10; $i++) { ?>
                                 <td class="value-column"> - </td>
                             <?php }  ?>
                         </tr>
@@ -217,8 +216,6 @@
     <script src="<?= base_url(''); ?>/js/utils.js"></script>
 
     <script type="text/javascript">
-        const get_data_url = '<?= url_to('get_data_dashboard') ?>';
-
         const get_data_url = '<?= url_to('get_data_dashboard') ?>';
 
         const load_data_dashboard = async (data_params) => {
