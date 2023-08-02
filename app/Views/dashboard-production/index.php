@@ -30,12 +30,12 @@
 
         .value {
             color: var(--bs-blue);
-            font-weight:  500;
+            font-weight: 500;
         }
 
         .value.big {
             font-size: 1.5em;
-            font-weight:  700;
+            font-weight: 700;
         }
 
         .value.down {
@@ -43,17 +43,17 @@
         }
 
         .title.bold {
-            font-weight:  700;
+            font-weight: 700;
         }
 
         .title-column {
-            width:  200px;
+            width: 200px;
             font-weight: 500;
             font-size: 24px;
         }
 
         .value-column {
-            width:  100px;
+            width: 100px;
             font-weight: 500;
             font-size: 24px;
             text-align: center;
@@ -186,7 +186,7 @@
                             <?php }  ?>
                         </tr>
                         <tr id="row_display_output">
-                            <td class="title-column">Output (Q Passed)</td>
+                            <td class="title-column">Q Passed Qty</td>
                             <?php for ($i = 1; $i <= 10; $i++) { ?>
                                 <td class="value-column"> - </td>
                             <?php } ?>
@@ -228,7 +228,7 @@
         const load_data_dashboard = async (data_params) => {
 
             result = await using_fetch(get_data_url, data_params, "GET");
-            if  (result.status == 'error') {
+            if (result.status == 'error') {
                 empty_data_dashboard();
                 $('#header_line').text(`Line : ${result.data.data_panel.line}`);
                 $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
@@ -295,7 +295,7 @@
         function run_slide_show(set_slide_show) {
             let delay = 30000;
             set_slide_show.forEach((data_show, i) => {
-                setTimeout(function()  {
+                setTimeout(function() {
                     data_params = {
                         line_id: data_show.id,
                         date_filter: time_date_filter,
@@ -306,7 +306,7 @@
                 }, i * delay)
             });
 
-            setTimeout(function()  {
+            setTimeout(function() {
                 run_slide_show(set_slide_show)
             }, set_slide_show.length * delay)
         }
@@ -354,7 +354,7 @@
         }
     </script>
     <script type="text/javascript">
-        $(document).ready(function()  {
+        $(document).ready(function() {
             run_slide_show(data_slideshow);
         })
     </script>
