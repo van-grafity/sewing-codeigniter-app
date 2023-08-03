@@ -68,8 +68,8 @@
 
 
 <body>
-    <div class="container-fluid mt-5">
-        <h1 class="page-title text-center mb-5">Dashboard Production</h1>
+    <div class="container-fluid mt-1">
+        <h1 class="page-title text-center mb-1">Dashboard Production</h1>
         <div class="header-section mb-2">
             <div class="row">
                 <div class="col-sm-3">
@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="panel-section">
-            <div class="row mb-5">
+            <div class="row">
                 <div class="col-sm-3">
                     <div class="card h-100">
                         <div class="card-body">
