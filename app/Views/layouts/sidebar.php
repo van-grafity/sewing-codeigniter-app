@@ -120,25 +120,25 @@
                     </a>
                     <ul class="ml-3 nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="<?= url_to('output_report') ?>" class="nav-link">
                                 <i class="far fa-file nav-icon"></i>
                                 <p>Output</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="<?= url_to('efficiency_report') ?>" class="nav-link">
                                 <i class="far fa-file nav-icon"></i>
                                 <p>Efficiency Rate</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="<?= url_to('defect_report') ?>" class="nav-link">
                                 <i class="far fa-file nav-icon"></i>
                                 <p>Defect Rate</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="<?= url_to('downtime_report') ?>" class="nav-link">
                                 <i class="far fa-file nav-icon"></i>
                                 <p>Line Downtime Record</p>
                             </a>
