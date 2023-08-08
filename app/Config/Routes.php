@@ -34,7 +34,7 @@ $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::process');
 $routes->get('/logout', 'LoginController::logout');
 
-$routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
+$routes->group('', ['filter' => 'usersAuth'], static function ($routes) {
     // $routes->get('/home', 'Home::index');
     $routes->get('/home', 'Home::home');
     $routes->get('/', 'Home::home');
@@ -79,6 +79,7 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->put('(:segment)', 'BuyersController::update/$1', ['as' => 'buyer_update']);
         $routes->delete('(:segment)', 'BuyersController::destroy/$1', ['as' => 'buyer_destroy']);
     });
+
     $routes->group('categories', static function ($routes) {
         $routes->get('', 'CategoriesController::index');
         $routes->get('(:segment)', 'CategoriesController::show/$1', ['as' => 'category_show']);
@@ -87,7 +88,6 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->put('(:segment)', 'CategoriesController::update/$1', ['as' => 'category_update']);
         $routes->delete('(:segment)', 'CategoriesController::destroy/$1', ['as' => 'category_destroy']);
     });
-
 
     $routes->get('output-record-create', 'OutputRecordsController::create', ['as' => 'output_record_create']);
     $routes->group('output-records', static function ($routes) {
@@ -106,26 +106,32 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
         $routes->get('edit/(:segment)', 'SlideshowsController::edit/$1', ['as' => 'slideshow_edit']);
         $routes->put('(:segment)', 'SlideshowsController::update/$1', ['as' => 'slideshow_update']);
         $routes->delete('(:segment)', 'SlideshowsController::destroy/$1', ['as' => 'slideshow_destroy']);
-        
+
         $routes->get('toggle/flag_status', 'SlideshowsController::toggle_status', ['as' => 'slideshow_toggle_status']);
     });
-    
-    
-    // ## Route for Datatable
-    $routes->group('dtable', static function ($routes){
-        $routes->get('buyer', 'BuyersController::dtableBuyer',['as' => 'dtable_buyer']);
-        $routes->get('gl', 'GlsController::dtableGl',['as' => 'dtable_gl']);
-        $routes->get('line', 'LinesController::dtableLine',['as' => 'dtable_line']);
-        $routes->get('group', 'GroupsController::dtableGroup',['as' => 'dtable_group']);
-        $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord',['as' => 'dtable_output_record']);
-        $routes->get('slideshow', 'SlideshowsController::dtableSlideshow',['as' => 'dtable_slideshow']);
-        $routes->get('remark', 'RemarksController::dtableRemark',['as' => 'dtable_remark']);
-        $routes->get('category', 'CategoriesController::dtableCategory',['as' => 'dtable_category']);
+
+    $routes->group('report', static function ($routes) {
+        $routes->get('defect', 'ReportController::defect', ['as' => 'defect_report']);
+        $routes->get('downtime', 'ReportController::downtime', ['as' => 'downtime_report']);
+        $routes->get('efficiency', 'ReportController::efficiency', ['as' => 'efficiency_report']);
+        $routes->get('output', 'ReportController::output', ['as' => 'output_report']);
     });
 
-    $routes->group('fetch', static function ($routes){
+    // ## Route for Datatable
+    $routes->group('dtable', static function ($routes) {
+        $routes->get('buyer', 'BuyersController::dtableBuyer', ['as' => 'dtable_buyer']);
+        $routes->get('gl', 'GlsController::dtableGl', ['as' => 'dtable_gl']);
+        $routes->get('line', 'LinesController::dtableLine', ['as' => 'dtable_line']);
+        $routes->get('group', 'GroupsController::dtableGroup', ['as' => 'dtable_group']);
+        $routes->get('output-record', 'OutputRecordsController::dtableOutputRecord', ['as' => 'dtable_output_record']);
+        $routes->get('slideshow', 'SlideshowsController::dtableSlideshow', ['as' => 'dtable_slideshow']);
+        $routes->get('remark', 'RemarksController::dtableRemark', ['as' => 'dtable_remark']);
+        $routes->get('category', 'CategoriesController::dtableCategory', ['as' => 'dtable_category']);
+    });
+
+    $routes->group('fetch', static function ($routes) {
         $routes->get('', 'FetchController::index');
-        $routes->get('style', 'FetchController::style',['as' => 'fetch_style']);
+        $routes->get('style', 'FetchController::style', ['as' => 'fetch_style']);
     });
 
 
@@ -137,12 +143,12 @@ $routes->group('',['filter'=> 'usersAuth'], static function ($routes) {
 
 
 // ## Dashboard Page
-$routes->get('dashboard-production','DashboardProductionsController::index', ['as' =>'dashboard-production']);
-$routes->get('dashboard-production-date/(:any)','DashboardProductionsController::index_date/$1', ['as' =>'dashboard-production-date']);
-$routes->get('dashboard-production/get-data','DashboardProductionsController::getDataDashboard', ['as' =>'get_data_dashboard']);
+$routes->get('dashboard-production', 'DashboardProductionsController::index', ['as' => 'dashboard-production']);
+$routes->get('dashboard-production-date/(:any)', 'DashboardProductionsController::index_date/$1', ['as' => 'dashboard-production-date']);
+$routes->get('dashboard-production/get-data', 'DashboardProductionsController::getDataDashboard', ['as' => 'get_data_dashboard']);
 
-$routes->get('dashboard-production-manager','DashboardProductionsController::dashboardManager', ['as' =>'dashboard_manager']);
-$routes->get('dashboard-production/get-data-all-line','DashboardProductionsController::getDataAllLine', ['as' =>'get_data_all_line']);
+$routes->get('dashboard-production-manager', 'DashboardProductionsController::dashboardManager', ['as' => 'dashboard_manager']);
+$routes->get('dashboard-production/get-data-all-line', 'DashboardProductionsController::getDataAllLine', ['as' => 'get_data_all_line']);
 
 
 
