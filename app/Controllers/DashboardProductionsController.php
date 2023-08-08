@@ -195,6 +195,7 @@ class DashboardProductionsController extends BaseController
                     $hourly_efficiency = round(($output_records[$i]->output / $output_records[$i]->target) * 100) . ' %';
                 } else {
                     $defect_rate = "-";
+                    $hourly_efficiency = '-';
                 }
 
                 $data_output_records[$i] = [
