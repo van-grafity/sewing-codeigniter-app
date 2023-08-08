@@ -69,7 +69,7 @@
 
 <body>
     <div class="container-fluid mt-5">
-        <h1 class="page-title text-center mb-5">Dashboard Production</h1>
+        <h1 class="page-title text-center mb-5">Production Dashboard</h1>
         <div class="header-section mb-2">
             <div class="row">
                 <div class="col-sm-3">
