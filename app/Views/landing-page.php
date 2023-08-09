@@ -32,13 +32,12 @@
                         <h2 class="text-white mx-auto mt-2 mb-5">Application for Sewing Department</h2>
                         
                         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                        <?php if((session()->get('logged_in'))): ?>
-                            <a href="<?= base_url('home')?>" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                        <?php else:  ?>
-                            <a href="<?= base_url('login')?>" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-                        <?php endif  ?>
-                            </div>
-                        @endif
+                            <?php if((session()->get('logged_in'))): ?>
+                                <a href="<?= base_url('home')?>" class="btn login text-white bg-primary bg-opacity-100" style="font-size:14px;">Home</a>
+                            <?php else:  ?>
+                                <a href="<?= base_url('login')?>" class="btn login text-white bg-primary bg-opacity-100" style="font-size:14px;">Log in</a>
+                            <?php endif  ?>
+                        </div>
                     </div>
                 </div>
             </div>
