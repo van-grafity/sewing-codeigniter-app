@@ -34,10 +34,14 @@ $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::process');
 $routes->get('/logout', 'LoginController::logout');
 
+$routes->get('/', function() {
+    return view('landing-page');
+});
+
 $routes->group('', ['filter' => 'usersAuth'], static function ($routes) {
     // $routes->get('/home', 'Home::index');
     $routes->get('/home', 'Home::home');
-    $routes->get('/', 'Home::home');
+    // $routes->get('/', 'Home::home');
 
     $routes->group('gls', static function ($routes) {
         $routes->get('', 'GlsController::index');

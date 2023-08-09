@@ -11,7 +11,7 @@ class LoginController extends BaseController
     public function index()
     {
         if((session()->get('logged_in'))){
-            return redirect()->to(base_url('/'));
+            return redirect()->to(base_url('/home'));
         }
         return view('login/index');
     }
@@ -33,7 +33,14 @@ class LoginController extends BaseController
                     'name' => $dataUser->name,
                     'logged_in' => TRUE
                 ]);
-                return redirect()->to(base_url('/'));
+
+                $current_url = session()->get('last_current_url');
+                if($current_url) {
+                    return redirect()->to($current_url);
+                } else {
+                    return redirect()->to(base_url('/home'));
+                }
+                
             } else {
                 session()->setFlashdata('error', 'Password Salah');
                 return redirect()->back();
