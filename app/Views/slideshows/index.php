@@ -163,7 +163,7 @@ $(document).ready(function(){
             {data: 'time_date', name: 'time_date',},
             {data: 'action', name: 'action', orderable: false, searchable: false},
             {data: 'toggle_active', name: 'toggle_active', orderable: false, searchable: false},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'show_dashboard', name: 'show_dashboard', orderable: false, searchable: false},
         ],
         paging: true,
         responsive: true,
