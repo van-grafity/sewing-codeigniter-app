@@ -111,6 +111,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="<?= url_to('dashboard_video') ?>" target="_blank" class="nav-link">
+                        <i class="fas fa-tv nav-icon"></i>
+                        <p>Dashboard Video</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="far fa-file-alt nav-icon"></i>
                         <p>

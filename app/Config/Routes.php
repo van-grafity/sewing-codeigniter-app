@@ -150,7 +150,7 @@ $routes->get('dashboard-production/get-data', 'DashboardProductionsController::g
 $routes->get('dashboard-production-manager', 'DashboardProductionsController::dashboardManager', ['as' => 'dashboard_manager']);
 $routes->get('dashboard-production/get-data-all-line', 'DashboardProductionsController::getDataAllLine', ['as' => 'get_data_all_line']);
 
-
+$routes->get('dashboard-video', 'DashboardVideo', ['as' => 'dashboard_video']);
 
 
 
