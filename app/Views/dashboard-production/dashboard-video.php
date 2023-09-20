@@ -40,9 +40,9 @@
 </head>
 
 <body>
-    <video autoplay muted loop id="myVideo">
+    <video autoplay muted id="myVideo">
         <source src="<?= base_url(); ?>/assets/video/video1.mp4" type="video/mp4" />
-        Browsermu tidak mendukung video HTML5.
+        Your browser does not support the video tag.
     </video>
 </body>
 
