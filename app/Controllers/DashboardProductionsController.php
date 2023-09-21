@@ -164,9 +164,13 @@ class DashboardProductionsController extends BaseController
         $work_hours = count($output_records) <= 8 ? 8 : count($output_records);
         $forecast = round(($sum_output / count($output_records)) * $work_hours);
 
-
-        $actual = round(($sum_output / $sum_target) * 100) . ' %';
-        $achievement = round(($variance_cumulative / $sum_target) * 100) . '%';
+        if($sum_target > 0) {
+            $actual = round(($sum_output / $sum_target) * 100) . ' %';
+            $achievement = round(($variance_cumulative / $sum_target) * 100) . '%';
+        } else {
+            $actual = '0%';
+            $achievement = '0%';
+        }
 
         $data_panel = [
             'line' => $line->name,
@@ -195,6 +199,7 @@ class DashboardProductionsController extends BaseController
                     $hourly_efficiency = round(($output_records[$i]->output / $output_records[$i]->target) * 100) . ' %';
                 } else {
                     $defect_rate = "-";
+                    $hourly_efficiency = '-';
                 }
 
                 $data_output_records[$i] = [

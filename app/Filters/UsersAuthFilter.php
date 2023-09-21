@@ -12,6 +12,7 @@ class UsersAuthFilter implements FilterInterface
     {
         if(is_null(session()->get('logged_in')))
         {
+            session()->set('last_current_url', current_url());
             return redirect()->to(base_url('login'));
         }
     }
