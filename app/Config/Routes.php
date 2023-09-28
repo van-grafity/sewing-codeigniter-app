@@ -34,7 +34,7 @@ $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::process');
 $routes->get('/logout', 'LoginController::logout');
 
-$routes->get('/', function() {
+$routes->get('/', function () {
     return view('landing-page');
 });
 
@@ -144,6 +144,8 @@ $routes->group('', ['filter' => 'usersAuth'], static function ($routes) {
 });
 
 
+// ## Dashboard Page BARU
+$routes->get('dashboard', 'DashboardController::index', ['as' => 'dashboard']);
 
 
 // ## Dashboard Page
@@ -155,8 +157,6 @@ $routes->get('dashboard-production-manager', 'DashboardProductionsController::da
 $routes->get('dashboard-production/get-data-all-line', 'DashboardProductionsController::getDataAllLine', ['as' => 'get_data_all_line']);
 
 $routes->get('dashboard-video', 'DashboardVideo', ['as' => 'dashboard_video']);
-
-
 
 /*
  * --------------------------------------------------------------------

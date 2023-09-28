@@ -46,6 +46,11 @@ $RECYCLE.BIN/
 Vagrantfile
 
 #-------------------------
+# Multimedia Files
+#-------------------------
+public/assets/video/*
+
+#-------------------------
 # Temporary Files
 #-------------------------
 writable/cache/*
