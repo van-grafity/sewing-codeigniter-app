@@ -87,7 +87,7 @@
             </div>
         </div>
         <div class="panel-section">
-            <div class="row mb-5">
+            <div class="row">
                 <div class="col-sm-3">
                     <div class="card h-100">
                         <div class="card-body">
