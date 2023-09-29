@@ -34,7 +34,7 @@ $routes->get('/login', 'LoginController::index');
 $routes->post('/login', 'LoginController::process');
 $routes->get('/logout', 'LoginController::logout');
 
-$routes->get('/', function() {
+$routes->get('/', function () {
     return view('landing-page');
 });
 
@@ -143,20 +143,15 @@ $routes->group('', ['filter' => 'usersAuth'], static function ($routes) {
     $routes->get('logs', "LogViewerController::index");
 });
 
-
-
-
 // ## Dashboard Page
-$routes->get('dashboard-production', 'DashboardProductionsController::index', ['as' => 'dashboard-production']);
-$routes->get('dashboard-production-date/(:any)', 'DashboardProductionsController::index_date/$1', ['as' => 'dashboard-production-date']);
-$routes->get('dashboard-production/get-data', 'DashboardProductionsController::getDataDashboard', ['as' => 'get_data_dashboard']);
+$routes->get('dashboard-factory', 'DashboardController::index', ['as' => 'dashboard-factory']);
+$routes->get('dashboard-production-date/(:any)', 'DashboardController::index_date/$1', ['as' => 'dashboard-production-date']);
+$routes->get('dashboard-production/get-data', 'DashboardController::getDataDashboard', ['as' => 'get_data_dashboard']);
 
-$routes->get('dashboard-production-manager', 'DashboardProductionsController::dashboardManager', ['as' => 'dashboard_manager']);
-$routes->get('dashboard-production/get-data-all-line', 'DashboardProductionsController::getDataAllLine', ['as' => 'get_data_all_line']);
+$routes->get('dashboard-manager', 'DashboardController::dashboardManager', ['as' => 'dashboard_manager']);
+$routes->get('dashboard-production/get-data-all-line', 'DashboardController::getDataAllLine', ['as' => 'get_data_all_line']);
 
-$routes->get('dashboard-video', 'DashboardVideo', ['as' => 'dashboard_video']);
-
-
+$routes->get('dashboard-video', 'DashboardController::dashboardVideo', ['as' => 'dashboard_video']);
 
 /*
  * --------------------------------------------------------------------
