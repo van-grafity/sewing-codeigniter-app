@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Controllers\DashboardController;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -144,8 +146,10 @@ $routes->group('', ['filter' => 'usersAuth'], static function ($routes) {
 });
 
 // ## Dashboard Page
-$routes->get('dashboard-factory', 'DashboardController::index', ['as' => 'dashboard-factory']);
-$routes->get('dashboard-production-date/(:any)', 'DashboardController::index_date/$1', ['as' => 'dashboard-production-date']);
+$routes->get('dashboard', 'DashboardController::index', ['as' => 'dashboard']);
+
+$routes->get('dashboard-factory', 'DashboardController::dashboardFactory', ['as' => 'dashboard-factory']);
+$routes->get('dashboard-production-date/(:any)', 'DashboardController::factory_date/$1', ['as' => 'dashboard-production-date']);
 $routes->get('dashboard-production/get-data', 'DashboardController::getDataDashboard', ['as' => 'get_data_dashboard']);
 
 $routes->get('dashboard-manager', 'DashboardController::dashboardManager', ['as' => 'dashboard_manager']);

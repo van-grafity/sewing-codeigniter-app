@@ -33,7 +33,15 @@ class DashboardController extends BaseController
 
     public function index()
     {
-        // dashboard-factory
+        $data = [
+            'title' => 'Dashboard'
+        ];
+        return view('dashboard/index', $data);
+    }
+
+    public function dashboardFactory()
+    {
+        // Dashboard Factory
         $slideshow = $this->SlideshowModel->where('flag_active',  '1')->first();
         if ($slideshow) {
             $data_slideshow = $this->LineGroupModel->getLinesByGroupId($slideshow->group_id);
@@ -52,7 +60,7 @@ class DashboardController extends BaseController
         return view('dashboard/factory', $data);
     }
 
-    public function index_date($date)
+    public function factory_date($date)
     {
         // ## date sesuai settingan slide
         $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
@@ -76,6 +84,7 @@ class DashboardController extends BaseController
 
     public function dashboardManager()
     {
+        // Dashboard Manager
         $slideshow = $this->SlideshowModel->where('flag_active', '1')->first();
         if (!$slideshow) {
             $time_date = (new Time('now'))->toDateString();
@@ -92,6 +101,7 @@ class DashboardController extends BaseController
 
     public function dashboardVideo()
     {
+        // Dashboard Video
         $data = [
             'title' => 'Video',
             'page_title' => 'Video Viewer',

@@ -48,7 +48,7 @@
 
 <script type='text/javascript'>
     var count = 1;
-    var totalvideo = 5;
+    var totalvideo = 6;
     var player = document.getElementById('myVideo');
     player.addEventListener('ended', videoHandler, false);
 
@@ -56,7 +56,7 @@
         if (!e) {
             e = window.event;
         }
-        if (count <= totalvideo) {
+        if (count < totalvideo) {
             count++;
         } else {
             count = 1

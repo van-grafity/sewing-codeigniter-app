@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,18 +17,18 @@
         #dashboard_manager th {
             border: 1px solid black !important;
         }
+
         .big-title {
             font-size: 1.2em;
-            font-weight:700;
+            font-weight: 700;
         }
 
         #dashboard_manager tbody {
-            font-size:.8em;
+            font-size: .8em;
         }
-        
-        
     </style>
 </head>
+
 <body>
     <div class="container-fluid mt-5">
         <div class="row">
@@ -42,28 +43,26 @@
         <div class="dashboard-container">
             <div class="row">
                 <div class="col-sm-12">
-                    <table id="dashboard_manager"class="table">
+                    <table id="dashboard_manager" class="table">
                         <thead class="">
                             <tr class="big-title">
-                                <th></th>
-                                <th colspan ="3">Actual vs Committed</th>
-                                <th colspan ="3">Forecast (expected at the end of shift)</th>
-                                <th colspan ="2">Efficiency</th>
+                                <th rowspan="2" class="text-center align-middle">Line</th>
+                                <th colspan="3" class="text-center align-middle">Actual vs Committed</th>
+                                <th colspan="3" class="text-center align-middle">Forecast (expected at the end of shift)</th>
+                                <th colspan="2" class="text-center align-middle">Efficiency</th>
                             </tr>
                             <tr>
-                                <th>Line</th>
-                                <th>Cum Committed Target</th>
-                                <th>Cum Actual</th>
-                                <th>Variance</th>
-                                <th>Value</th>
-                                <th>Committed</th>
-                                <th>Variance</th>
-                                <th>Efficiency Committed</th>
-                                <th>Current Efficiency</th>
+                                <th class="text-center align-middle">Cum Committed Target</th>
+                                <th class="text-center align-middle">Cum Actual</th>
+                                <th class="text-center align-middle">Variance</th>
+                                <th class="text-center align-middle">Value</th>
+                                <th class="text-center align-middle">Committed</th>
+                                <th class="text-center align-middle">Variance</th>
+                                <th class="text-center align-middle">Efficiency Committed</th>
+                                <th class="text-center align-middle">Current Efficiency</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
                         </tbody>
                     </table>
                 </div>
@@ -76,11 +75,11 @@
     <script src="<?= base_url(''); ?>/js/utils.js"></script>
 
     <script type="text/javascript">
-        const get_data_url ='<?= url_to('get_data_all_line') ?>';
-        
+        const get_data_url = '<?= url_to('get_data_all_line') ?>';
+
         const load_data_dashboard = async (data_params) => {
             result = await using_fetch(get_data_url, data_params, "GET");
-            if(result.status == 'error') {
+            if (result.status == 'error') {
                 console.log(result.message);
                 return false;
             }
@@ -94,14 +93,14 @@
                 $('#dashboard_manager tbody').append(`
                     <tr>
                         <td class="${line.element_class}">${line.line}</td>
-                        <td class="">${line.target}</td>
-                        <td class="">${line.output}</td>
-                        <td class="">${line.variance}</td>
-                        <td class="">${line.forecast}</td>
-                        <td class="">${line.forecast_target}</td>
-                        <td class="">${line.forecast_variance}</td>
-                        <td class="">${line.efficiency_target}</td>
-                        <td class="">${line.efficiency_actual}</td>
+                        <td class="text-center">${line.target}</td>
+                        <td class="text-center">${line.output}</td>
+                        <td class="text-center">${line.variance}</td>
+                        <td class="text-center">${line.forecast}</td>
+                        <td class="text-center">${line.forecast_target}</td>
+                        <td class="text-center">${line.forecast_variance}</td>
+                        <td class="text-center">${line.efficiency_target}</td>
+                        <td class="text-center">${line.efficiency_actual}</td>
                     <tr>
                 `)
             })
@@ -109,20 +108,19 @@
 
         function run_slide_show() {
             let delay = 20000;
-            setTimeout(function(){
+            setTimeout(function() {
                 data_params = {}
                 load_data_dashboard(data_params)
                 run_slide_show()
-            },  delay)
+            }, delay)
         }
-
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             load_data_dashboard();
             run_slide_show();
         })
-        
     </script>
 </body>
+
 </html>

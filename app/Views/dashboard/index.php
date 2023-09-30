@@ -1,13 +1,12 @@
 <html>
 
 <head>
-    <title>
-        This is dashboard page
-    </title>
+    <title><?= $title ?></title>
 </head>
 
-<body>
-    <h1>This is dashboard page</h1>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+    <h1>This is Dashboard Index</h1>
 </body>
 
 </html>
