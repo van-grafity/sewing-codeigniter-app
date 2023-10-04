@@ -268,9 +268,24 @@ $('#output_records_table').DataTable({
         "<'row'<'col-md-12'tr>>" +
         "<'row'<'col-md-5'i><'col-md-7'p>>",
     buttons: [
-        'excelHtml5',
-        'pdfHtml5',
-        'print'
+        {
+            extend: 'excelHtml5',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+            }
+        },
+        {
+            extend: 'print',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+            }
+        },
     ]
 });
 </script>
