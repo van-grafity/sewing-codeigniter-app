@@ -22,13 +22,14 @@
             height: 100%;
             overflow: hidden;
 
-            /* Make video to at least 100% wide and tall 
-            min-width: 100%;
-            min-height: 100%;*/
+            /* Make video to at least 100% wide and tall  */
+            /* min-width: 100%; */
+            /* min-height: 100%; 
 
             /* Setting width & height to auto prevents the browser from stretching or squishing the video */
             width: auto;
-            height: auto;
+            /* height: auto; */
+            height: fit-content;
 
             /* Center the video */
             position: absolute;
@@ -60,6 +61,7 @@
             count++;
         } else {
             count = 1
+            // window.location.href = "http://localhost/sewing-app/public/dashboard-manager";
         }
         player.src = "<?= base_url(); ?>/assets/video/video" + count + ".mp4";
     }

@@ -14,7 +14,7 @@ class StyleModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['style','description','gl_id'];
+    protected $allowedFields    = ['style', 'description', 'gl_id'];
 
     // Dates
     protected $useTimestamps = true;
@@ -40,11 +40,12 @@ class StyleModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getData() {
+    public function getData()
+    {
 
         $builder = $this->db->table('styles');
         $builder->select('*');
-        $builder->where('deleted_at',null);
+        $builder->where('deleted_at', null);
         $styles = $builder->get()->getResult();
 
         return $styles;

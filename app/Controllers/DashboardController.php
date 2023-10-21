@@ -34,7 +34,8 @@ class DashboardController extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Dashboard'
+            'title' => 'Load Dashboard in multiview',
+            'waktu' => now()
         ];
         return view('dashboard/index', $data);
     }

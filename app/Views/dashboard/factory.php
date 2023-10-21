@@ -234,8 +234,6 @@
                 $('#header_date_show').text(`Date : ${result.data.data_panel.date_show}`);
                 $('#header_gl_number').text(`GL : ${result.data.data_panel.gl_number}`);
                 $('#header_category').text(`Product Type : ${result.data.data_panel.category}`);
-
-
                 return false;
             }
 
