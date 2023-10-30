@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
@@ -16,11 +17,12 @@
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="<?= base_url(); ?>bootstrap/css/bootstrap.min.css">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="<?= base_url(); ?>/css/dashboard.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>css/dashboard.css">
 </head>
 
 <body>
@@ -46,7 +48,7 @@
         </div>
     </nav>
 
-    <div class="container" id="title" via-views>should stay hidden</div>
+    <!-- <div class="container" id="title" via-views>should stay hidden</div> -->
 
     <div class="container" id="content" via-views>should stay hidden</div>
     <!-- /.container -->
