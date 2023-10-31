@@ -30,9 +30,9 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="navbar-nav">
-                    <li><a via-link via-href="manager">Manager</a></li>
-                    <a via-link via-href="factory">Factory</a>
-                    <a via-link via-href="video">Video</a>
+                    <li><a via-link via-href="manager">Manager </a></li>
+                    <li><a via-link via-href="factory">Factory </a></li>
+                    <li><a via-link via-href="video">Video </a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -41,7 +41,7 @@
     </nav>
 
     <!-- Container for content-->
-    <div class="container" id="content" via-views>should stay hidden</div>
+    <div class="container-fluid" id="content" via-views>should stay hidden</div>
     <!-- /.container for content-->
 
     <!-- Latest compiled and minified JavaScript -->
@@ -61,26 +61,17 @@
 
         var views = {
             manager: [{
-                selector: "#title",
-                // templateUrl: 'views/index-title.html'
-            }, {
                 selector: "#content",
                 templateUrl: 'dashboard-manager'
-            }, ],
+            }],
             factory: [{
-                selector: "#title",
-                // templateUrl: 'views/about-title.html'
-            }, {
                 selector: "#content",
                 templateUrl: 'dashboard-factory'
-            }, ],
+            }],
             video: [{
-                selector: "#title",
-                // templateUrl: 'views/contact-title.html'
-            }, {
                 selector: "#content",
                 templateUrl: 'dashboard-video'
-            }, ],
+            }],
             defaultView: {
                 view: 'manager'
             }

@@ -8,12 +8,6 @@
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: Arial;
-            font-size: 17px;
-        }
-
         #myVideo {
             position: absolute;
             top: 0;
