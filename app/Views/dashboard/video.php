@@ -55,7 +55,6 @@
             count++;
         } else {
             count = 1
-            // window.location.href = "http://localhost/sewing-app/public/dashboard-manager";
         }
         player.src = "<?= base_url(); ?>/assets/video/video" + count + ".mp4";
     }

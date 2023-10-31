@@ -17,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>css/dashboard.css">
 </head>
 
+<!-- <body onload="welcomeFunction()"> -->
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-light fixed-top">
@@ -30,9 +32,9 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="navbar-nav">
-                    <li><a via-link via-href="manager">Manager </a></li>
-                    <li><a via-link via-href="factory">Factory </a></li>
-                    <li><a via-link via-href="video">Video </a></li>
+                    <li><a id="link-manager" via-link via-href="manager">Manager </a></li>
+                    <li><a id="link-factory" via-link via-href="factory">Factory </a></li>
+                    <li><a id="link-video" via-link via-href="video">Video </a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -49,8 +51,9 @@
     <script src="<?= base_url('bootstrap'); ?>/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="<?= base_url(); ?>/js/app.js"></script>
-    <!-- Init -->
-    <script>
+
+    <!-- Initialize view -->
+    <script type="text/javascript">
         $(function() {
             var navBar = $("#navbar");
 
@@ -77,6 +80,44 @@
             }
         };
         new Via(views);
+    </script>
+
+    <script type="text/javascript">
+        let message = document.getElementById("message");
+
+        function welcomeFunction() {
+            alert("welcome to the tutorialsPoint!");
+            message.innerHTML = "Function executed successfully on page load."
+        }
+    </script>
+
+    <script type="text/javascript">
+        let int_manager = 60000; // satuan milidetik tuk 1 menit.
+        let int_factory = 120000; // satuan milidetik tuk 2 menit.
+
+        var i = 0;
+        var loop = function() {
+            while (i < 3) { //Your code here!
+                i++;
+                console.log("I am looping!");
+            }
+        };
+
+        loop();
+    </script>
+
+    <!-- JavaScript for clicking button -->
+    <script type="text/javascript">
+        setTimeout(ClickTheLink, 60000);
+
+        function ClickTheLink() {
+            document.getElementById("link-factory").click();
+        }
+        setTimeout(ClickLinkVideo, 120000);
+
+        function ClickLinkVideo() {
+            document.getElementById("link-video").click();
+        }
     </script>
 </body>
 
