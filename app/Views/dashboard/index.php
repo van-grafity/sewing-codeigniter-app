@@ -82,14 +82,14 @@
         new Via(views);
     </script>
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         let message = document.getElementById("message");
 
         function welcomeFunction() {
             alert("welcome to the tutorialsPoint!");
             message.innerHTML = "Function executed successfully on page load."
         }
-    </script>
+    </script> -->
 
     <script type="text/javascript">
         let int_manager = 60000; // satuan milidetik tuk 1 menit.
