@@ -71,7 +71,7 @@
                                             <label for="line" class="form-label">Hours of</label>
                                             <select name="time_hours_of" class="form-control select2" id="time_hours_of" style="width: 100%;" data-placeholder="Choose Hours of" required>
                                                 <option value="">Choose Hours of</option>
-                                                <?php for ($i=1; $i <= 10; $i++) { ?>
+                                                <?php for ($i=1; $i <= 11; $i++) { ?>
                                                     <option value="<?= $i ?>"><?= $i ?></option>
                                                 <?php } ?>
                                             </select>
