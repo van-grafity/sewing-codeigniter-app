@@ -17,9 +17,7 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url(); ?>css/dashboard.css">
 </head>
 
-<!-- <body onload="welcomeFunction()"> -->
-
-<body>
+<body onload="showDashboard()">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-light fixed-top">
         <!-- Navbar content -->
@@ -28,13 +26,13 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">Dashboard Manager</a>
+                <a class="navbar-brand" href="dashboard">Dashboard Manager</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="navbar-nav">
-                    <li><a id="link-manager" via-link via-href="manager">Manager </a></li>
-                    <li><a id="link-factory" via-link via-href="factory">Factory </a></li>
-                    <li><a id="link-video" via-link via-href="video">Video </a></li>
+                    <li><a id="link-1" via-link via-href="manager">Manager </a></li>
+                    <li><a id="link-2" via-link via-href="factory">Factory </a></li>
+                    <li><a id="link-3" via-link via-href="video">Video </a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -82,42 +80,63 @@
         new Via(views);
     </script>
 
-    <!-- <script type="text/javascript">
-        let message = document.getElementById("message");
-
-        function welcomeFunction() {
-            alert("welcome to the tutorialsPoint!");
-            message.innerHTML = "Function executed successfully on page load."
-        }
-    </script> -->
-
     <script type="text/javascript">
-        let int_manager = 60000; // satuan milidetik tuk 1 menit.
-        let int_factory = 120000; // satuan milidetik tuk 2 menit.
+        function showDashboard() {
+            // showDashboard code will be inside here
+            let i = 0;
+            let durasi = 1000;
 
-        var i = 0;
-        var loop = function() {
-            while (i < 3) { //Your code here!
+            function increment() {
                 i++;
-                console.log("I am looping!");
+                if (i == 4) {
+                    i = 1
+                }
+                // console.log('Link aktif : ' + 'link-' + i);
+                document.getElementById('link-' + i).click();
             }
-        };
 
-        loop();
-    </script>
-
-    <!-- JavaScript for clicking button -->
-    <script type="text/javascript">
-        setTimeout(ClickTheLink, 60000);
-
-        function ClickTheLink() {
-            document.getElementById("link-factory").click();
+            let timer = setTimeout(function myTimer() {
+                increment();
+                if (i == 1) {
+                    durasi = 5000;
+                } else if (i == 2) {
+                    durasi = 10000;
+                } else if (i == 3) {
+                    durasi = 15000;
+                }
+                // console.log('Link aktif : ' + 'link-' + i);
+                timer = setTimeout(myTimer, durasi);
+            }, 1000);
         }
-        setTimeout(ClickLinkVideo, 120000);
 
-        function ClickLinkVideo() {
-            document.getElementById("link-video").click();
-        }
+        // var link = ['link-manager', 'link-factory', 'link-video'];
+        // // console.log(link);
+        // setTimeout(changeDashboard(link), 5000);
+
+        // function changeDashboard(link) {
+        //     let delay = 10000;
+
+        //     // 
+        //     link.forEach(function(e, i) {
+        //         setTimeout(console.log('Link aktif : ' + (i + 1) + ' adalah : ' + e), i * delay);
+        //     });
+
+        //     setTimeout(function() {
+        //         changeDashboard(link)
+        //     }, link.length * delay);
+        // }
+
+        // JavaScript for clicking button
+        //     setTimeout(ClickTheLink, 60000);
+
+        //     function ClickTheLink() {
+        //         document.getElementById("link-factory").click();
+        //     }
+        //     setTimeout(ClickLinkVideo, 120000);
+
+        //     function ClickLinkVideo() {
+        //         document.getElementById("link-video").click();
+        //     }
     </script>
 </body>
 
