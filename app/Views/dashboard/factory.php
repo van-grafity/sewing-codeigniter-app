@@ -219,7 +219,6 @@
     <script>
         data_slideshow = <?php echo json_encode($data_slideshow)  ?>;
         time_date_filter = '<?= $time_date  ?>';
-        console.log("dipanggil ini");
         
         $(document).ready(function() {
             run_slide_show_factory(data_slideshow);
