@@ -26,10 +26,10 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="dashboard">Dashboard Manager</a>
+                <a class="navbar-brand d-none" href="dashboard">Dashboard Manager</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav d-none">
                     <li><a id="link-1" via-link via-href="manager">Manager </a></li>
                     <li><a id="link-2" via-link via-href="factory">Factory </a></li>
                     <li><a id="link-3" via-link via-href="video">Video </a></li>
