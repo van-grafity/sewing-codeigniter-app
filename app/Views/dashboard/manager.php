@@ -70,55 +70,10 @@
         </div>
     </div>
 
-    <script src="<?= base_url('adminLTE'); ?>/plugins/jquery/jquery.min.js"></script>
-    <script src="<?= base_url('bootstrap'); ?>/js/bootstrap.min.js"></script>
-    <script src="<?= base_url(''); ?>/js/utils.js"></script>
-
-    <script type="text/javascript">
-        const get_data_url = '<?= url_to('get_data_all_line') ?>';
-
-        const load_data_dashboard = async (data_params) => {
-            result = await using_fetch(get_data_url, data_params, "GET");
-            if (result.status == 'error') {
-                console.log(result.message);
-                return false;
-            }
-
-            // console.log(result.data);
-
-            let data_per_line = result.data.data_per_line;
-            $('#dashboard_manager tbody').html(``);
-
-            data_per_line.forEach(line => {
-                $('#dashboard_manager tbody').append(`
-                    <tr>
-                        <td class="${line.element_class}">${line.line}</td>
-                        <td class="text-center">${line.target}</td>
-                        <td class="text-center">${line.output}</td>
-                        <td class="text-center">${line.variance}</td>
-                        <td class="text-center">${line.forecast}</td>
-                        <td class="text-center">${line.forecast_target}</td>
-                        <td class="text-center">${line.forecast_variance}</td>
-                        <td class="text-center">${line.efficiency_target}</td>
-                        <td class="text-center">${line.efficiency_actual}</td>
-                    <tr>
-                `)
-            })
-        }
-
-        function run_slide_show() {
-            let delay = 20000;
-            setTimeout(function() {
-                data_params = {}
-                load_data_dashboard(data_params)
-                run_slide_show()
-            }, delay)
-        }
-    </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            load_data_dashboard();
-            run_slide_show();
+            load_data_dashboard_manager();
+            run_slide_show_manager();
         })
     </script>
 </body>
