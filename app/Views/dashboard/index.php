@@ -105,10 +105,10 @@
                 } else if (i == 2) {
                     durasi = 960000;
                 } else if (i == 3) {
-                    durasi = 15000;
+                    durasi = 360000;
                 }
                 // console.log('Link aktif : ' + 'link-' + i);
-                timer = setTimeout(myTimer, 20000);
+                timer = setTimeout(myTimer, durasi);
             }, 1000);
         }
 
