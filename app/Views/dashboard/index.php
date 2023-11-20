@@ -100,7 +100,7 @@
                 if (i == 1) {
                     durasi = 5000;
                 } else if (i == 2) {
-                    durasi = 10000;
+                    durasi = 960000;
                 } else if (i == 3) {
                     durasi = 15000;
                 }
