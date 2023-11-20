@@ -48,7 +48,7 @@ Vagrantfile
 #-------------------------
 # Multimedia Files
 #-------------------------
-public/assets/video/*
+#public/assets/video/*
 
 #-------------------------
 # Temporary Files
